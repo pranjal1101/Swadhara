@@ -94,9 +94,28 @@ const upgradeUserToSeller = async (userId) => {
   return await User.findById(userId).select('-password');
 };
 
+/**
+ * Update user profile details
+ */
+const updateUserProfile = async (userId, { name, bio, location, profileImage }) => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  if (name) user.name = name;
+  if (bio !== undefined) user.bio = bio;
+  if (location !== undefined) user.location = location;
+  if (profileImage !== undefined) user.profileImage = profileImage;
+
+  await user.save();
+  return await User.findById(userId).select('-password');
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
-  upgradeUserToSeller
+  upgradeUserToSeller,
+  updateUserProfile
 };
