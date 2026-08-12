@@ -10,6 +10,7 @@ const {
   createReview
 } = require('../controllers/productController');
 const { authenticateUser, authorizeSeller } = require('../middlewares/auth');
+const { validateProduct } = require('../middlewares/validate');
 
 const router = express.Router();
 
@@ -28,8 +29,8 @@ router.get('/:id', getProduct);
 router.post('/:id/reviews', authenticateUser, createReview);
 
 // Protected product management (Seller only)
-router.post('/', authenticateUser, authorizeSeller, createProduct);
-router.put('/:id', authenticateUser, authorizeSeller, updateProduct);
+router.post('/', authenticateUser, authorizeSeller, validateProduct, createProduct);
+router.put('/:id', authenticateUser, authorizeSeller, validateProduct, updateProduct);
 router.delete('/:id', authenticateUser, authorizeSeller, deleteProduct);
 
 module.exports = router;
