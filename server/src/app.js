@@ -19,8 +19,10 @@ app.use('/api/health', (req, res) => {
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/courses', courseRoutes);
 
 // Centralized Error Handler
 app.use(errorHandler);
