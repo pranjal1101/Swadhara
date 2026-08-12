@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "6a7c5cfc15caa5e461d429fd",
+    "name": "Radha Sharma",
+    "email": "radha@swadhara.org",
+    "role": "seller",
+    "profileImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop",
+    "bio": "A passionate home cook and skilled tailor based in Jaipur. Radha has been running her own small cottage tailoring shop for the last 5 years and loves teaching embroidery to young girls in her community.",
+    "location": "Jaipur, Rajasthan",
+    "createdAt": "2026-08-12T11:46:04.530Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a7c5cfc15caa5e461d429ff",
+    "name": "Sunita Patel",
+    "email": "sunita@swadhara.org",
+    "role": "user",
+    "profileImage": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300&auto=format&fit=crop",
+    "bio": "Interested in learning home baking to start a tiny custom cookie kitchen from my apartment.",
+    "location": "Ahmedabad, Gujarat",
+    "createdAt": "2026-08-12T11:46:04.620Z",
+    "__v": 0
+  }
+]

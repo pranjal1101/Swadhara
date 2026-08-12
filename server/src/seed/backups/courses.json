@@ -1,0 +1,62 @@
+[
+  {
+    "title": {
+      "en": "Basic Tailoring & Stitching",
+      "hi": "सिलाई और कटाई की मूल बातें",
+      "gu": "ટેલરિંગ અને સિલાઈની મૂળભૂત બાબતો"
+    },
+    "description": {
+      "en": "Learn how to handle a sewing machine, take proper body measurements, stitch straight lines, and sew basic garments from home.",
+      "hi": "सिलाई मशीन चलाना सीखें, शरीर की सही माप लें, सीधी सिलाई करना सीखें और घर बैठे साधारण कपड़े सिलना सीखें।",
+      "gu": "સિલાઈ મશીન ચલાવતા શીખો, શરીરના માપ લેતા શીખો, સીધી સિલાઈ અને ઘર બેઠા સામાન્ય કપડાં સીવતા શીખો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a07",
+    "category": "6a7c5cfc15caa5e461d42a01",
+    "instructor": "Savitri Devi",
+    "thumbnail": "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop",
+    "level": "Beginner",
+    "duration": "3 hours",
+    "createdAt": "2026-08-12T11:46:04.711Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Creative Embroidery Patterns",
+      "hi": "रचनात्मक कढ़ाई के तरीके",
+      "gu": "સર્જનાત્મક ભરતકામ પેટર્ન"
+    },
+    "description": {
+      "en": "Master basic hand embroidery stitches including running stitch, backstitch, french knots, and create floral designs.",
+      "hi": "हाथ की कढ़ाई के मुख्य टाँके सीखें जैसे रनिंग स्टिच, बैकस्टिच, फ्रेंच नॉट और सुंदर फूलों के पैटर्न बनाएं।",
+      "gu": "હાથ ભરતકામના મુખ્ય ટાંકા શીખો જેવા કે રનિંગ સ્ટીચ, બેકસ્ટીચ, ફ્રેન્ચ નોટ અને સુંદર ફૂલોની પેટર્ન બનાવો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a0d",
+    "category": "6a7c5cfc15caa5e461d42a02",
+    "instructor": "Radha Sharma",
+    "thumbnail": "https://images.unsplash.com/photo-1617005082133-548c4dd27f35?q=80&w=600&auto=format&fit=crop",
+    "level": "Beginner",
+    "duration": "2.5 hours",
+    "createdAt": "2026-08-12T11:46:04.718Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Home Baking Basics",
+      "hi": "घरेलू बेकिंग सीखें",
+      "gu": "ઘરેલુ બેકિંગ પાયાના નિયમો"
+    },
+    "description": {
+      "en": "Learn how to bake sponge cakes, measuring dry and wet ingredients correctly, and handling oven temperature settings.",
+      "hi": "स्पंज केक बनाना सीखें, सूखी और गीली सामग्रियों को सही तरीके से नापना और ओवन का तापमान सेट करना सीखें।",
+      "gu": "સ્પોન્જ કેક બનાવતા શીખો, સૂકી અને ભીની વસ્તુઓનું માપ લેતા શીખો અને ઓવનનું તાપમાન સેટ કરતા શીખો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a12",
+    "category": "6a7c5cfc15caa5e461d42a03",
+    "instructor": "Chef Ananya Sen",
+    "thumbnail": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+    "level": "Beginner",
+    "duration": "4 hours",
+    "createdAt": "2026-08-12T11:46:04.722Z",
+    "__v": 0
+  }
+]

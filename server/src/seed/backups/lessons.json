@@ -1,0 +1,135 @@
+[
+  {
+    "title": {
+      "en": "How to Thread a Sewing Machine",
+      "hi": "सिलाई मशीन में धागा कैसे डालें",
+      "gu": "સિલાઈ મશીનમાં દોરો કેવી રીતે નાખવો"
+    },
+    "description": {
+      "en": "A step-by-step video guide showing how to place the bobbin, thread the upper needle, and prepare your machine.",
+      "hi": "बॉबिन लगाने, ऊपर की सुई में धागा डालने और अपनी सिलाई मशीन तैयार करने का आसान वीडियो गाइड।",
+      "gu": "બોબીન લગાવવા, ઉપરની સોયમાં દોરો નાખવા અને મશીન તૈયાર કરવા માટેનો સરળ વિડિયો ગાઇડ."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a09",
+    "course": "6a7c5cfc15caa5e461d42a07",
+    "videoUrl": "https://www.youtube.com/watch?v=9jKsnq16Faw",
+    "duration": "8 mins",
+    "order": 1,
+    "createdAt": "2026-08-12T11:46:04.714Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Stitching a Straight Line",
+      "hi": "सीधी सिलाई कैसे लगाएं",
+      "gu": "સીધી સિલાઈ કેવી રીતે કરવી"
+    },
+    "description": {
+      "en": "Learn how to guide fabric under the presser foot to achieve perfectly straight seams every time.",
+      "hi": "कपड़े को दबाकर सुई के नीचे सीधा आगे बढ़ाना और सीधी सिलाई के अभ्यास का तरीका सीखें।",
+      "gu": "કાપડને સીધું રાખીને મશીન ચલાવવા અને સીધી સિલાઈની પ્રેક્ટિસ કેવી રીતે કરવી તે શીખો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a0a",
+    "course": "6a7c5cfc15caa5e461d42a07",
+    "videoUrl": "https://www.youtube.com/watch?v=sC6wepVb2Qc",
+    "duration": "10 mins",
+    "order": 2,
+    "createdAt": "2026-08-12T11:46:04.714Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Sewing a Simple Cushion Cover",
+      "hi": "साधारण कुशन कवर सिलना",
+      "gu": "સાદા કુશન કવરની સિલાઈ"
+    },
+    "description": {
+      "en": "Put your stitching skills to use by creating a beautiful square cushion cover for your home.",
+      "hi": "अपनी सिलाई कला का उपयोग करके घर के लिए सुंदर चौकोर तकिया/कुशन कवर तैयार करना सीखें।",
+      "gu": "તમારી સિલાઈ કળાનો ઉપયોગ કરીને ઘર માટે સુંદર ચોરસ કુશન કવર સીવતા શીખો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a0b",
+    "course": "6a7c5cfc15caa5e461d42a07",
+    "videoUrl": "https://www.youtube.com/watch?v=sC6wepVb2Qc",
+    "duration": "15 mins",
+    "order": 3,
+    "createdAt": "2026-08-12T11:46:04.715Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Essential Embroidery Tools",
+      "hi": "कढ़ाई के आवश्यक साधन",
+      "gu": "ભરતકામ માટેના જરૂરી સાધનો"
+    },
+    "description": {
+      "en": "Learn about embroidery hoops, different types of needles, and cotton embroidery floss selection.",
+      "hi": "कढ़ाई की फ्रेम (फ्रेम), धागे के प्रकार और सुइयों के चयन के बारे में विस्तार से जानें।",
+      "gu": "ભરતકામ ફ્રેમ (ફ્રેમ), સોયના પ્રકાર અને ગુણવત્તાવાળા દોરાઓની પસંદગી વિશે માહિતી."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a0f",
+    "course": "6a7c5cfc15caa5e461d42a0d",
+    "videoUrl": "https://www.youtube.com/watch?v=mYpS3zDqMug",
+    "duration": "6 mins",
+    "order": 1,
+    "createdAt": "2026-08-12T11:46:04.719Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Running Stitch & Backstitch",
+      "hi": "रनिंग स्टिच और बैकस्टिच बनाना",
+      "gu": "રનિંગ સ્ટીચ અને બેકસ્ટીચ બનાવતા શીખો"
+    },
+    "description": {
+      "en": "Learn the two most fundamental outline stitches used for drawing patterns on cotton canvas.",
+      "hi": "कपड़े पर पैटर्न की रूपरेखा (आउटलाइन) बनाने के दो सबसे आसान टांकों का अभ्यास करें।",
+      "gu": "કાપડ પર આઉટલાઇન દોરવા માટેના બે સૌથી પાયાના ટાંકાઓની પ્રેક્ટિસ."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a10",
+    "course": "6a7c5cfc15caa5e461d42a0d",
+    "videoUrl": "https://www.youtube.com/watch?v=mYpS3zDqMug",
+    "duration": "9 mins",
+    "order": 2,
+    "createdAt": "2026-08-12T11:46:04.720Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Baking Measurements & Kitchen Tools",
+      "hi": "बेकिंग की माप और रसोई के उपकरण",
+      "gu": "બેકિંગ માપન અને રસોઈ સાધનો"
+    },
+    "description": {
+      "en": "Learn how to use cups, spoons, and kitchen scales to get perfect baking results.",
+      "hi": "कप, चम्मच और किचन वजन कांटे की मदद से बेकिंग सामग्री का सही अनुपात मापना सीखें।",
+      "gu": "કપ, ચમચી અને કિચન સ્કેલની મદદથી બેકિંગ મટીરીયલનું યોગ્ય માપ લેતા શીખો."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a14",
+    "course": "6a7c5cfc15caa5e461d42a12",
+    "videoUrl": "https://www.youtube.com/watch?v=qtlhdIofo-8",
+    "duration": "7 mins",
+    "order": 1,
+    "createdAt": "2026-08-12T11:46:04.724Z",
+    "__v": 0
+  },
+  {
+    "title": {
+      "en": "Baking Chocolate Chip Cookies",
+      "hi": "चॉकलेट चिप कुकीज़ बनाना",
+      "gu": "ચોકલેટ ચિપ કુકીઝ બનાવવાની રીત"
+    },
+    "description": {
+      "en": "Simple recipe to bake crispy-on-the-outside and soft-on-the-inside cookies at home.",
+      "hi": "घर पर कुरकुरी और अंदर से सॉफ्ट चॉकलेट कुकीज़ बनाने का सबसे सरल तरीका।",
+      "gu": "ઘરે બહારથી ક્રિસ્પી અને અંદરથી સોફ્ટ ચોકલેટ કૂકીઝ બનાવવાની સૌથી સરળ રીત."
+    },
+    "_id": "6a7c5cfc15caa5e461d42a15",
+    "course": "6a7c5cfc15caa5e461d42a12",
+    "videoUrl": "https://www.youtube.com/watch?v=yfS0K43gU84",
+    "duration": "12 mins",
+    "order": 2,
+    "createdAt": "2026-08-12T11:46:04.724Z",
+    "__v": 0
+  }
+]

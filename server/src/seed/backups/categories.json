@@ -1,0 +1,62 @@
+[
+  {
+    "name": {
+      "en": "Tailoring",
+      "hi": "सिलाई-कटाई",
+      "gu": "ટેલરિંગ"
+    },
+    "_id": "6a7c5cfc15caa5e461d42a01",
+    "slug": "tailoring",
+    "image": "https://images.unsplash.com/photo-1524295981997-ec4f4e30424d?q=80&w=400&auto=format&fit=crop",
+    "createdAt": "2026-08-12T11:46:04.703Z",
+    "__v": 0
+  },
+  {
+    "name": {
+      "en": "Embroidery",
+      "hi": "कढ़ाई",
+      "gu": "ભરતકામ"
+    },
+    "_id": "6a7c5cfc15caa5e461d42a02",
+    "slug": "embroidery",
+    "image": "https://images.unsplash.com/photo-1617005082133-548c4dd27f35?q=80&w=400&auto=format&fit=crop",
+    "createdAt": "2026-08-12T11:46:04.704Z",
+    "__v": 0
+  },
+  {
+    "name": {
+      "en": "Baking",
+      "hi": "बेकिंग",
+      "gu": "બેકિંગ"
+    },
+    "_id": "6a7c5cfc15caa5e461d42a03",
+    "slug": "baking",
+    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop",
+    "createdAt": "2026-08-12T11:46:04.704Z",
+    "__v": 0
+  },
+  {
+    "name": {
+      "en": "Jewellery",
+      "hi": "आभूषण बनाना",
+      "gu": "ઝવેરાત બનાવવી"
+    },
+    "_id": "6a7c5cfc15caa5e461d42a04",
+    "slug": "jewellery",
+    "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop",
+    "createdAt": "2026-08-12T11:46:04.704Z",
+    "__v": 0
+  },
+  {
+    "name": {
+      "en": "Handicrafts",
+      "hi": "हस्तशिल्प",
+      "gu": "હસ્તકલા"
+    },
+    "_id": "6a7c5cfc15caa5e461d42a05",
+    "slug": "handicrafts",
+    "image": "https://images.unsplash.com/photo-1561715276-a2d087060f1d?q=80&w=400&auto=format&fit=crop",
+    "createdAt": "2026-08-12T11:46:04.704Z",
+    "__v": 0
+  }
+]
