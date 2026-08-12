@@ -4,7 +4,8 @@ const {
   getCourse,
   getLesson,
   getProgress,
-  completeLesson
+  completeLesson,
+  getEnrolledCourses
 } = require('../controllers/courseController');
 const { authenticateUser } = require('../middlewares/auth');
 
@@ -12,6 +13,11 @@ const router = express.Router();
 
 // Public routes
 router.get('/', listCourses);
+
+// Protected routes (User enrolled list)
+router.get('/user/enrolled', authenticateUser, getEnrolledCourses);
+
+// Public course detail
 router.get('/:id', getCourse);
 
 // Protected routes (Requires logging in)

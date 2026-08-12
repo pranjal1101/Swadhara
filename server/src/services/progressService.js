@@ -58,7 +58,17 @@ const markLessonComplete = async (userId, courseId, lessonId) => {
   return progress;
 };
 
+const getUserEnrolledCourses = async (userId) => {
+  return await Progress.find({ user: userId })
+    .populate({
+      path: 'course',
+      populate: { path: 'category' }
+    })
+    .sort({ lastAccessed: -1 });
+};
+
 module.exports = {
   getUserProgress,
-  markLessonComplete
+  markLessonComplete,
+  getUserEnrolledCourses
 };

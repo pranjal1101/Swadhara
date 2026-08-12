@@ -95,10 +95,28 @@ const completeLesson = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Get user's enrolled courses and percentages
+ * @route   GET /api/courses/user/enrolled
+ * @access  Private (Registered users only)
+ */
+const getEnrolledCourses = async (req, res, next) => {
+  try {
+    const enrolled = await progressService.getUserEnrolledCourses(req.user._id);
+    res.status(200).json({
+      success: true,
+      data: enrolled
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listCourses,
   getCourse,
   getLesson,
   getProgress,
-  completeLesson
+  completeLesson,
+  getEnrolledCourses
 };
