@@ -6,7 +6,8 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-  listSellerProducts
+  listSellerProducts,
+  createReview
 } = require('../controllers/productController');
 const { authenticateUser, authorizeSeller } = require('../middlewares/auth');
 
@@ -22,6 +23,9 @@ router.get('/seller', authenticateUser, authorizeSeller, listSellerProducts);
 // Public product browsing routes
 router.get('/', listProducts);
 router.get('/:id', getProduct);
+
+// Protected review route (Registered users only)
+router.post('/:id/reviews', authenticateUser, createReview);
 
 // Protected product management (Seller only)
 router.post('/', authenticateUser, authorizeSeller, createProduct);
