@@ -1783,6 +1783,126 @@ p {
   }
 }
 
+/* Seller Panel tabs and navigation */
+.seller-tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition-fast);
+  min-height: 48px;
+}
+
+.seller-tab-btn:hover, .seller-tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.seller-tab-btn.active {
+  font-weight: 600;
+}
+
+/* Seller Products Portfolio Table */
+.seller-items-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--card-bg);
+}
+
+.seller-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.seller-items-table th, .seller-items-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.seller-items-table th {
+  background-color: rgba(96, 71, 52, 0.03);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.seller-items-table tr:last-child td {
+  border-bottom: none;
+}
+
+.table-product-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.table-product-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: #f0e9c8;
+}
+
+.table-product-name {
+  font-weight: 500;
+}
+
+/* Stock status badges inside table */
+.stock-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.stock-badge.in-stock {
+  background-color: #edf7ed;
+  color: var(--success-color);
+}
+
+.stock-badge.out-stock {
+  background-color: #fdf2f2;
+  color: var(--error-color);
+}
+
+/* Dropdown styling for status updates in order summary */
+.status-select-dropdown {
+  background-color: var(--card-bg) !important;
+  font-weight: 600;
+}
+
+.status-select-dropdown.Pending {
+  border-color: #ffe0b3;
+  color: #b38600;
+}
+
+.status-select-dropdown.Confirmed {
+  border-color: #b3d7ff;
+  color: #0066cc;
+}
+
+.status-select-dropdown.Shipped {
+  border-color: #d9b3ff;
+  color: #6600cc;
+}
+
+.status-select-dropdown.Delivered {
+  border-color: #d4eed4;
+  color: var(--success-color);
+}
+
+.status-select-dropdown.Cancelled {
+  border-color: #fde8e8;
+  color: var(--error-color);
+}
+
 
 
 
