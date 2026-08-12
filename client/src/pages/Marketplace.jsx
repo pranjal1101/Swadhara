@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 
+import SafeImage from '../components/SafeImage';
+
 export default function Marketplace() {
   const { t, tDynamic } = useLanguage();
   const navigate = useNavigate();
@@ -169,11 +171,11 @@ export default function Marketplace() {
               style={{ cursor: 'pointer' }}
             >
               <div className="product-card-img-wrapper">
-                <img
+                <SafeImage
                   src={product.images && product.images[0]}
                   alt={product.name}
+                  category={product.category?.slug}
                   className="product-card-img"
-                  loading="lazy"
                 />
               </div>
               <div className="card-body">

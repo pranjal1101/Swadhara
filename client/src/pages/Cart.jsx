@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
+import SafeImage from '../components/SafeImage';
+
 export default function Cart() {
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -129,6 +131,15 @@ export default function Cart() {
 
   return (
     <div className="container section">
+      {/* Breadcrumb nav */}
+      <div className="breadcrumb-nav" style={{ marginBottom: '24px' }}>
+        <Link to="/marketplace" style={{ textDecoration: 'underline', color: 'var(--text-muted)' }}>
+          {t('navMarketplace')}
+        </Link>
+        <span style={{ margin: '0 8px', color: 'var(--text-light)' }}>/</span>
+        <span style={{ color: 'var(--text-main)' }}>Cart</span>
+      </div>
+
       <h1 className="cart-page-title" style={{ marginBottom: '32px' }}>
         {t('cartTitle')}
       </h1>
@@ -147,7 +158,7 @@ export default function Cart() {
             <div className="cart-items-list">
               {cartItems.map((item) => (
                 <div key={item.product} className="cart-item-card">
-                  <img src={item.image} alt={item.name} className="cart-item-img" />
+                  <SafeImage src={item.image} alt={item.name} className="cart-item-img" />
                   <div className="cart-item-details">
                     <h3 className="cart-item-title">{item.name}</h3>
                     <span className="cart-item-maker" style={{ fontSize: '0.85rem', color: 'var(--text-light)' }}>

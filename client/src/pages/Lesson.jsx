@@ -122,18 +122,38 @@ export default function Lesson() {
       {/* Video Iframe Embed */}
       <div className="lesson-player-container">
         {videoId ? (
-          <div className="iframe-wrapper">
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
-              title={tDynamic(lesson.title)}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <>
+            <div className="iframe-wrapper">
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
+                title={tDynamic(lesson.title)}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div style={{ marginTop: '12px', textAlign: 'right' }}>
+              <a 
+                href={lesson.videoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{ fontSize: '0.85rem', color: 'var(--accent-rose)', textDecoration: 'underline', fontWeight: '600' }}
+              >
+                Watch directly on YouTube &rarr;
+              </a>
+            </div>
+          </>
         ) : (
-          <div className="no-video-error">
-            <p>Invalid lesson video configuration.</p>
+          <div className="no-video-error" style={{ padding: '48px 24px', backgroundColor: 'var(--card-pink)', borderRadius: '16px', textAlign: 'center', margin: '16px 0', border: '1px solid var(--border-color)' }}>
+            <p style={{ fontWeight: '700', color: 'var(--text-main)', marginBottom: '16px' }}>Embedded video player could not load.</p>
+            <a 
+              href={lesson.videoUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn btn-primary"
+            >
+              Watch Tutorial on YouTube &rarr;
+            </a>
           </div>
         )}
       </div>

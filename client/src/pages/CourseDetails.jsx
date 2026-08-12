@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
+import SafeImage from '../components/SafeImage';
+
 export default function CourseDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -104,7 +106,7 @@ export default function CourseDetails() {
         {/* Course Info */}
         <div className="course-main-info">
           <div className="course-banner-img-wrapper">
-            <img src={course.thumbnail} alt={tDynamic(course.title)} className="course-banner-img" />
+            <SafeImage src={course.thumbnail} alt={tDynamic(course.title)} category={course.category?.slug} className="course-banner-img" />
           </div>
 
           <h1 className="course-detail-title">{tDynamic(course.title)}</h1>

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
+import SafeImage from '../components/SafeImage';
+
 export default function ProductDetails() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -150,9 +152,10 @@ export default function ProductDetails() {
         {/* Product Image Column */}
         <div className="product-image-col">
           <div className="product-main-img-wrapper">
-            <img 
+            <SafeImage 
               src={product.images && product.images[0]} 
               alt={product.name} 
+              category={product.category?.slug}
               className="product-main-img" 
             />
           </div>

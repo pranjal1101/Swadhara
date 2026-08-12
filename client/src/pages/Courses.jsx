@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 
+import SafeImage from '../components/SafeImage';
+
 export default function Courses() {
   const { t, tDynamic } = useLanguage();
   const navigate = useNavigate();
@@ -103,9 +105,10 @@ export default function Courses() {
               style={{ cursor: 'pointer' }}
             >
               <div className="course-thumbnail-wrapper">
-                <img
+                <SafeImage
                   src={course.thumbnail}
                   alt={tDynamic(course.title)}
+                  category={course.category?.slug}
                   className="course-thumbnail-img"
                 />
               </div>
