@@ -105,9 +105,40 @@ const upgradeToSeller = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Update current user profile details
+ * @route   PUT /api/auth/profile
+ * @access  Private
+ */
+const updateProfile = async (req, res, next) => {
+  try {
+    const { name, bio, location, profileImage } = req.body;
+    
+    if (name === '') {
+      return res.status(400).json({ success: false, message: 'Name cannot be empty' });
+    }
+
+    const updatedUser = await authService.updateUserProfile(req.user._id, {
+      name,
+      bio,
+      location,
+      profileImage
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: updatedUser
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   getMe,
-  upgradeToSeller
+  upgradeToSeller,
+  updateProfile
 };
