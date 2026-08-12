@@ -24,6 +24,12 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import SellerDashboard from './pages/SellerDashboard';
 
+/**
+ * Main Application component managing layouts and route maps
+ * Guest pages: /, /login, /register, /courses, /courses/:id, /marketplace, /products/:id, /cart
+ * Learner pages: /courses/:id/lesson/:lessonId, /orders, /profile, /dashboard
+ * Maker pages: /seller, /seller/products, /seller/products/new (Requires seller validation)
+ */
 function App() {
   return (
     <LanguageProvider>
