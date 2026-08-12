@@ -17,6 +17,11 @@ app.use('/api/health', (req, res) => {
   });
 });
 
+// Routes
+const authRoutes = require('./routes/authRoutes');
+
+app.use('/api/auth', authRoutes);
+
 // Centralized Error Handler
 app.use(errorHandler);
 
