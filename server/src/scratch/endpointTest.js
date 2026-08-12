@@ -5,6 +5,7 @@
 require('dotenv').config();
 const http = require('http');
 const mongoose = require('mongoose');
+const connectDB = require('../config/db');
 const app = require('../app'); // Import express app instance
 
 const PORT = 5099;
