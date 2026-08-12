@@ -58,6 +58,9 @@ const runTests = async () => {
   console.log('--- STARTING SWADHARA API ENDPOINT TESTS ---');
 
   try {
+    // Connect to database
+    await connectDB();
+
     // 1. Start test server
     serverInstance = app.listen(PORT, () => {
       console.log(`Test server running on port ${PORT}`);
