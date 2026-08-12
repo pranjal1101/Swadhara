@@ -122,6 +122,37 @@ const listSellerProducts = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Create a product rating and review
+ * @route   POST /api/products/:id/reviews
+ * @access  Private (Registered users only)
+ */
+const createReview = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const userId = req.user._id;
+    const userName = req.user.name;
+    const { rating, comment } = req.body;
+
+    if (!rating || !comment) {
+      return res.status(400).json({ success: false, message: 'Please add a rating and comment' });
+    }
+
+    const product = await productService.addProductReview(productId, userId, userName, {
+      rating,
+      comment
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Review added successfully',
+      data: product
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listCategories,
   listProducts,
@@ -129,5 +160,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  listSellerProducts
+  listSellerProducts,
+  createReview
 };
