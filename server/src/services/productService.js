@@ -138,6 +138,37 @@ const getSellerProducts = async (sellerId) => {
   return await Product.find({ seller: sellerId }).populate('category');
 };
 
+const addProductReview = async (productId, userId, userName, { rating, comment }) => {
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new Error('Product not found');
+  }
+
+  const alreadyReviewed = product.reviews.find(
+    r => r.user.toString() === userId.toString()
+  );
+
+  if (alreadyReviewed) {
+    throw new Error('Product already reviewed by you');
+  }
+
+  const review = {
+    user: userId,
+    name: userName,
+    rating: Number(rating),
+    comment
+  };
+
+  product.reviews.push(review);
+  product.numReviews = product.reviews.length;
+  
+  const totalRating = product.reviews.reduce((sum, r) => sum + r.rating, 0);
+  product.rating = Number((totalRating / product.reviews.length).toFixed(1));
+
+  await product.save();
+  return product;
+};
+
 module.exports = {
   getCategories,
   getProducts,
@@ -145,5 +176,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  getSellerProducts
+  getSellerProducts,
+  addProductReview
 };
