@@ -3,9 +3,9 @@ const Lesson = require('../models/Lesson');
 const Category = require('../models/Category');
 
 /**
- * Get all courses, optionally filtered by category slug
+ * Get all courses, optionally filtered by category slug, difficulty, or search query
  */
-const getCourses = async (categorySlug) => {
+const getCourses = async (categorySlug, difficulty, search) => {
   let filter = {};
   
   if (categorySlug) {
@@ -13,12 +13,26 @@ const getCourses = async (categorySlug) => {
     if (category) {
       filter.category = category._id;
     } else {
-      // If category not found, return empty list
       return [];
     }
   }
 
-  // Populate category info
+  if (difficulty && difficulty !== 'All') {
+    filter.difficulty = difficulty;
+  }
+
+  if (search && search.trim() !== '') {
+    const regex = new RegExp(search.trim(), 'i');
+    filter.$or = [
+      { 'title.en': regex },
+      { 'title.hi': regex },
+      { 'title.gu': regex },
+      { 'description.en': regex },
+      { 'description.hi': regex },
+      { 'description.gu': regex }
+    ];
+  }
+
   return await Course.find(filter).populate('category');
 };
 

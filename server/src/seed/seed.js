@@ -10,6 +10,15 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const Progress = require('../models/Progress');
 
+const coursesData = require('./coursesData');
+
+const extractYouTubeId = (url) => {
+  if (!url) return '';
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : (url.length === 11 ? url : '');
+};
+
 const seedData = async () => {
   try {
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/swadhara';
@@ -56,7 +65,7 @@ const seedData = async () => {
 
     console.log(`Created users: Radha (Seller), Sunita (User). Seeding categories...`);
 
-    // 2. Seed Categories (with translations)
+    // 2. Seed Categories
     const categoryData = [
       {
         name: { en: 'Tailoring', hi: 'सिलाई-कटाई', gu: 'ટેલરિંગ' },
@@ -74,7 +83,7 @@ const seedData = async () => {
         image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop'
       },
       {
-        name: { en: 'Jewellery', hi: 'आभूषण बनाना', gu: 'ઝવેરાત બનાવવી' },
+        name: { en: 'Jewellery Making', hi: 'आभूषण बनाना', gu: 'ઝવેરાત બનાવવી' },
         slug: 'jewellery',
         image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop'
       },
@@ -93,190 +102,49 @@ const seedData = async () => {
       categoryMap[cat.slug] = cat._id;
     });
 
-    console.log(`Created 5 categories. Seeding courses & lessons...`);
+    console.log(`Created 5 categories. Seeding 30 courses & their lessons...`);
 
-    // 3. Seed Course 1: Basic Tailoring
-    const course1 = await Course.create({
-      title: {
-        en: 'Basic Tailoring & Stitching',
-        hi: 'सिलाई और कटाई की मूल बातें',
-        gu: 'ટેલરિંગ અને સિલાઈની મૂળભૂત બાબતો'
-      },
-      description: {
-        en: 'Learn how to handle a sewing machine, take proper body measurements, stitch straight lines, and sew basic garments from home.',
-        hi: 'सिलाई मशीन चलाना सीखें, शरीर की सही माप लें, सीधी सिलाई करना सीखें और घर बैठे साधारण कपड़े सिलना सीखें।',
-        gu: 'સિલાઈ મશીન ચલાવતા શીખો, શરીરના માપ લેતા શીખો, સીધી સિલાઈ અને ઘર બેઠા સામાન્ય કપડાં સીવતા શીખો.'
-      },
-      category: categoryMap['tailoring'],
-      instructor: 'Savitri Devi',
-      thumbnail: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop',
-      level: 'Beginner',
-      duration: '3 hours'
-    });
+    let seededCourseCount = 0;
+    let seededLessonCount = 0;
 
-    const lessonsCourse1 = [
-      {
-        course: course1._id,
-        title: {
-          en: 'How to Thread a Sewing Machine',
-          hi: 'सिलाई मशीन में धागा कैसे डालें',
-          gu: 'સિલાઈ મશીનમાં દોરો કેવી રીતે નાખવો'
-        },
-        description: {
-          en: 'A step-by-step video guide showing how to place the bobbin, thread the upper needle, and prepare your machine.',
-          hi: 'बॉबिन लगाने, ऊपर की सुई में धागा डालने और अपनी सिलाई मशीन तैयार करने का आसान वीडियो गाइड।',
-          gu: 'બોબીન લગાવવા, ઉપરની સોયમાં દોરો નાખવા અને મશીન તૈયાર કરવા માટેનો સરળ વિડિયો ગાઇડ.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=9jKsnq16Faw',
-        duration: '8 mins',
-        order: 1
-      },
-      {
-        course: course1._id,
-        title: {
-          en: 'Stitching a Straight Line',
-          hi: 'सीधी सिलाई कैसे लगाएं',
-          gu: 'સીધી સિલાઈ કેવી રીતે કરવી'
-        },
-        description: {
-          en: 'Learn how to guide fabric under the presser foot to achieve perfectly straight seams every time.',
-          hi: 'कपड़े को दबाकर सुई के नीचे सीधा आगे बढ़ाना और सीधी सिलाई के अभ्यास का तरीका सीखें।',
-          gu: 'કાપડને સીધું રાખીને મશીન ચલાવવા અને સીધી સિલાઈની પ્રેક્ટિસ કેવી રીતે કરવી તે શીખો.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=sC6wepVb2Qc',
-        duration: '10 mins',
-        order: 2
-      },
-      {
-        course: course1._id,
-        title: {
-          en: 'Sewing a Simple Cushion Cover',
-          hi: 'साधारण कुशन कवर सिलना',
-          gu: 'સાદા કુશન કવરની સિલાઈ'
-        },
-        description: {
-          en: 'Put your stitching skills to use by creating a beautiful square cushion cover for your home.',
-          hi: 'अपनी सिलाई कला का उपयोग करके घर के लिए सुंदर चौकोर तकिया/कुशन कवर तैयार करना सीखें।',
-          gu: 'તમારી સિલાઈ કળાનો ઉપયોગ કરીને ઘર માટે સુંદર ચોરસ કુશન કવર સીવતા શીખો.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=sC6wepVb2Qc',
-        duration: '15 mins',
-        order: 3
+    for (const item of coursesData) {
+      const categoryId = categoryMap[item.categorySlug];
+      if (!categoryId) {
+        console.warn(`Category slug "${item.categorySlug}" not found for course "${item.title.en}"`);
+        continue;
       }
-    ];
-    await Lesson.insertMany(lessonsCourse1);
 
-    // Seed Course 2: Creative Embroidery
-    const course2 = await Course.create({
-      title: {
-        en: 'Creative Embroidery Patterns',
-        hi: 'रचनात्मक कढ़ाई के तरीके',
-        gu: 'સર્જનાત્મક ભરતકામ પેટર્ન'
-      },
-      description: {
-        en: 'Master basic hand embroidery stitches including running stitch, backstitch, french knots, and create floral designs.',
-        hi: 'हाथ की कढ़ाई के मुख्य टाँके सीखें जैसे रनिंग स्टिच, बैकस्टिच, फ्रेंच नॉट और सुंदर फूलों के पैटर्न बनाएं।',
-        gu: 'હાથ ભરતકામના મુખ્ય ટાંકા શીખો જેવા કે રનિંગ સ્ટીચ, બેકસ્ટીચ, ફ્રેન્ચ નોટ અને સુંદર ફૂલોની પેટર્ન બનાવો.'
-      },
-      category: categoryMap['embroidery'],
-      instructor: 'Radha Sharma',
-      thumbnail: 'https://images.unsplash.com/photo-1617005082133-548c4dd27f35?q=80&w=600&auto=format&fit=crop',
-      level: 'Beginner',
-      duration: '2.5 hours'
-    });
+      const courseObj = await Course.create({
+        title: item.title,
+        description: item.description,
+        category: categoryId,
+        thumbnail: item.thumbnail,
+        difficulty: item.difficulty,
+        level: item.difficulty,
+        duration: item.duration,
+        learningOutcomes: item.learningOutcomes || [],
+        materials: item.materials || []
+      });
 
-    const lessonsCourse2 = [
-      {
-        course: course2._id,
-        title: {
-          en: 'Essential Embroidery Tools',
-          hi: 'कढ़ाई के आवश्यक साधन',
-          gu: 'ભરતકામ માટેના જરૂરી સાધનો'
-        },
-        description: {
-          en: 'Learn about embroidery hoops, different types of needles, and cotton embroidery floss selection.',
-          hi: 'कढ़ाई की फ्रेम (फ्रेम), धागे के प्रकार और सुइयों के चयन के बारे में विस्तार से जानें।',
-          gu: 'ભરતકામ ફ્રેમ (ફ્રેમ), સોયના પ્રકાર અને ગુણવત્તાવાળા દોરાઓની પસંદગી વિશે માહિતી.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=mYpS3zDqMug',
-        duration: '6 mins',
-        order: 1
-      },
-      {
-        course: course2._id,
-        title: {
-          en: 'Running Stitch & Backstitch',
-          hi: 'रनिंग स्टिच और बैकस्टिच बनाना',
-          gu: 'રનિંગ સ્ટીચ અને બેકસ્ટીચ બનાવતા શીખો'
-        },
-        description: {
-          en: 'Learn the two most fundamental outline stitches used for drawing patterns on cotton canvas.',
-          hi: 'कपड़े पर पैटर्न की रूपरेखा (आउटलाइन) बनाने के दो सबसे आसान टांकों का अभ्यास करें।',
-          gu: 'કાપડ પર આઉટલાઇન દોરવા માટેના બે સૌથી પાયાના ટાંકાઓની પ્રેક્ટિસ.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=mYpS3zDqMug',
-        duration: '9 mins',
-        order: 2
+      seededCourseCount++;
+
+      if (item.lessons && item.lessons.length > 0) {
+        const lessonDocs = item.lessons.map(l => ({
+          course: courseObj._id,
+          title: l.title,
+          description: l.description,
+          videoUrl: l.videoUrl,
+          youtubeVideoId: extractYouTubeId(l.videoUrl),
+          duration: l.duration,
+          order: l.order
+        }));
+
+        await Lesson.insertMany(lessonDocs);
+        seededLessonCount += lessonDocs.length;
       }
-    ];
-    await Lesson.insertMany(lessonsCourse2);
+    }
 
-    // Seed Course 3: Baking
-    const course3 = await Course.create({
-      title: {
-        en: 'Home Baking Basics',
-        hi: 'घरेलू बेकिंग सीखें',
-        gu: 'ઘરેલુ બેકિંગ પાયાના નિયમો'
-      },
-      description: {
-        en: 'Learn how to bake sponge cakes, measuring dry and wet ingredients correctly, and handling oven temperature settings.',
-        hi: 'स्पंज केक बनाना सीखें, सूखी और गीली सामग्रियों को सही तरीके से नापना और ओवन का तापमान सेट करना सीखें।',
-        gu: 'સ્પોન્જ કેક બનાવતા શીખો, સૂકી અને ભીની વસ્તુઓનું માપ લેતા શીખો અને ઓવનનું તાપમાન સેટ કરતા શીખો.'
-      },
-      category: categoryMap['baking'],
-      instructor: 'Chef Ananya Sen',
-      thumbnail: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop',
-      level: 'Beginner',
-      duration: '4 hours'
-    });
-
-    const lessonsCourse3 = [
-      {
-        course: course3._id,
-        title: {
-          en: 'Baking Measurements & Kitchen Tools',
-          hi: 'बेकिंग की माप और रसोई के उपकरण',
-          gu: 'બેકિંગ માપન અને રસોઈ સાધનો'
-        },
-        description: {
-          en: 'Learn how to use cups, spoons, and kitchen scales to get perfect baking results.',
-          hi: 'कप, चम्मच और किचन वजन कांटे की मदद से बेकिंग सामग्री का सही अनुपात मापना सीखें।',
-          gu: 'કપ, ચમચી અને કિચન સ્કેલની મદદથી બેકિંગ મટીરીયલનું યોગ્ય માપ લેતા શીખો.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=qtlhdIofo-8',
-        duration: '7 mins',
-        order: 1
-      },
-      {
-        course: course3._id,
-        title: {
-          en: 'Baking Chocolate Chip Cookies',
-          hi: 'चॉकलेट चिप कुकीज़ बनाना',
-          gu: 'ચોકલેટ ચિપ કુકીઝ બનાવવાની રીત'
-        },
-        description: {
-          en: 'Simple recipe to bake crispy-on-the-outside and soft-on-the-inside cookies at home.',
-          hi: 'घर पर कुरकुरी और अंदर से सॉफ्ट चॉकलेट कुकीज़ बनाने का सबसे सरल तरीका।',
-          gu: 'ઘરે બહારથી ક્રિસ્પી અને અંદરથી સોફ્ટ ચોકલેટ કૂકીઝ બનાવવાની સૌથી સરળ રીત.'
-        },
-        videoUrl: 'https://www.youtube.com/watch?v=yfS0K43gU84',
-        duration: '12 mins',
-        order: 2
-      }
-    ];
-    await Lesson.insertMany(lessonsCourse3);
-
-    console.log(`Created 3 courses with lessons. Seeding products...`);
+    console.log(`Seeded ${seededCourseCount} courses with ${seededLessonCount} lessons successfully!`);
 
     // 4. Seed Products (sold by Radha Sharma)
     const productData = [

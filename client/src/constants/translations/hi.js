@@ -46,16 +46,25 @@ export const hi = {
   quantity: 'मात्रा',
 
   // Courses UI
-  courseLevel: 'स्तर',
+  courseLevel: 'कठिनाई (Difficulty)',
+  courseDifficulty: 'कठिनाई (Difficulty)',
+  difficultyAll: 'सभी स्तर',
+  difficultyEasy: 'सरल (Easy)',
+  difficultyMedium: 'मध्यम (Medium)',
+  difficultyHard: 'कठिन (Hard)',
+  providedBySwadhara: 'स्वधारा आधिकारिक कोर्स',
+  whatYouWillLearn: 'आप क्या सीखेंगी',
+  requiredMaterials: 'आवश्यक सामग्री और उपकरण',
+  searchCoursesPlaceholder: 'कोर्स या कौशल खोजें...',
   courseDuration: 'अवधि',
   courseLessons: 'पाठ',
-  courseInstructor: 'शिक्षक',
+  courseInstructor: 'कोर्स प्रदाता',
   courseProgressBar: 'आपकी प्रगति',
   lessonMarkComplete: 'पाठ पूरा हुआ',
   lessonCompleted: 'पूरा हो गया',
   continueLearning: 'कोर्स जारी रखें',
   startCourse: 'कोर्स शुरू करें',
-  emptyCourses: 'आप अभी तक किसी भी कोर्स में शामिल नहीं हुई हैं।',
+  emptyCourses: 'आपकी खोज या फ़िल्टर से कोई कोर्स नहीं मिला।',
   courseDetails: 'पाठ्यक्रम सूची',
 
   // Marketplace UI

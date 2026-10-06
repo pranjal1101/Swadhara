@@ -18,7 +18,16 @@ const LessonSchema = new mongoose.Schema({
   },
   videoUrl: {
     type: String,
-    required: true
+    required: false,
+    default: null
+  },
+  youtubeVideoId: {
+    type: String,
+    default: null
+  },
+  language: {
+    type: String,
+    default: 'Hindi'
   },
   duration: {
     type: String,

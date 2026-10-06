@@ -10,9 +10,6 @@ const FALLBACK_IMAGES = {
 };
 
 export default function SafeImage({ src, alt, category = 'default', className = '', style = {} }) {
-  const [imgSrc, setImgSrc] = useState('');
-  const [hasError, setHasError] = useState(false);
-
   // Normalize category slugs
   const getCategoryKey = (catStr) => {
     if (!catStr) return 'default';
@@ -27,6 +24,9 @@ export default function SafeImage({ src, alt, category = 'default', className = 
 
   const categoryKey = getCategoryKey(category);
   const fallbackSrc = FALLBACK_IMAGES[categoryKey] || FALLBACK_IMAGES.default;
+
+  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (!src || src.trim() === '') {

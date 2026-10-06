@@ -8,8 +8,8 @@ const progressService = require('../services/progressService');
  */
 const listCourses = async (req, res, next) => {
   try {
-    const { category } = req.query;
-    const courses = await courseService.getCourses(category);
+    const { category, difficulty, search } = req.query;
+    const courses = await courseService.getCourses(category, difficulty, search);
     res.status(200).json({
       success: true,
       data: courses

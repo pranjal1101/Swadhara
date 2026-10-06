@@ -16,23 +16,41 @@ const CourseSchema = new mongoose.Schema({
     ref: 'Category',
     required: true
   },
-  instructor: {
-    type: String,
-    required: true
-  },
   thumbnail: {
     type: String,
     required: true
   },
+  provider: {
+    type: String,
+    default: 'Swadhara'
+  },
+  instructor: {
+    type: String,
+    default: 'Swadhara'
+  },
+  difficulty: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+    default: 'Easy'
+  },
   level: {
     type: String,
-    enum: ['Beginner', 'Intermediate', 'Advanced'],
-    default: 'Beginner'
+    default: function() { return this.difficulty || 'Easy'; }
   },
   duration: {
     type: String,
     required: true
   },
+  learningOutcomes: [{
+    en: { type: String },
+    hi: { type: String },
+    gu: { type: String }
+  }],
+  materials: [{
+    en: { type: String },
+    hi: { type: String },
+    gu: { type: String }
+  }],
   createdAt: {
     type: Date,
     default: Date.now
@@ -40,3 +58,4 @@ const CourseSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Course', CourseSchema);
+

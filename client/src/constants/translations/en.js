@@ -46,16 +46,25 @@ export const en = {
   quantity: 'Quantity',
 
   // Courses UI
-  courseLevel: 'Level',
+  courseLevel: 'Difficulty',
+  courseDifficulty: 'Difficulty',
+  difficultyAll: 'All Difficulties',
+  difficultyEasy: 'Easy',
+  difficultyMedium: 'Medium',
+  difficultyHard: 'Hard',
+  providedBySwadhara: 'Official Swadhara Course',
+  whatYouWillLearn: "What You'll Learn",
+  requiredMaterials: 'Required Materials & Tools',
+  searchCoursesPlaceholder: 'Search courses by title or skill...',
   courseDuration: 'Duration',
   courseLessons: 'Lessons',
-  courseInstructor: 'Instructor',
+  courseInstructor: 'Course Provider',
   courseProgressBar: 'Your Progress',
   lessonMarkComplete: 'Mark Lesson Done',
   lessonCompleted: 'Completed',
   continueLearning: 'Continue Course',
   startCourse: 'Start Course',
-  emptyCourses: 'You have not joined any courses yet.',
+  emptyCourses: 'No courses match your search or filter selection.',
   courseDetails: 'Course Syllabus',
 
   // Marketplace UI

@@ -96,7 +96,7 @@ export default function Dashboard() {
                       </span>
                       <h3 className="enrolled-row-title">{tDynamic(course.title)}</h3>
                       <span className="enrolled-row-instructor" style={{ fontSize: '0.85rem', color: 'var(--text-light)' }}>
-                        {t('courseInstructor')}: {course.instructor}
+                        {t('courseDifficulty')}: {course.difficulty || course.level || 'Easy'} &bull; {t('providedBySwadhara')}
                       </span>
                       
                       {/* Progress bar info */}

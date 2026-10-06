@@ -46,16 +46,25 @@ export const gu = {
   quantity: 'પ્રમાણ (જથ્થો)',
 
   // Courses UI
-  courseLevel: 'સ્તર',
+  courseLevel: 'મુશ્કેલી (Difficulty)',
+  courseDifficulty: 'મુશ્કેલી (Difficulty)',
+  difficultyAll: 'બધા સ્તર',
+  difficultyEasy: 'સરળ (Easy)',
+  difficultyMedium: 'મધ્યમ (Medium)',
+  difficultyHard: 'કઠિન (Hard)',
+  providedBySwadhara: 'સ્વધારા સત્તાવાર કોર્સ',
+  whatYouWillLearn: 'તમે શું શીખશો',
+  requiredMaterials: 'જરૂરી સામગ્રી અને સાધનો',
+  searchCoursesPlaceholder: 'કોર્સ અથવા કૌશલ્ય શોધો...',
   courseDuration: 'સમયગાળો',
   courseLessons: 'પાઠ',
-  courseInstructor: 'શિક્ષક',
+  courseInstructor: 'કોર્સ પ્રદાતા',
   courseProgressBar: 'તમારી પ્રગતિ',
   lessonMarkComplete: 'પાઠ પૂર્ણ કરો',
   lessonCompleted: 'પૂર્ણ થયેલ',
   continueLearning: 'કોર્સ ચાલુ રાખો',
   startCourse: 'કોર્સ શરૂ કરો',
-  emptyCourses: 'તમે હજી સુધી કોઈ કોર્સમાં જોડાયા નથી.',
+  emptyCourses: 'તમારી શોધ અથવા ફિલ્ટર મુજબ કોઈ કોર્સ મળ્યો નથી.',
   courseDetails: 'અભ્યાસક્રમની વિગતો',
 
   // Marketplace UI
