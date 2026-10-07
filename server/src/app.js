@@ -4,8 +4,26 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+// Configure CORS for production (Vercel) and local development
+const allowedOrigins = [
+  'https://swadhara.vercel.app',
+  'https://swadhara-c4461ajyv-pranjal1101s-projects.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
