@@ -19,11 +19,13 @@ const extractYouTubeId = (url) => {
   return (match && match[2].length === 11) ? match[2] : (url.length === 11 ? url : '');
 };
 
-const seedData = async () => {
+const seedData = async (shouldDisconnect = true) => {
   try {
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/swadhara';
-    console.log(`Connecting to database: ${mongoUri}...`);
-    await mongoose.connect(mongoUri);
+    if (mongoose.connection.readyState === 0) {
+      console.log(`Connecting to database: ${mongoUri}...`);
+      await mongoose.connect(mongoUri);
+    }
     console.log('Connected to MongoDB. Checking existing data...');
 
     // Only seed if collections are empty or missing default seed data
@@ -171,12 +173,16 @@ const seedData = async () => {
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {
-    await mongoose.disconnect();
-    console.log('Database disconnected.');
+    if (shouldDisconnect) {
+      await mongoose.disconnect();
+      console.log('Database disconnected.');
+    }
   }
 };
 
 // Run the script directly if invoked
 if (require.main === module) {
-  seedData();
+  seedData(true);
 }
+
+module.exports = { seedData };
