@@ -90,32 +90,14 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
     }}>
       {/* Widget Header (Panel 5 Reference) */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--bg-pink-soft)',
-            color: 'var(--primary-rose-dark)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Sparkles size={20} />
-          </div>
-          <div>
-            <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', margin: 0 }}>
-              Ask Swadhara AI
-            </h3>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Contextual guidance for {courseTitle || 'this course'}
-            </span>
-          </div>
+        <div>
+          <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', margin: 0 }}>
+            Ask Swadhara AI
+          </h3>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            Contextual guidance for {courseTitle || 'this course'}
+          </span>
         </div>
-
-        <span className="badge-tag">
-          Powered by Gemini AI
-        </span>
       </div>
 
       {/* Chat Conversation History */}

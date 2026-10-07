@@ -131,7 +131,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         {/* Modal Header */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <span className="eyebrow-pill">
-            <Sparkles size={14} /> Swadhara AI Assistant
+            Swadhara AI Assistant
           </span>
           <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-dark)', margin: '12px 0 6px 0' }}>
             {step === 5 ? 'Your Swadhara Recommendations' : 'Find the Right Course for You'}

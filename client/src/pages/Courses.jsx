@@ -127,9 +127,6 @@ export default function Courses() {
         boxShadow: 'var(--shadow-subtle)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: 'var(--primary-dark)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Sparkles size={22} />
-          </div>
           <div>
             <h3 style={{ margin: '0 0 4px 0', fontSize: '1.25rem', color: 'var(--primary-dark)' }}>
               Not sure what to learn?
