@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Sparkles, Send, HelpCircle, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
@@ -10,10 +11,10 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
   const [error, setError] = useState('');
 
   const quickQuestions = [
-    'Why is my cake sinking in the middle?',
-    'My stitches are uneven. What should I check?',
-    'Which fabric is easiest for beginners?',
-    'Why is my thread breaking constantly?'
+    'Explain this step',
+    'Easier way to do this',
+    'What material should I use?',
+    'I made a mistake'
   ];
 
   const handleAsk = async (questionText) => {
@@ -58,12 +59,10 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
     }
   };
 
-  // Helper to convert basic markdown bold and newlines into formatted text
   const renderFormattedText = (text) => {
     if (!text) return null;
     const lines = text.split('\n');
     return lines.map((line, lineIdx) => {
-      // Process bold **text**
       const parts = line.split(/(\*\*.*?\*\*)/g);
       const formattedLine = parts.map((part, pIdx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
@@ -81,56 +80,54 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
   };
 
   return (
-    <div className="ai-tutor-widget" style={{
-      backgroundColor: '#fff',
-      borderRadius: '16px',
-      border: '1px solid var(--border-color)',
+    <div style={{
+      backgroundColor: '#FFFFFF',
+      borderRadius: 'var(--border-radius-md)',
+      border: '1px solid var(--border-subtle)',
       padding: '24px',
-      boxShadow: '0 4px 16px rgba(96, 71, 52, 0.05)',
+      boxShadow: 'var(--shadow-subtle)',
       marginTop: '32px'
     }}>
-      {/* Widget Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      {/* Widget Header (Panel 5 Reference) */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '36px',
-            height: '36px',
+            width: '38px',
+            height: '38px',
             borderRadius: '50%',
-            backgroundColor: 'var(--card-pink)',
-            color: 'var(--primary-dark)',
+            backgroundColor: 'var(--bg-pink-soft)',
+            color: 'var(--primary-rose-dark)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: '700',
-            fontSize: '1rem'
+            justifyContent: 'center'
           }}>
-            ✨
+            <Sparkles size={20} />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', margin: 0, fontWeight: '700' }}>
+            <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', margin: 0 }}>
               Ask Swadhara AI
             </h3>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              Your course assistant for {courseTitle || 'this course'}
+              Contextual guidance for {courseTitle || 'this course'}
             </span>
           </div>
         </div>
 
-        <span style={{ fontSize: '0.75rem', fontWeight: '600', backgroundColor: '#eee9e0', padding: '4px 10px', borderRadius: '12px', color: 'var(--primary-dark)' }}>
+        <span className="badge-tag">
           Powered by Gemini AI
         </span>
       </div>
 
-      {/* Chat Conversation Area */}
+      {/* Chat Conversation History */}
       {chatHistory.length > 0 && (
-        <div className="ai-chat-history" style={{
+        <div style={{
           maxHeight: '320px',
           overflowY: 'auto',
-          backgroundColor: '#fbf9f6',
-          borderRadius: '12px',
+          backgroundColor: 'var(--bg-base)',
+          borderRadius: 'var(--border-radius-sm)',
           padding: '16px',
           marginBottom: '20px',
-          border: '1px solid var(--border-color)',
+          border: '1px solid var(--border-subtle)',
           display: 'flex',
           flexDirection: 'column',
           gap: '12px'
@@ -140,15 +137,15 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
               key={idx}
               style={{
                 alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                backgroundColor: msg.sender === 'user' ? 'var(--primary-dark)' : '#fff',
-                color: msg.sender === 'user' ? '#fff' : 'var(--text-main)',
+                backgroundColor: msg.sender === 'user' ? 'var(--primary-dark)' : '#FFFFFF',
+                color: msg.sender === 'user' ? '#FFFFFF' : 'var(--text-main)',
                 padding: '12px 16px',
-                borderRadius: msg.sender === 'user' ? '16px 16px 2px 16px' : '16px 16px 16px 2px',
+                borderRadius: msg.sender === 'user' ? '14px 14px 2px 14px' : '14px 14px 14px 2px',
                 maxWidth: '85%',
                 fontSize: '0.9rem',
                 lineHeight: '1.5',
-                border: msg.sender === 'user' ? 'none' : '1px solid var(--border-color)',
-                boxShadow: msg.sender === 'user' ? 'none' : '0 2px 8px rgba(0,0,0,0.03)'
+                border: msg.sender === 'user' ? 'none' : '1px solid var(--border-subtle)',
+                boxShadow: msg.sender === 'user' ? 'none' : '0 2px 8px rgba(0,0,0,0.02)'
               }}
             >
               {msg.sender === 'user' ? (
@@ -161,11 +158,11 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
         </div>
       )}
 
-      {/* Suggested Quick Questions */}
+      {/* Suggested Quick Questions (Panel 5 Reference) */}
       {chatHistory.length === 0 && (
-        <div style={{ marginBottom: '16px' }}>
+        <div style={{ marginBottom: '18px' }}>
           <label style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-light)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>
-            Suggested Questions:
+            Quick Questions:
           </label>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {quickQuestions.map((q, idx) => (
@@ -174,15 +171,13 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
                 type="button"
                 onClick={() => handleAsk(q)}
                 disabled={loading}
+                className="btn btn-ghost btn-sm"
                 style={{
-                  fontSize: '0.8rem',
-                  padding: '6px 12px',
-                  borderRadius: '16px',
-                  backgroundColor: '#f4efe8',
+                  backgroundColor: 'var(--bg-pink-soft)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--border-radius-pill)',
                   color: 'var(--primary-dark)',
-                  border: '1px solid #e0d8cc',
-                  cursor: 'pointer',
-                  fontWeight: '500'
+                  fontSize: '0.82rem'
                 }}
               >
                 "{q}"
@@ -193,12 +188,12 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
       )}
 
       {error && (
-        <div className="alert alert-danger" style={{ marginBottom: '12px', fontSize: '0.85rem' }}>
+        <div className="alert alert-danger" style={{ marginBottom: '14px', fontSize: '0.85rem' }}>
           {error}
         </div>
       )}
 
-      {/* Input Field & Submit */}
+      {/* Input Field & Submit Button */}
       <form onSubmit={(e) => { e.preventDefault(); handleAsk(); }} style={{ display: 'flex', gap: '10px' }}>
         <input
           type="text"
@@ -214,9 +209,9 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
           type="submit"
           className="btn btn-primary"
           disabled={loading || !question.trim()}
-          style={{ padding: '0 20px', fontSize: '0.9rem', fontWeight: '700', flexShrink: 0 }}
+          style={{ padding: '0 20px', fontSize: '0.9rem', flexShrink: 0 }}
         >
-          {loading ? 'Swadhara AI is thinking...' : 'Ask AI ✨'}
+          {loading ? 'Thinking...' : 'Ask AI'}
         </button>
       </form>
     </div>

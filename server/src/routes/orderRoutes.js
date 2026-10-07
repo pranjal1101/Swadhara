@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   checkout,
+  getOrderDetails,
   listUserOrders,
   listSellerOrders,
   updateStatus
@@ -16,6 +17,11 @@ router.get('/', authenticateUser, listUserOrders);
 
 // Seller incoming orders and fulfillment (Protected, Seller only)
 router.get('/seller', authenticateUser, authorizeSeller, listSellerOrders);
+
+// Get single order details (Protected)
+router.get('/:id', authenticateUser, getOrderDetails);
+
+// Seller status update
 router.put('/:id/status', authenticateUser, authorizeSeller, updateStatus);
 
 module.exports = router;

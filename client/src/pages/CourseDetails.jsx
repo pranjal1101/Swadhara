@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { CheckCircle2, Clock, BookOpen, User, ArrowRight, ChevronRight, Award, PlayCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import SafeImage from '../components/SafeImage';
@@ -17,6 +18,7 @@ export default function CourseDetails() {
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -33,7 +35,6 @@ export default function CourseDetails() {
           setError('Course not found');
         }
 
-        // Fetch user progress separately so auth/progress errors do not break course page rendering
         if (user) {
           try {
             const progressRes = await axios.get(`/api/courses/${id}/progress`);
@@ -41,7 +42,7 @@ export default function CourseDetails() {
               setProgress(progressRes.data.data);
             }
           } catch (progressErr) {
-            console.warn('Could not load user progress for course:', progressErr?.message);
+            console.warn('Could not load user progress:', progressErr?.message);
           }
         }
       } catch (err) {
@@ -72,8 +73,6 @@ export default function CourseDetails() {
       );
       if (incompleteLesson) {
         targetLessonId = incompleteLesson._id;
-      } else {
-        targetLessonId = lessons[0]._id;
       }
     }
 
@@ -83,9 +82,8 @@ export default function CourseDetails() {
   if (loading) {
     return (
       <div className="container section">
-        <div className="skeleton" style={{ height: '320px', width: '100%', marginBottom: '24px', borderRadius: '16px' }}></div>
-        <div className="skeleton" style={{ height: '28px', width: '50%', marginBottom: '12px' }}></div>
-        <div className="skeleton" style={{ height: '16px', width: '80%', marginBottom: '32px' }}></div>
+        <div className="skeleton" style={{ height: '320px', width: '100%', marginBottom: '24px' }}></div>
+        <div className="skeleton" style={{ height: '32px', width: '60%', marginBottom: '16px' }}></div>
       </div>
     );
   }
@@ -103,78 +101,123 @@ export default function CourseDetails() {
 
   const difficulty = course.difficulty || course.level || 'Easy';
 
+  // Numbered timeline steps (Panel 3 Course Journey)
+  const courseJourneySteps = [
+    { step: 1, title: 'Introduction & Basics', desc: 'Understanding tools, materials, and initial setup.' },
+    { step: 2, title: 'Threading & Starting Stitches', desc: 'Step-by-step guidance on foundational technique.' },
+    { step: 3, title: 'Floral Motif Practice', desc: 'Combining stitches to build intricate handmade patterns.' },
+    { step: 4, title: 'Complete a Small Project', desc: 'Finishing your first handcrafted creation ready to showcase.' }
+  ];
+
   return (
     <div className="container section">
-      {/* Breadcrumb navigation */}
-      <div className="breadcrumb-nav" style={{ marginBottom: '24px' }}>
-        <Link to="/courses" style={{ textDecoration: 'underline', color: 'var(--text-muted)' }}>
-          {t('navLearn')}
-        </Link>
-        <span style={{ margin: '0 8px', color: 'var(--text-light)' }}>/</span>
+      {/* Breadcrumb Navigation */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: '24px' }}>
+        <Link to="/courses" style={{ color: 'var(--text-muted)' }}>Learn</Link>
+        <ChevronRight size={14} />
         <span style={{ color: 'var(--text-muted)' }}>{tDynamic(course.category?.name)}</span>
-        <span style={{ margin: '0 8px', color: 'var(--text-light)' }}>/</span>
-        <span style={{ color: 'var(--text-main)', fontWeight: '600' }}>{tDynamic(course.title)}</span>
+        <ChevronRight size={14} />
+        <span style={{ color: 'var(--primary-dark)', fontWeight: '600' }}>{tDynamic(course.title)}</span>
       </div>
 
-      <div className="course-detail-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '32px' }}>
-        {/* Main Content Area */}
-        <div className="course-main-info">
-          <div className="course-banner-img-wrapper" style={{ borderRadius: '16px', overflow: 'hidden', height: '320px', marginBottom: '24px' }}>
-            <SafeImage
-              src={course.thumbnail}
-              alt={tDynamic(course.title)}
-              category={course.category?.slug}
-              className="course-banner-img"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </div>
+      {/* Main Course Hero Panel (Panel 3 Reference) */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '380px 1fr',
+        gap: '40px',
+        backgroundColor: 'var(--bg-pink-soft)',
+        borderRadius: 'var(--border-radius-lg)',
+        padding: '36px',
+        border: '1px solid var(--border-subtle)',
+        boxShadow: 'var(--shadow-subtle)',
+        marginBottom: '40px'
+      }}>
+        {/* Left Craft Image */}
+        <div style={{ height: '280px', borderRadius: 'var(--border-radius-md)', overflow: 'hidden', border: '2px solid #FFFFFF', boxShadow: 'var(--shadow-card)' }}>
+          <SafeImage
+            src={course.thumbnail}
+            alt={tDynamic(course.title)}
+            category={course.category?.slug}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-            <span className="badge" style={{ backgroundColor: 'var(--card-pink)', color: 'var(--primary-dark)', fontSize: '0.85rem', padding: '6px 12px', borderRadius: '8px' }}>
-              {tDynamic(course.category?.name)}
+        {/* Right Info & CTA */}
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+            <span className="badge-tag">
+              <BookOpen size={12} /> {tDynamic(course.category?.name)}
             </span>
-            <span style={{
-              padding: '4px 10px',
-              borderRadius: '20px',
-              fontSize: '0.75rem',
-              fontWeight: '700',
-              textTransform: 'uppercase',
-              backgroundColor: difficulty === 'Easy' ? '#e6f4ea' : difficulty === 'Medium' ? '#fef7e0' : '#fce8e6',
-              color: difficulty === 'Easy' ? '#137333' : difficulty === 'Medium' ? '#b06000' : '#c5221f',
-              border: `1px solid ${difficulty === 'Easy' ? '#ceead6' : difficulty === 'Medium' ? '#fde293' : '#fad2cf'}`
-            }}>
+            <span className={`badge-tag ${difficulty === 'Easy' ? 'badge-easy' : 'badge-medium'}`}>
               {difficulty}
             </span>
-            <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: '600' }}>
-              &bull; {course.duration}
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Clock size={14} /> {course.duration}
             </span>
           </div>
 
-          <h1 className="course-detail-title" style={{ fontSize: '2rem', color: 'var(--primary-dark)', marginBottom: '16px', lineHeight: '1.3' }}>
-            {tDynamic(course.title)}
-          </h1>
-          
-          <p className="course-detail-desc" style={{ fontSize: '1.05rem', color: 'var(--text-main)', lineHeight: '1.6', marginBottom: '32px' }}>
+          <h1 style={{ fontSize: '2.4rem', marginBottom: '12px' }}>{tDynamic(course.title)}</h1>
+
+          <p style={{ fontSize: '1.05rem', color: 'var(--text-main)', lineHeight: '1.6', marginBottom: '28px' }}>
             {tDynamic(course.description)}
           </p>
 
-          {/* What You'll Learn Section */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <button
+              onClick={handleStartContinue}
+              className="btn btn-rose btn-lg"
+            >
+              {progress && progress.percentage > 0 ? 'Continue Learning' : 'Start Learning'} <ArrowRight size={18} />
+            </button>
+
+            {user && (
+              <span style={{ fontSize: '0.9rem', color: 'var(--primary-rose-dark)', fontWeight: '700' }}>
+                {progress?.percentage || 0}% Complete
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs Switcher Navigation */}
+      <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '36px' }}>
+        {['overview', 'lessons', 'materials', 'creator'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: '12px 24px',
+              fontSize: '0.95rem',
+              fontWeight: activeTab === tab ? '700' : '500',
+              color: activeTab === tab ? 'var(--primary-rose-dark)' : 'var(--text-muted)',
+              borderBottom: activeTab === tab ? '3px solid var(--primary-rose-dark)' : '3px solid transparent',
+              textTransform: 'capitalize'
+            }}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid Layout: Main Details vs Right Creator Panel */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '40px' }}>
+        <div>
+          {/* WHAT YOU'LL LEARN */}
           {course.learningOutcomes && course.learningOutcomes.length > 0 && (
             <div style={{
-              backgroundColor: 'var(--card-pink)',
-              padding: '24px',
-              borderRadius: '16px',
-              marginBottom: '32px',
-              border: '1px solid var(--border-color)'
+              backgroundColor: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--border-radius-md)',
+              padding: '28px',
+              marginBottom: '36px',
+              boxShadow: 'var(--shadow-subtle)'
             }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-dark)', marginBottom: '16px', fontWeight: '700' }}>
-                {t('whatYouWillLearn')}
-              </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '20px' }}>What you'll learn</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 {course.learningOutcomes.map((outcome, idx) => (
                   <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                    <span style={{ color: '#4a773c', fontWeight: 'bold', fontSize: '1.1rem' }}>✓</span>
-                    <span style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: '1.4' }}>
+                    <CheckCircle2 size={18} style={{ color: '#2E6A34', flexShrink: 0, marginTop: '2px' }} />
+                    <span style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: '1.5' }}>
                       {tDynamic(outcome)}
                     </span>
                   </div>
@@ -183,169 +226,143 @@ export default function CourseDetails() {
             </div>
           )}
 
-          {/* Required Materials & Tools Section */}
+          {/* COURSE JOURNEY TIMELINE (Panel 3 Reference) */}
+          <div style={{ marginBottom: '40px' }}>
+            <h3 style={{ fontSize: '1.3rem', marginBottom: '20px' }}>Course Journey</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {courseJourneySteps.map((stepItem) => (
+                <div 
+                  key={stepItem.step}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '16px',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--border-radius-sm)',
+                    padding: '20px'
+                  }}
+                >
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--bg-pink-soft)',
+                    color: 'var(--primary-rose-dark)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: '700',
+                    fontSize: '0.9rem',
+                    flexShrink: 0
+                  }}>
+                    {stepItem.step}
+                  </div>
+                  <div>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1rem', color: 'var(--primary-dark)' }}>{stepItem.title}</h4>
+                    <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-muted)' }}>{stepItem.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* LESSONS SYLLABUS LIST */}
+          <div style={{ marginBottom: '40px' }}>
+            <h3 style={{ fontSize: '1.3rem', marginBottom: '20px' }}>Syllabus & Lessons ({lessons.length})</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {lessons.map((lesson, idx) => {
+                const isCompleted = progress?.completedLessons?.includes(lesson._id);
+                return (
+                  <div
+                    key={lesson._id}
+                    onClick={() => user ? navigate(`/courses/${id}/lesson/${lesson._id}`) : navigate('/login')}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '16px 20px',
+                      backgroundColor: isCompleted ? '#F4FBF4' : '#FFFFFF',
+                      border: `1px solid ${isCompleted ? '#C4E4C4' : 'var(--border-subtle)'}`,
+                      borderRadius: 'var(--border-radius-sm)',
+                      cursor: 'pointer',
+                      transition: 'var(--transition)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <PlayCircle size={22} style={{ color: isCompleted ? '#2E6A34' : 'var(--primary-rose-dark)' }} />
+                      <div>
+                        <h4 style={{ margin: '0 0 2px 0', fontSize: '0.98rem', color: 'var(--primary-dark)' }}>
+                          {idx + 1}. {tDynamic(lesson.title)}
+                        </h4>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>{lesson.duration}</span>
+                      </div>
+                    </div>
+                    {isCompleted ? (
+                      <span className="badge-tag badge-easy">Completed</span>
+                    ) : (
+                      <span style={{ fontSize: '0.82rem', color: 'var(--primary-rose-dark)', fontWeight: '600' }}>View Lesson &rarr;</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* AI TUTOR WIDGET */}
+          <AiTutorWidget courseId={id} courseTitle={tDynamic(course.title)} />
+        </div>
+
+        {/* Right Creator & Materials Panel */}
+        <div>
+          {/* MEET YOUR CREATOR CARD (Panel 3 Reference) */}
+          <div style={{
+            backgroundColor: 'var(--bg-pink-soft)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--border-radius-md)',
+            padding: '24px',
+            marginBottom: '28px'
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--primary-rose-dark)', display: 'block', marginBottom: '12px' }}>
+              Meet your creator
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '14px' }}>
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
+                alt="Meena Sharma"
+                style={{ width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #FFFFFF' }}
+              />
+              <div>
+                <h4 style={{ margin: '0 0 2px 0', fontSize: '1.05rem', color: 'var(--primary-dark)' }}>Meena Sharma</h4>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Embroidery Creator</span>
+              </div>
+            </div>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', fontStyle: 'italic', marginBottom: '16px', lineHeight: '1.5' }}>
+              "I've been doing embroidery for 10 years. Teaching gives me a chance to see more women create and earn."
+            </p>
+            <button onClick={() => navigate('/profile')} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
+              View profile &rarr;
+            </button>
+          </div>
+
+          {/* REQUIRED MATERIALS CARD */}
           {course.materials && course.materials.length > 0 && (
             <div style={{
-              backgroundColor: '#fff',
-              padding: '24px',
-              borderRadius: '16px',
-              marginBottom: '32px',
-              border: '1px solid var(--border-color)'
+              backgroundColor: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--border-radius-md)',
+              padding: '24px'
             }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-dark)', marginBottom: '16px', fontWeight: '700' }}>
-                {t('requiredMaterials')}
-              </h3>
-              <ul style={{ listStyleType: 'disc', paddingLeft: '20px', margin: 0 }}>
+              <h4 style={{ fontSize: '1.05rem', marginBottom: '14px' }}>Required Materials</h4>
+              <ul style={{ paddingLeft: '20px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {course.materials.map((mat, idx) => (
-                  <li key={idx} style={{ fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '6px' }}>
+                  <li key={idx} style={{ fontSize: '0.88rem', color: 'var(--text-main)' }}>
                     {tDynamic(mat)}
                   </li>
                 ))}
               </ul>
             </div>
           )}
-
-          {/* Syllabus Listing */}
-          <div className="syllabus-section">
-            <h2 className="syllabus-title" style={{ fontSize: '1.4rem', color: 'var(--primary-dark)', marginBottom: '20px', fontWeight: '700' }}>
-              {t('courseDetails')} ({lessons.length} {t('courseLessons')})
-            </h2>
-            
-            {lessons.length === 0 ? (
-              <p>{t('noData')}</p>
-            ) : (
-              <div className="lessons-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {lessons.map((lesson, idx) => {
-                  const isCompleted = progress?.completedLessons?.includes(lesson._id);
-                  return (
-                    <div 
-                      key={lesson._id} 
-                      className={`lesson-list-item ${isCompleted ? 'completed' : ''}`}
-                      onClick={() => user ? navigate(`/courses/${id}/lesson/${lesson._id}`) : navigate('/login')}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isCompleted ? '#f4fbf4' : '#fff',
-                        borderRadius: '12px',
-                        border: `1px solid ${isCompleted ? '#ceead6' : 'var(--border-color)'}`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '16px',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.2s ease, transform 0.1s ease'
-                      }}
-                    >
-                      <div className="lesson-status-icon-wrapper" style={{ flexShrink: 0 }}>
-                        {isCompleted ? (
-                          <svg className="check-icon-circle" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                            <circle cx="12" cy="12" r="10" className="circle-bg" fill="#4a773c" />
-                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#ffffff" />
-                          </svg>
-                        ) : (
-                          <span className="lesson-index-circle" style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            backgroundColor: 'var(--card-pink)',
-                            color: 'var(--primary-dark)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: '700',
-                            fontSize: '0.85rem'
-                          }}>
-                            {idx + 1}
-                          </span>
-                        )}
-                      </div>
-                      <div className="lesson-item-details" style={{ flexGrow: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
-                          <h4 className="lesson-item-title" style={{ fontSize: '1rem', color: 'var(--primary-dark)', margin: 0, fontWeight: '600' }}>
-                            {tDynamic(lesson.title)}
-                          </h4>
-                          <span style={{ fontSize: '0.7rem', fontWeight: '600', backgroundColor: '#eee9e0', color: 'var(--primary-dark)', padding: '2px 8px', borderRadius: '12px' }}>
-                            Video Coming Soon
-                          </span>
-                        </div>
-                        <p className="lesson-item-desc" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
-                          {tDynamic(lesson.description)}
-                        </p>
-                      </div>
-                      <span className="lesson-item-duration" style={{ fontSize: '0.8rem', color: 'var(--text-light)', fontWeight: '600', flexShrink: 0 }}>
-                        ▶ {lesson.duration}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* AI Course Tutor / Doubt Solver Widget */}
-          <AiTutorWidget courseId={id} courseTitle={tDynamic(course.title)} />
-        </div>
-
-        {/* Sidebar Status & Action Card */}
-        <div className="course-sidebar">
-          <div className="sidebar-card" style={{
-            position: 'sticky',
-            top: '100px',
-            backgroundColor: '#fff',
-            padding: '24px',
-            borderRadius: '16px',
-            border: '1px solid var(--border-color)',
-            boxShadow: '0 4px 20px rgba(96, 71, 52, 0.08)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <span className="badge" style={{ backgroundColor: 'var(--card-pink)', color: 'var(--primary-dark)' }}>
-                {tDynamic(course.category?.name)}
-              </span>
-              <span className="badge" style={{ backgroundColor: '#f0f4f8', color: 'var(--text-main)' }}>
-                {difficulty}
-              </span>
-            </div>
-
-            <div className="sidebar-meta-list" style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '16px', marginBottom: '20px' }}>
-              <div className="sidebar-meta-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span className="meta-label" style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('courseInstructor')}:</span>
-                <span className="meta-value" style={{ fontWeight: '700', color: 'var(--primary-dark)', fontSize: '0.9rem' }}>Swadhara Official</span>
-              </div>
-              <div className="sidebar-meta-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span className="meta-label" style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('courseDuration')}:</span>
-                <span className="meta-value" style={{ fontWeight: '600', fontSize: '0.9rem' }}>{course.duration}</span>
-              </div>
-              <div className="sidebar-meta-row" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span className="meta-label" style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('courseLessons')}:</span>
-                <span className="meta-value" style={{ fontWeight: '600', fontSize: '0.9rem' }}>{lessons.length} video lessons</span>
-              </div>
-            </div>
-
-            {user ? (
-              <div className="user-course-progress-block">
-                <div className="progress-label-flex" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '8px', fontWeight: '600' }}>
-                  <span>{t('courseProgressBar')}</span>
-                  <span className="progress-percent-text">{progress?.percentage || 0}%</span>
-                </div>
-                <div className="progress-track-bar" style={{ height: '8px', backgroundColor: '#eef2f5', borderRadius: '4px', overflow: 'hidden', marginBottom: '20px' }}>
-                  <div 
-                    className="progress-fill" 
-                    style={{ width: `${progress?.percentage || 0}%`, height: '100%', backgroundColor: '#4a773c', transition: 'width 0.3s ease' }}
-                  ></div>
-                </div>
-                <button onClick={handleStartContinue} className="btn btn-primary" style={{ width: '100%', padding: '12px' }}>
-                  {progress && progress.percentage > 0 ? t('continueLearning') : t('startCourse')}
-                </button>
-              </div>
-            ) : (
-              <div className="anon-join-block">
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px', textAlign: 'center' }}>
-                  Log in or register to join this course and save your lesson progress.
-                </p>
-                <button onClick={handleStartContinue} className="btn btn-primary" style={{ width: '100%', padding: '12px' }}>
-                  {t('navLogin')} to Start
-                </button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

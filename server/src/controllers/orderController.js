@@ -1,18 +1,47 @@
 const orderService = require('../services/orderService');
 
 /**
- * @desc    Create a new order from checkout
+ * @desc    Create a new order from checkout / demo payment
  * @route   POST /api/orders
  * @access  Private (Authenticated users)
  */
 const checkout = async (req, res, next) => {
   try {
-    const { items, shippingAddress } = req.body;
-    const order = await orderService.createOrder(req.user._id, { items, shippingAddress });
-    
+    const { items, shippingAddress, paymentMethod, paymentStatus, status } = req.body;
+    const order = await orderService.createOrder(req.user._id, {
+      items,
+      shippingAddress,
+      paymentMethod,
+      paymentStatus,
+      status
+    });
+
     res.status(201).json({
       success: true,
       message: 'Order placed successfully',
+      data: order
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Get single order details by ID
+ * @route   GET /api/orders/:id
+ * @access  Private (Authenticated users)
+ */
+const getOrderDetails = async (req, res, next) => {
+  try {
+    const order = await orderService.getOrderById(req.params.id);
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+    res.status(200).json({
+      success: true,
       data: order
     });
   } catch (error) {
@@ -39,7 +68,7 @@ const listUserOrders = async (req, res, next) => {
 
 /**
  * @desc    Get orders containing seller's products
- * @route   GET /api/seller/orders
+ * @route   GET /api/orders/seller
  * @access  Private (Seller only)
  */
 const listSellerOrders = async (req, res, next) => {
@@ -72,7 +101,7 @@ const updateStatus = async (req, res, next) => {
     }
 
     const order = await orderService.updateOrderStatus(req.user._id, orderId, status);
-    
+
     res.status(200).json({
       success: true,
       message: 'Order status updated successfully',
@@ -85,6 +114,7 @@ const updateStatus = async (req, res, next) => {
 
 module.exports = {
   checkout,
+  getOrderDetails,
   listUserOrders,
   listSellerOrders,
   updateStatus

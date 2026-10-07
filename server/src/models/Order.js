@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
+  orderNumber: {
+    type: String,
+    unique: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -36,15 +40,33 @@ const OrderSchema = new mongoose.Schema({
     zipCode: { type: String, required: true },
     phone: { type: String, required: true }
   },
+  paymentStatus: {
+    type: String,
+    enum: ['PAID'],
+    default: 'PAID'
+  },
+  paymentMethod: {
+    type: String,
+    default: 'Demo Payment'
+  },
   status: {
     type: String,
-    enum: ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'],
-    default: 'Pending'
+    enum: ['PENDING', 'CONFIRMED', 'DELIVERED'],
+    default: 'PENDING'
   },
   createdAt: {
     type: Date,
     default: Date.now
   }
+});
+
+// Auto-generate orderNumber before saving if not present
+OrderSchema.pre('save', function (next) {
+  if (!this.orderNumber) {
+    const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();
+    this.orderNumber = `SWD-${randomHex}`;
+  }
+  next();
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

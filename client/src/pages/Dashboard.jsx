@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BookOpen, CheckCircle2, Clock, Layers, ArrowRight, Plus, Sparkles, TrendingUp } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import SafeImage from '../components/SafeImage';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -26,7 +28,6 @@ export default function Dashboard() {
           setEnrolledCourses(enrolledRes.data.data);
         }
         if (ordersRes.data.success) {
-          // Get the top 2 recent orders
           setRecentOrders(ordersRes.data.data.slice(0, 2));
         }
       } catch (err) {
@@ -40,6 +41,24 @@ export default function Dashboard() {
     fetchDashboardData();
   }, []);
 
+  const activeCourseProgress = enrolledCourses[0] || null;
+  const activeCourse = activeCourseProgress?.course || null;
+
+  // Sample skill journey indicators (Panel 4 Reference)
+  const learningSkills = [
+    { title: 'Embroidery', progress: 40 },
+    { title: 'Tailoring', progress: 25 },
+    { title: 'Baking', progress: 10 },
+    { title: 'Jewellery', progress: 0 }
+  ];
+
+  // User projects showcase (Panel 4 Reference)
+  const myProjectsList = [
+    { title: 'Embroidery Tote Bag', status: 'In progress - 60%', img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=300&auto=format&fit=crop' },
+    { title: 'Baking Dreams', status: 'In progress - 70%', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop' },
+    { title: 'Tote Bag Design', status: 'Not started', img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=300&auto=format&fit=crop' }
+  ];
+
   if (loading) {
     return (
       <div className="container section">
@@ -51,130 +70,129 @@ export default function Dashboard() {
 
   return (
     <div className="container section">
-      {/* Welcome Banner */}
-      <div className="dashboard-welcome-banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', borderBottom: '1px solid var(--border-color)', paddingBottom: '20px' }}>
+      {/* Header Banner (Panel 4 Reference) */}
+      <div style={{
+        backgroundColor: 'var(--bg-pink-soft)',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: 'var(--border-radius-lg)',
+        padding: '36px',
+        marginBottom: '40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        boxShadow: 'var(--shadow-subtle)'
+      }}>
         <div>
-          <h1 style={{ margin: 0 }}>Hello, {user?.name}</h1>
-          <p style={{ margin: '4px 0 0', color: 'var(--text-light)' }}>
-            Welcome to your learning dashboard
+          <h1 style={{ fontSize: '2.4rem', margin: '0 0 6px 0', color: 'var(--primary-dark)' }}>
+            Good morning, {user?.name || 'Learner'}
+          </h1>
+          <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '1.05rem' }}>
+            You're doing amazing! Keep going, you're closer to your goals than you think.
           </p>
         </div>
-        <div className="dashboard-role-badge">
-          <span className="badge" style={{ backgroundColor: 'var(--surface)', fontSize: '0.8rem', padding: '6px 12px' }}>
-            Learner Account
-          </span>
-        </div>
+
+        <button onClick={() => navigate('/courses')} className="btn btn-rose btn-sm">
+          Explore Courses <ArrowRight size={16} />
+        </button>
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      <div className="dashboard-grid-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px', alignItems: 'start' }}>
-        {/* Ongoing Courses Column */}
-        <div className="dashboard-courses-col">
-          <h2 style={{ fontSize: '1.4rem', borderBottom: 'none', paddingBottom: 0, marginBottom: '24px' }}>
-            Your Ongoing Courses
-          </h2>
+      {/* Main Grid: Continue Learning + Focus & Journey */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px', marginBottom: '40px' }}>
+        
+        {/* LEFT: CONTINUE LEARNING HERO CARD */}
+        <div>
+          <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Continue Learning</h3>
+          
+          {activeCourse ? (
+            <div className="card-editorial" style={{ padding: '24px', display: 'flex', gap: '20px', alignItems: 'center' }}>
+              <div style={{ width: '140px', height: '120px', borderRadius: 'var(--border-radius-sm)', overflow: 'hidden', flexShrink: 0 }}>
+                <SafeImage src={activeCourse.thumbnail} alt={tDynamic(activeCourse.title)} category={activeCourse.category?.slug} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div style={{ flexGrow: 1 }}>
+                <span className="badge-tag" style={{ marginBottom: '6px' }}>
+                  <BookOpen size={12} /> {tDynamic(activeCourse.category?.name)}
+                </span>
+                <h3 style={{ fontSize: '1.2rem', margin: '0 0 6px 0', color: 'var(--primary-dark)' }}>
+                  {tDynamic(activeCourse.title)}
+                </h3>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>
+                  Lesson 3 &bull; {activeCourseProgress.percentage}% complete
+                </span>
 
-          {enrolledCourses.length === 0 ? (
-            <div className="empty-state-box" style={{ padding: '48px 24px' }}>
-              <p style={{ marginBottom: '16px' }}>{t('emptyCourses')}</p>
-              <Link to="/courses" className="btn btn-primary">
-                {t('ctaStartLearning')}
-              </Link>
+                {/* Progress bar */}
+                <div style={{ height: '6px', backgroundColor: '#F0E2E5', borderRadius: '3px', overflow: 'hidden', marginBottom: '16px' }}>
+                  <div style={{ width: `${activeCourseProgress.percentage}%`, height: '100%', backgroundColor: 'var(--primary-rose-dark)' }}></div>
+                </div>
+
+                <button onClick={() => navigate(`/courses/${activeCourse._id}`)} className="btn btn-rose btn-sm">
+                  Start Lesson &rarr;
+                </button>
+              </div>
             </div>
           ) : (
-            <div className="dashboard-enrolled-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {enrolledCourses.map((progressObj) => {
-                const course = progressObj.course;
-                if (!course) return null;
-                return (
-                  <div key={progressObj._id} className="enrolled-course-row-card">
-                    <img src={course.thumbnail} alt={tDynamic(course.title)} className="enrolled-row-img" />
-                    <div className="enrolled-row-details">
-                      <span className="badge" style={{ fontSize: '0.65rem', marginBottom: '6px' }}>
-                        {tDynamic(course.category?.name)}
-                      </span>
-                      <h3 className="enrolled-row-title">{tDynamic(course.title)}</h3>
-                      <span className="enrolled-row-instructor" style={{ fontSize: '0.85rem', color: 'var(--text-light)' }}>
-                        {t('courseDifficulty')}: {course.difficulty || course.level || 'Easy'} &bull; {t('providedBySwadhara')}
-                      </span>
-                      
-                      {/* Progress bar info */}
-                      <div className="enrolled-row-progress-block" style={{ marginTop: '12px' }}>
-                        <div className="progress-label-flex" style={{ fontSize: '0.8rem', marginBottom: '4px' }}>
-                          <span>Course Completion</span>
-                          <span>{progressObj.percentage}%</span>
-                        </div>
-                        <div className="progress-track-bar" style={{ height: '6px' }}>
-                          <div className="progress-fill" style={{ width: `${progressObj.percentage}%` }}></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="enrolled-row-action">
-                      <button 
-                        onClick={() => navigate(`/courses/${course._id}`)} 
-                        className="btn btn-secondary btn-sm"
-                      >
-                        {t('continueLearning')}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="empty-state-box">
+              <p style={{ margin: '0 0 16px 0' }}>You haven't started any courses yet.</p>
+              <Link to="/courses" className="btn btn-primary btn-sm">Browse Practical Skills</Link>
             </div>
           )}
         </div>
 
-        {/* Sidebar Summary (Recent Orders, Quick links) */}
-        <div className="dashboard-summary-col">
-          {/* Recent Orders Overview */}
-          <div className="sidebar-card" style={{ marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '16px' }}>Recent Orders</h3>
-            
-            {recentOrders.length === 0 ? (
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>You haven't placed any orders yet.</p>
-            ) : (
-              <div className="dashboard-orders-preview" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
-                {recentOrders.map((order) => (
-                  <div key={order._id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
-                    <div>
-                      <span style={{ fontWeight: '600', display: 'block' }}>
-                        Order #{order._id.substring(order._id.length - 6).toUpperCase()}
-                      </span>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>
-                        {new Date(order.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontWeight: '600', display: 'block', color: 'var(--primary)' }}>
-                        ₹{order.totalAmount}
-                      </span>
-                      <span className={`status-badge ${order.status === 'Delivered' ? 'status-delivered' : 'status-pending'}`} style={{ fontSize: '0.7rem', padding: '2px 6px' }}>
-                        {order.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            <Link to="/orders" className="btn btn-outline btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-              View All Orders
-            </Link>
-          </div>
-
-          {/* Maker Portal Promotion if not seller yet */}
-          {user && user.role !== 'seller' && (
-            <div className="sidebar-card" style={{ backgroundColor: 'var(--surface)' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px' }}>Sell what you make</h3>
-              <p style={{ fontSize: '0.85rem', lineHeight: '1.4', marginBottom: '16px' }}>
-                Ready to show and sell your custom creations in the marketplace? Upgrading is quick and free.
-              </p>
-              <Link to="/profile" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                Become a Maker
-              </Link>
+        {/* RIGHT: TODAY'S FOCUS */}
+        <div>
+          <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Today's Focus</h3>
+          <div className="card-pink-surface" style={{ padding: '24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <Clock size={20} style={{ color: 'var(--primary-rose-dark)' }} />
+              <h4 style={{ margin: 0, fontSize: '1.05rem', color: 'var(--primary-dark)' }}>Basic Stitches</h4>
             </div>
-          )}
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+              Spend 15 minutes practicing thread tensions and basic outline stitches.
+            </p>
+            <button onClick={() => navigate('/courses')} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
+              Start Practice &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* YOUR LEARNING JOURNEY SKILL BREAKDOWN (Panel 4 Reference) */}
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Your Learning Journey</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          {learningSkills.map((sk) => (
+            <div key={sk.title} className="card-editorial" style={{ padding: '20px', textAlign: 'center' }}>
+              <span style={{ fontSize: '1.6rem', fontWeight: '700', color: 'var(--primary-rose-dark)', display: 'block', marginBottom: '4px' }}>
+                {sk.progress}%
+              </span>
+              <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--primary-dark)', display: 'block' }}>
+                {sk.title}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* MY PROJECTS WORKSPACE (Panel 4 Reference) */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <h3 style={{ fontSize: '1.25rem', margin: 0 }}>My Projects</h3>
+          <Link to="/seller" style={{ color: 'var(--primary-rose-dark)', fontWeight: '600', fontSize: '0.9rem' }}>
+            View all &rarr;
+          </Link>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          {myProjectsList.map((proj, idx) => (
+            <div key={idx} className="card-editorial" style={{ padding: '16px', display: 'flex', gap: '14px', alignItems: 'center' }}>
+              <img src={proj.img} alt={proj.title} style={{ width: '70px', height: '70px', borderRadius: 'var(--border-radius-sm)', objectFit: 'cover' }} />
+              <div>
+                <h4 style={{ margin: '0 0 4px 0', fontSize: '0.98rem', color: 'var(--primary-dark)' }}>{proj.title}</h4>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>{proj.status}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

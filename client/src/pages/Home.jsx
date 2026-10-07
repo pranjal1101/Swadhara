@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowRight, BookOpen, ShoppingBag, Sparkles, CheckCircle, Users, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import SafeImage from '../components/SafeImage';
+import heroImg from '../assets/hero.png';
+import embroideryImg from '../assets/embroidery.png';
+import tailoringImg from '../assets/tailoring.jpg';
+import bakingImg from '../assets/baking.jpg';
+import jewelleryImg from '../assets/jewellery.jpg';
 
 export default function Home() {
   const { user } = useAuth();
@@ -17,7 +23,7 @@ export default function Home() {
   const [enrolledProgress, setEnrolledProgress] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Filter Category State
+  // Category Filter State
   const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
@@ -39,7 +45,6 @@ export default function Home() {
           setCourses(coursesRes.data.data);
         }
 
-        // Fetch user progress if authenticated
         if (user) {
           const progressRes = await axios.get('/api/courses/user/enrolled');
           if (progressRes.data.success) {
@@ -56,268 +61,280 @@ export default function Home() {
     fetchHomeData();
   }, [user]);
 
-  // Filter content cards by category
-  const getFilteredContent = () => {
-    let filteredCourses = courses;
-    let filteredProducts = products;
+  // Featured Skill Categories for Visual Display
+  const featuredSkillCards = [
+    { title: 'Tailoring', slug: 'tailoring', image: tailoringImg },
+    { title: 'Embroidery', slug: 'embroidery', image: embroideryImg },
+    { title: 'Baking', slug: 'baking', image: bakingImg },
+    { title: 'Jewellery', slug: 'jewellery', image: jewelleryImg },
+    { title: 'Handicrafts', slug: 'handicrafts', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=500&auto=format&fit=crop' }
+  ];
 
-    if (activeCategory !== 'all') {
-      filteredCourses = courses.filter(
-        c => c.category?.slug === activeCategory || c.category === activeCategory
-      );
-      filteredProducts = products.filter(
-        p => p.category?.slug === activeCategory || p.category === activeCategory
-      );
-    }
-
-    // Build mixed grid: interleaving 2 courses and 2 products
-    const mixed = [];
-    const maxItems = 4;
-    let courseIdx = 0;
-    let prodIdx = 0;
-
-    for (let i = 0; i < maxItems; i++) {
-      if (i % 2 === 0 && courseIdx < filteredCourses.length) {
-        mixed.push({ type: 'learning', data: filteredCourses[courseIdx++] });
-      } else if (prodIdx < filteredProducts.length) {
-        mixed.push({ type: 'marketplace', data: filteredProducts[prodIdx++] });
-      } else if (courseIdx < filteredCourses.length) {
-        // Fallback if no products
-        mixed.push({ type: 'learning', data: filteredCourses[courseIdx++] });
-      }
-    }
-
-    return mixed;
-  };
-
-  const mixedCards = getFilteredContent();
-
-  // Stats computation for right personal panel
-  const getCreationsStats = () => {
-    if (!user || user.role !== 'seller') {
-      // Return default visual promo stats
-      return { count: 3, value: 2450 };
-    }
-    const myProducts = products.filter(p => p.seller?._id === user._id || p.seller === user._id);
-    const totalValue = myProducts.reduce((sum, p) => sum + (p.price * p.stock), 0);
-    return { count: myProducts.length, value: totalValue };
-  };
-
-  const creationsStats = getCreationsStats();
+  // Creator Avatars for Women Supporting Women Section
+  const creatorAvatars = [
+    { name: 'Meena Sharma', skill: 'Embroidery', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop' },
+    { name: 'Rani Devi', skill: 'Baking', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop' },
+    { name: 'Puja Patel', skill: 'Crochet', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop' }
+  ];
 
   return (
-    <div className="homepage-container-layout">
-      {/* Middle/Main Content Area Column */}
-      <div className="homepage-main-col">
-        {/* Main Heading & Editorial Text */}
-        <header className="homepage-main-header">
-          <h1 className="editorial-main-heading">Learn. Create. Earn.</h1>
-          <p className="editorial-subtitle-para">
-            Learn practical skills, turn them into handmade creations, and share them with the world.
-          </p>
-        </header>
+    <div className="homepage-redesign-container">
+      {/* SECTION 1: EDITORIAL HERO BANNER */}
+      <section className="section" style={{ backgroundColor: 'var(--bg-base)', paddingTop: '40px', paddingBottom: '56px' }}>
+        <div className="container">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1.1fr 0.9fr',
+            gap: '48px',
+            alignItems: 'center',
+            backgroundColor: 'var(--bg-pink-soft)',
+            borderRadius: 'var(--border-radius-lg)',
+            padding: '48px',
+            border: '1px solid var(--border-subtle)',
+            boxShadow: 'var(--shadow-subtle)'
+          }}>
+            <div>
+              <span className="eyebrow-pill">LEARN &bull; CREATE &bull; EARN</span>
+              
+              <h1 style={{ fontSize: '3.2rem', marginBottom: '20px', lineHeight: '1.15', color: 'var(--primary-dark)' }}>
+                Real skills.<br />
+                Handmade dreams.<br />
+                Your journey.
+              </h1>
+              
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '32px', maxWidth: '480px' }}>
+                Learn practical craft skills step-by-step, create beautiful products, and build your own sustainable income.
+              </p>
 
-        {/* Categories Pills Navigation Row */}
-        <div className="categories-pills-row">
-          <button 
-            onClick={() => setActiveCategory('all')} 
-            className={`pill-btn ${activeCategory === 'all' ? 'active' : ''}`}
-          >
-            All
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat._id}
-              onClick={() => setActiveCategory(cat.slug)}
-              className={`pill-btn ${activeCategory === cat.slug ? 'active' : ''}`}
-            >
-              {tDynamic(cat.name)}
-            </button>
-          ))}
-        </div>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <button 
+                  onClick={() => navigate('/courses')} 
+                  className="btn btn-rose btn-lg"
+                >
+                  Explore the Journey <ArrowRight size={18} />
+                </button>
 
-        {/* Mixed Content Cards Grid */}
-        {loading ? (
-          <div className="mixed-content-cards-grid">
-            {[1, 2, 3, 4].map(n => (
-              <div key={n} className="card skeleton-card" style={{ height: '240px' }}>
-                <div className="skeleton" style={{ height: '140px', width: '100%' }}></div>
-                <div className="card-body">
-                  <div className="skeleton" style={{ height: '20px', width: '70%' }}></div>
+                <button 
+                  onClick={() => navigate('/marketplace')} 
+                  className="btn btn-outline btn-lg"
+                >
+                  Explore Marketplace
+                </button>
+              </div>
+            </div>
+
+            <div style={{ position: 'relative' }}>
+              <div style={{
+                borderRadius: 'var(--border-radius-md)',
+                overflow: 'hidden',
+                boxShadow: 'var(--shadow-card)',
+                height: '380px',
+                border: '2px solid #FFFFFF'
+              }}>
+                <SafeImage
+                  src={heroImg}
+                  alt="Woman artisan embroidering"
+                  category="hero"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+
+              {/* Floating Story Pill */}
+              <div style={{
+                position: 'absolute',
+                bottom: '-20px',
+                right: '-20px',
+                backgroundColor: '#FFFFFF',
+                padding: '14px 20px',
+                borderRadius: 'var(--border-radius-md)',
+                border: '1px solid var(--border-subtle)',
+                boxShadow: 'var(--shadow-card)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: 'var(--bg-pink-soft)', color: 'var(--primary-rose-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Award size={20} />
                 </div>
+                <div>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--primary-dark)', display: 'block' }}>Real people</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>Real handmade stories</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2: POPULAR SKILLS SHOWCASE */}
+      <section className="section" style={{ padding: '32px 0 56px 0' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '28px' }}>
+            <div>
+              <h2 style={{ margin: 0 }}>Popular Skills</h2>
+              <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Start with what interests you most.</p>
+            </div>
+            <Link to="/courses" style={{ color: 'var(--primary-rose-dark)', fontWeight: '600', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              View all <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
+            {featuredSkillCards.map((skill) => (
+              <div 
+                key={skill.slug} 
+                className="card-editorial"
+                onClick={() => navigate(`/courses?category=${skill.slug}`)}
+                style={{ cursor: 'pointer', textAlign: 'center', padding: '12px' }}
+              >
+                <div style={{ height: '140px', borderRadius: 'var(--border-radius-sm)', overflow: 'hidden', marginBottom: '12px' }}>
+                  <SafeImage src={skill.image} alt={skill.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                <h4 style={{ margin: 0, fontSize: '0.95rem', color: 'var(--primary-dark)' }}>{skill.title}</h4>
               </div>
             ))}
           </div>
-        ) : mixedCards.length === 0 ? (
-          <div className="empty-state-box" style={{ padding: '64px 24px' }}>
-            <p>{t('noData')}</p>
-          </div>
-        ) : (
-          <div className="mixed-content-cards-grid">
-            {mixedCards.map((item, idx) => {
-              if (item.type === 'learning') {
-                const course = item.data;
-                const progressObj = enrolledProgress.find(p => p.course?._id === course._id);
-                const percent = progressObj ? progressObj.percentage : 0;
-                
-                return (
-                  <div 
-                    key={`course-${course._id}-${idx}`}
-                    className="home-card card-learning"
-                    onClick={() => navigate(`/courses/${course._id}`)}
-                  >
-                    <div className="home-card-header">
-                      <span className="card-type-tag label-learning">
-                        <svg className="card-tag-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                        </svg>
-                        Learning
-                      </span>
-                    </div>
-                    <div className="home-card-body">
-                      <h3 className="home-card-title">{tDynamic(course.title)}</h3>
-                      <p className="home-card-meta">{course.level} &bull; {course.lessonsCount || 8} lessons</p>
-                      
-                      {/* Compact Progress tracker */}
-                      {user && progressObj && (
-                        <div className="card-progress-bar-container">
-                          <div className="card-progress-track">
-                            <div className="card-progress-fill" style={{ width: `${percent}%` }}></div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              } else {
-                const product = item.data;
-                return (
-                  <div 
-                    key={`product-${product._id}-${idx}`}
-                    className="home-card card-marketplace"
-                    onClick={() => navigate(`/products/${product._id}`)}
-                  >
-                    <div className="home-card-header">
-                      <span className="card-type-tag label-marketplace">Marketplace</span>
-                      {product.stock > 0 ? (
-                        <span className="home-card-stock-badge stock-in">In Stock</span>
-                      ) : (
-                        <span className="home-card-stock-badge stock-out">Out of Stock</span>
-                      )}
-                    </div>
-                    <div className="home-card-body">
-                      <h3 className="home-card-title">{product.name}</h3>
-                      <p className="home-card-meta">₹{product.price} &bull; Handmade by {product.seller?.name || 'Maker'}</p>
-                    </div>
-                  </div>
-                );
-              }
-            })}
-          </div>
-        )}
-      </div>
+        </div>
+      </section>
 
-      {/* Right Personal Panel Sidebar Column */}
-      <aside className="homepage-right-sidebar">
-        {/* User profile header card */}
-        <div className="sidebar-profile-card">
-          <div className="profile-card-flex">
-            <div className="profile-card-avatar" onClick={() => navigate('/profile')}>
-              {user?.profileImage ? (
-                <img src={user.profileImage} alt={user.name} />
-              ) : (
-                user?.name.charAt(0).toUpperCase() || 'G'
-              )}
+      {/* SECTION 3: EDITORIAL STORY - SMALL STEPS BIG DREAMS */}
+      <section className="section" style={{ backgroundColor: '#FAF0F2', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '16px' }}>Small steps.<br />Big dreams.</h2>
+              <p style={{ fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--text-main)', marginBottom: '24px' }}>
+                Learn new skills, create what you love, and build your own income — at your pace. Swadhara provides step-by-step video courses, AI guidance, and a direct marketplace to showcase your creations to appreciative buyers.
+              </p>
+              <button 
+                onClick={() => navigate('/courses')} 
+                className="btn btn-outline"
+                style={{ fontWeight: '700', color: 'var(--primary-rose-dark)' }}
+              >
+                How Swadhara works <ArrowRight size={16} />
+              </button>
             </div>
-            <div className="profile-card-details">
-              <h2 className="profile-card-name" onClick={() => navigate('/profile')}>
-                {user ? user.name : 'Welcome, Guest'}
-              </h2>
-              <span className="profile-card-label">
-                {user ? (user.role === 'seller' ? 'Maker Account' : 'Learner Account') : 'Browse Mode'}
-              </span>
+
+            <div style={{ borderRadius: 'var(--border-radius-md)', overflow: 'hidden', height: '320px', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
+              <SafeImage
+                src="https://images.unsplash.com/photo-1524295981997-ec4f4e30424d?q=80&w=800&auto=format&fit=crop"
+                alt="Women sewing and tailoring"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
-            <button 
-              onClick={() => navigate(user ? '/profile' : '/login')} 
-              className="profile-card-settings-btn"
-              title="Profile Settings"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-              </svg>
-            </button>
           </div>
         </div>
+      </section>
 
-        {/* Section 1: My Swadhara Journey */}
-        <div className="personal-hub-card">
-          <h3 className="personal-hub-title">My Swadhara</h3>
-          
-          {user ? (
-            <div className="personal-hub-metrics-list">
-              {/* Enrolled Courses widget */}
-              <div className="hub-metric-group">
-                <span className="hub-metric-label">Learning</span>
-                <div className="hub-progress-track">
-                  <div 
-                    className="hub-progress-fill" 
-                    style={{ width: `${enrolledProgress.length > 0 ? (enrolledProgress.reduce((sum, p) => sum + p.percentage, 0) / enrolledProgress.length) : 0}%` }}
-                  ></div>
-                </div>
-                <span className="hub-metric-sub">{enrolledProgress.length} courses in progress</span>
-              </div>
+      {/* SECTION 4: WOMEN SUPPORTING WOMEN */}
+      <section className="section">
+        <div className="container">
+          <div style={{
+            backgroundColor: 'var(--bg-pink-soft)',
+            borderRadius: 'var(--border-radius-lg)',
+            padding: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '32px',
+            flexWrap: 'wrap'
+          }}>
+            <div>
+              <h3 style={{ fontSize: '1.8rem', color: 'var(--primary-dark)', marginBottom: '8px' }}>
+                Women supporting women
+              </h3>
+              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '1rem' }}>
+                Real stories. Real progress. Real livelihood created from home.
+              </p>
+            </div>
 
-              {/* Creations widget */}
-              <div className="hub-metric-group" style={{ marginTop: '16px' }}>
-                <span className="hub-metric-label">My Creations</span>
-                <span className="hub-metric-sub" style={{ fontWeight: '600', color: 'var(--text-main)', fontSize: '0.95rem' }}>
-                  {creationsStats.count} products listed
-                </span>
-                <span className="hub-metric-sub">₹{creationsStats.value.toLocaleString()} total listed value</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <div style={{ display: 'flex' }}>
+                {creatorAvatars.map((c, i) => (
+                  <img 
+                    key={i} 
+                    src={c.img} 
+                    alt={c.name} 
+                    style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #FFFFFF', marginLeft: i > 0 ? '-12px' : 0, objectFit: 'cover' }} 
+                  />
+                ))}
               </div>
+              
+              <button 
+                onClick={() => navigate('/profile')} 
+                className="btn btn-rose btn-sm"
+              >
+                Read our Creators <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: FEATURED COURSES & PRODUCTS FROM DATABASE */}
+      <section className="section" style={{ paddingTop: '0' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <h2 style={{ margin: 0 }}>Featured Opportunities</h2>
+            
+            {/* Category Pills */}
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                onClick={() => setActiveCategory('all')} 
+                className={`btn btn-sm ${activeCategory === 'all' ? 'btn-rose' : 'btn-ghost'}`}
+                style={{ borderRadius: 'var(--border-radius-pill)' }}
+              >
+                All
+              </button>
+              {categories.slice(0, 4).map((cat) => (
+                <button 
+                  key={cat._id} 
+                  onClick={() => setActiveCategory(cat.slug)} 
+                  className={`btn btn-sm ${activeCategory === cat.slug ? 'btn-rose' : 'btn-ghost'}`}
+                  style={{ borderRadius: 'var(--border-radius-pill)' }}
+                >
+                  {tDynamic(cat.name)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Grid of Courses & Products */}
+          {loading ? (
+            <div className="grid grid-3">
+              {[1, 2, 3].map(n => (
+                <div key={n} className="skeleton" style={{ height: '260px' }}></div>
+              ))}
             </div>
           ) : (
-            <div className="anon-hub-welcome">
-              <p style={{ fontSize: '0.85rem', marginBottom: '16px', lineHeight: '1.4' }}>
-                Create a Swadhara account to save your learning courses and list handmade items.
-              </p>
-              <Link to="/login" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                Sign In to Start
-              </Link>
+            <div className="grid grid-3">
+              {courses.slice(0, 3).map((course) => (
+                <div 
+                  key={course._id} 
+                  className="card-editorial"
+                  onClick={() => navigate(`/courses/${course._id}`)}
+                  style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', height: '100%' }}
+                >
+                  <div style={{ height: '180px', overflow: 'hidden' }}>
+                    <SafeImage src={course.thumbnail} alt={tDynamic(course.title)} category={course.category?.slug} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                    <span className="badge-tag" style={{ width: 'fit-content', marginBottom: '10px' }}>
+                      <BookOpen size={12} /> {tDynamic(course.category?.name) || 'Course'}
+                    </span>
+                    <h3 style={{ fontSize: '1.15rem', marginBottom: '8px' }}>{tDynamic(course.title)}</h3>
+                    <p style={{ fontSize: '0.85rem', flexGrow: 1, marginBottom: '16px' }}>{tDynamic(course.description)}</p>
+                    <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-light)', fontWeight: '600' }}>{course.duration} &bull; {course.level || 'Beginner'}</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary-rose-dark)' }}>Start &rarr;</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
-
-        {/* Section 2: Compact My Marketplace showcase */}
-        <div className="personal-hub-card">
-          <h3 className="personal-hub-title">My Marketplace</h3>
-          
-          <div className="hub-marketplace-list">
-            {products.slice(0, 2).map((prod) => (
-              <div 
-                key={`hub-prod-${prod._id}`}
-                className="hub-product-row"
-                onClick={() => navigate(`/products/${prod._id}`)}
-              >
-                <div className="hub-product-thumb-container">
-                  <SafeImage src={prod.images?.[0]} alt={prod.name} category={prod.category?.slug} className="hub-product-thumb" />
-                </div>
-                <div className="hub-product-info">
-                  <span className="hub-product-name">{prod.name}</span>
-                  <span className="hub-product-price-stock">
-                    ₹{prod.price} &bull; {prod.stock > 0 ? `${prod.stock} left` : 'Out of Stock'}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Link to="/marketplace" className="view-shop-link-arrow">
-            View my shop &rarr;
-          </Link>
-        </div>
-      </aside>
+      </section>
     </div>
   );
 }

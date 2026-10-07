@@ -1,35 +1,48 @@
 import React, { useState, useEffect } from 'react';
+import heroImg from '../assets/hero.png';
+import embroideryImg from '../assets/embroidery.png';
+import tailoringImg from '../assets/tailoring.jpg';
+import bakingImg from '../assets/baking.jpg';
+import jewelleryImg from '../assets/jewellery.jpg';
 
 const FALLBACK_IMAGES = {
-  tailoring: 'https://images.unsplash.com/photo-1524295981997-ec4f4e30424d?q=80&w=600&auto=format&fit=crop',
-  embroidery: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=600&auto=format&fit=crop',
-  baking: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop',
-  jewellery: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop',
-  handicrafts: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=600&auto=format&fit=crop',
-  default: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=600&auto=format&fit=crop'
+  hero: heroImg,
+  tailoring: tailoringImg,
+  embroidery: embroideryImg,
+  baking: bakingImg,
+  jewellery: jewelleryImg,
+  handicrafts: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
+  painting: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
+  default: heroImg
 };
 
 export default function SafeImage({ src, alt, category = 'default', className = '', style = {} }) {
-  // Normalize category slugs
   const getCategoryKey = (catStr) => {
     if (!catStr) return 'default';
-    const clean = catStr.toLowerCase();
-    if (clean.includes('tailor') || clean.includes('sew')) return 'tailoring';
-    if (clean.includes('embroid') || clean.includes('stitch')) return 'embroidery';
-    if (clean.includes('bak') || clean.includes('cook')) return 'baking';
-    if (clean.includes('jewel')) return 'jewellery';
-    if (clean.includes('handicraft') || clean.includes('potter') || clean.includes('wood')) return 'handicrafts';
+    const clean = String(catStr).toLowerCase();
+    if (clean.includes('hero') || clean.includes('landing')) return 'hero';
+    if (clean.includes('tailor') || clean.includes('sew') || clean.includes('stitch')) return 'tailoring';
+    if (clean.includes('embroid') || clean.includes('thread')) return 'embroidery';
+    if (clean.includes('bak') || clean.includes('cook') || clean.includes('cake')) return 'baking';
+    if (clean.includes('jewel') || clean.includes('bead')) return 'jewellery';
+    if (clean.includes('paint') || clean.includes('art')) return 'painting';
+    if (clean.includes('handicraft') || clean.includes('potter') || clean.includes('wood') || clean.includes('bag')) return 'handicrafts';
     return 'default';
   };
 
   const categoryKey = getCategoryKey(category);
   const fallbackSrc = FALLBACK_IMAGES[categoryKey] || FALLBACK_IMAGES.default;
 
-  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+  const [imgSrc, setImgSrc] = useState(() => {
+    if (!src || src.trim() === '' || src.includes('placeholder') || src.includes('1606813907291')) {
+      return fallbackSrc;
+    }
+    return src;
+  });
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (!src || src.trim() === '') {
+    if (!src || src.trim() === '' || src.includes('placeholder') || src.includes('1606813907291')) {
       setImgSrc(fallbackSrc);
       setHasError(true);
     } else {
@@ -48,7 +61,7 @@ export default function SafeImage({ src, alt, category = 'default', className = 
   return (
     <img 
       src={imgSrc} 
-      alt={alt} 
+      alt={alt || 'Swadhara Craft'} 
       className={className} 
       style={style} 
       onError={handleError}

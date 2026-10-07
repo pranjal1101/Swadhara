@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowLeft, ArrowRight, CheckCircle2, Video, PlayCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import AiTutorWidget from '../components/AiTutorWidget';
-
-const getYouTubeId = (url) => {
-  if (!url) return '';
-  if (url.length === 11) return url;
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : '';
-};
 
 export default function Lesson() {
   const { id: courseId, lessonId } = useParams();
@@ -24,13 +17,11 @@ export default function Lesson() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [markingDone, setMarkingDone] = useState(false);
-  const [iframeFailed, setIframeFailed] = useState(false);
 
   useEffect(() => {
     const fetchLessonAndCourseData = async () => {
       setLoading(true);
       setError('');
-      setIframeFailed(false);
       try {
         const courseRes = await axios.get(`/api/courses/${courseId}`);
         if (courseRes.data && courseRes.data.success) {
@@ -43,7 +34,6 @@ export default function Lesson() {
           setLesson(lessonRes.data.data);
         }
 
-        // Isolate progress fetching so progress errors don't prevent lesson viewing
         try {
           const progressRes = await axios.get(`/api/courses/${courseId}/progress`);
           if (progressRes.data && progressRes.data.success) {
@@ -83,16 +73,13 @@ export default function Lesson() {
     }
   };
 
-  const videoId = lesson ? (lesson.youtubeVideoId || getYouTubeId(lesson.videoUrl)) : '';
   const isCompleted = progress?.completedLessons?.includes(lessonId);
-  const youtubeWatchUrl = lesson?.videoUrl || (videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#');
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
 
   if (loading) {
     return (
       <div className="container section">
-        <div className="skeleton" style={{ height: '420px', width: '100%', marginBottom: '24px', borderRadius: '16px' }}></div>
-        <div className="skeleton" style={{ height: '24px', width: '60%', marginBottom: '12px' }}></div>
+        <div className="skeleton" style={{ height: '380px', width: '100%', marginBottom: '24px' }}></div>
+        <div className="skeleton" style={{ height: '24px', width: '60%' }}></div>
       </div>
     );
   }
@@ -111,102 +98,83 @@ export default function Lesson() {
   return (
     <div className="container section">
       {/* Navigation Header */}
-      <div className="lesson-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <Link to={`/courses/${courseId}`} className="back-course-btn" style={{ fontWeight: '600', color: 'var(--primary-dark)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-          &larr; Back to {tDynamic(course.title)}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <Link to={`/courses/${courseId}`} style={{ fontWeight: '600', color: 'var(--primary-dark)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <ArrowLeft size={16} /> Back to {tDynamic(course.title)}
         </Link>
-        <div className="lesson-top-progress" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="progress-text" style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-muted)' }}>
-            {t('courseProgressBar')}: {progress?.percentage || 0}%
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-muted)' }}>
+            Course Progress: {progress?.percentage || 0}%
           </span>
-          <div className="progress-track-bar" style={{ width: '120px', height: '8px', backgroundColor: '#eef2f5', borderRadius: '4px', overflow: 'hidden' }}>
-            <div className="progress-fill" style={{ width: `${progress?.percentage || 0}%`, height: '100%', backgroundColor: '#4a773c' }}></div>
+          <div style={{ width: '120px', height: '8px', backgroundColor: '#F0E2E5', borderRadius: '4px', overflow: 'hidden' }}>
+            <div style={{ width: `${progress?.percentage || 0}%`, height: '100%', backgroundColor: 'var(--primary-rose-dark)' }}></div>
           </div>
         </div>
       </div>
 
-      {/* Video Container — Plain UI Video Coming Soon Placeholder */}
-      <div className="lesson-player-container" style={{ marginBottom: '24px' }}>
-        <div className="video-missing-box" style={{
-          borderRadius: '16px',
-          border: '1px solid var(--border-color)',
-          backgroundColor: '#fbf9f6',
+      {/* Video Player Container / Video Coming Soon Placeholder */}
+      <div style={{ marginBottom: '28px' }}>
+        <div style={{
+          borderRadius: 'var(--border-radius-md)',
+          border: '1px solid var(--border-subtle)',
+          backgroundColor: 'var(--bg-pink-soft)',
           padding: '56px 24px',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '260px',
-          boxShadow: '0 4px 16px rgba(96, 71, 52, 0.04)'
+          minHeight: '280px',
+          boxShadow: 'var(--shadow-subtle)'
         }}>
           <div style={{
             width: '64px',
             height: '64px',
             borderRadius: '50%',
-            backgroundColor: 'var(--card-pink)',
+            backgroundColor: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: '16px',
-            color: 'var(--primary-dark)'
+            color: 'var(--primary-rose-dark)',
+            boxShadow: 'var(--shadow-card)'
           }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-              <line x1="7" y1="2" x2="7" y2="22"></line>
-              <line x1="17" y1="2" x2="17" y2="22"></line>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <line x1="2" y1="7" x2="7" y2="7"></line>
-              <line x1="2" y1="17" x2="7" y2="17"></line>
-              <line x1="17" y1="17" x2="22" y2="17"></line>
-              <line x1="17" y1="7" x2="22" y2="7"></line>
-            </svg>
+            <Video size={30} />
           </div>
-          <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-dark)', marginBottom: '8px', fontWeight: '700' }}>
-            Video Coming Soon
+          <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-dark)', marginBottom: '8px' }}>
+            Video Lesson Coming Soon
           </h3>
-          <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '440px', lineHeight: '1.6', margin: '0 0 16px 0' }}>
-            The official video tutorial for this lesson is currently being produced by Swadhara. Check back soon for video updates.
+          <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '460px', lineHeight: '1.6', margin: '0 0 16px 0' }}>
+            The official practical video tutorial for this lesson is currently being filmed. Read the lesson guide below to get started.
           </p>
-          <span style={{
-            fontSize: '0.8rem',
-            fontWeight: '600',
-            padding: '6px 16px',
-            borderRadius: '20px',
-            backgroundColor: '#eee9e0',
-            color: 'var(--primary-dark)'
-          }}>
+          <span className="badge-tag">
             Official Swadhara Course Material
           </span>
         </div>
       </div>
 
-      {/* Lesson Controls Panel */}
-      <div className="lesson-controls-panel" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+      {/* Lesson Controls Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <button
           className="btn btn-secondary"
           onClick={() => navigate(`/courses/${courseId}/lesson/${prevLesson._id}`)}
           disabled={!prevLesson}
-          style={{ opacity: prevLesson ? 1 : 0.5 }}
         >
-          &larr; {t('back')}
+          <ArrowLeft size={16} /> Back
         </button>
 
         <button
-          className={`btn ${isCompleted ? 'btn-secondary' : 'btn-primary'} complete-action-btn`}
+          className={`btn ${isCompleted ? 'btn-secondary' : 'btn-rose'}`}
           onClick={handleMarkComplete}
           disabled={markingDone}
-          style={{ padding: '12px 32px', fontWeight: '700' }}
+          style={{ padding: '12px 32px' }}
         >
           {isCompleted ? (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#4a773c' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              {t('lessonCompleted')}
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#2E6A34', fontWeight: '700' }}>
+              <CheckCircle2 size={18} /> Lesson Completed
             </span>
           ) : (
-            t('lessonMarkComplete')
+            'Mark Lesson Done'
           )}
         </button>
 
@@ -214,31 +182,30 @@ export default function Lesson() {
           className="btn btn-secondary"
           onClick={() => navigate(`/courses/${courseId}/lesson/${nextLesson._id}`)}
           disabled={!nextLesson}
-          style={{ opacity: nextLesson ? 1 : 0.5 }}
         >
-          {t('next')} &rarr;
+          Next <ArrowRight size={16} />
         </button>
       </div>
 
-      {/* Lesson Info Details */}
-      <div className="lesson-info-content" style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+      {/* Lesson Description Details */}
+      <div className="card-editorial" style={{ padding: '32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-          <span className="lesson-meta-badge" style={{ backgroundColor: 'var(--card-pink)', color: 'var(--primary-dark)', padding: '4px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: '700' }}>
+          <span className="badge-tag">
             Lesson {currentIdx + 1} of {lessonsList.length}
           </span>
           <span style={{ fontSize: '0.85rem', color: 'var(--text-light)', fontWeight: '600' }}>
             &bull; {lesson.duration}
           </span>
         </div>
-        <h1 className="lesson-title-heading" style={{ fontSize: '1.75rem', color: 'var(--primary-dark)', marginBottom: '16px', fontWeight: '700' }}>
+        <h1 style={{ fontSize: '1.8rem', color: 'var(--primary-dark)', marginBottom: '16px' }}>
           {tDynamic(lesson.title)}
         </h1>
-        <p className="lesson-description-text" style={{ fontSize: '1.05rem', color: 'var(--text-main)', lineHeight: '1.7', margin: 0 }}>
+        <p style={{ fontSize: '1.05rem', color: 'var(--text-main)', lineHeight: '1.7', margin: 0 }}>
           {tDynamic(lesson.description)}
         </p>
       </div>
 
-      {/* AI Course Tutor / Doubt Solver Widget */}
+      {/* AI Tutor Widget */}
       <AiTutorWidget courseId={courseId} lessonId={lessonId} courseTitle={tDynamic(course.title)} />
     </div>
   );

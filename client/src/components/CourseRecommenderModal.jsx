@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Sparkles, Star, ArrowRight, RotateCcw, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import SafeImage from './SafeImage';
 
@@ -67,7 +68,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
 
       if (response.data && response.data.success) {
         setRecommendations(response.data.data);
-        setStep(5); // Move to results step
+        setStep(5);
       } else {
         setError('Unable to fetch recommendations right now. Please try again.');
       }
@@ -91,10 +92,10 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="modal-backdrop" style={{
+    <div style={{
       position: 'fixed',
       top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(30, 20, 15, 0.5)',
+      backgroundColor: 'rgba(46, 34, 38, 0.5)',
       backdropFilter: 'blur(4px)',
       display: 'flex',
       alignItems: 'center',
@@ -102,15 +103,15 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
       zIndex: 1000,
       padding: '20px'
     }}>
-      <div className="modal-card" style={{
-        backgroundColor: '#fff',
-        borderRadius: '20px',
+      <div style={{
+        backgroundColor: '#FFFFFF',
+        borderRadius: 'var(--border-radius-lg)',
         maxWidth: '620px',
         width: '100%',
         maxHeight: '90vh',
         overflowY: 'auto',
-        boxShadow: '0 12px 40px rgba(96, 71, 52, 0.18)',
-        border: '1px solid var(--border-color)',
+        boxShadow: 'var(--shadow-card)',
+        border: '1px solid var(--border-subtle)',
         padding: '32px',
         position: 'relative'
       }}>
@@ -121,31 +122,18 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
             position: 'absolute',
             top: '20px',
             right: '20px',
-            background: 'none',
-            border: 'none',
-            fontSize: '1.4rem',
-            cursor: 'pointer',
             color: 'var(--text-muted)'
           }}
         >
-          &times;
+          <X size={20} />
         </button>
 
         {/* Modal Header */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <span style={{
-            fontSize: '0.8rem',
-            fontWeight: '700',
-            backgroundColor: 'var(--card-pink)',
-            color: 'var(--primary-dark)',
-            padding: '4px 12px',
-            borderRadius: '20px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
-          }}>
-            Swadhara AI Assistant ✨
+          <span className="eyebrow-pill">
+            <Sparkles size={14} /> Swadhara AI Assistant
           </span>
-          <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-dark)', margin: '12px 0 6px 0', fontWeight: '700' }}>
+          <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-dark)', margin: '12px 0 6px 0' }}>
             {step === 5 ? 'Your Swadhara Recommendations' : 'Find the Right Course for You'}
           </h2>
           <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', margin: 0 }}>
@@ -162,7 +150,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         {/* STEP 1: INTEREST */}
         {step === 1 && (
           <div>
-            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px', fontWeight: '600' }}>
+            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
               1. What are you interested in learning?
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
@@ -173,15 +161,13 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                   onClick={() => setInterest(opt)}
                   style={{
                     padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: `2px solid ${interest === opt ? 'var(--primary-dark)' : 'var(--border-color)'}`,
-                    backgroundColor: interest === opt ? 'var(--card-pink)' : '#fff',
+                    borderRadius: 'var(--border-radius-sm)',
+                    border: `2px solid ${interest === opt ? 'var(--primary-rose-dark)' : 'var(--border-subtle)'}`,
+                    backgroundColor: interest === opt ? 'var(--bg-pink-soft)' : '#FFFFFF',
                     color: 'var(--primary-dark)',
-                    fontWeight: interest === opt ? '700' : '600',
+                    fontWeight: interest === opt ? '700' : '500',
                     textAlign: 'left',
-                    cursor: 'pointer',
-                    fontSize: '0.95rem',
-                    transition: 'all 0.15s ease'
+                    fontSize: '0.95rem'
                   }}
                 >
                   {opt}
@@ -191,9 +177,9 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
             <button
               className="btn btn-primary"
               onClick={() => setStep(2)}
-              style={{ width: '100%', padding: '12px' }}
+              style={{ width: '100%' }}
             >
-              Next: Skill Level &rarr;
+              Next: Skill Level <ArrowRight size={16} />
             </button>
           </div>
         )}
@@ -201,7 +187,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         {/* STEP 2: SKILL LEVEL */}
         {step === 2 && (
           <div>
-            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px', fontWeight: '600' }}>
+            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
               2. What is your current skill level?
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
@@ -212,13 +198,12 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                   onClick={() => setSkillLevel(opt)}
                   style={{
                     padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: `2px solid ${skillLevel === opt ? 'var(--primary-dark)' : 'var(--border-color)'}`,
-                    backgroundColor: skillLevel === opt ? 'var(--card-pink)' : '#fff',
+                    borderRadius: 'var(--border-radius-sm)',
+                    border: `2px solid ${skillLevel === opt ? 'var(--primary-rose-dark)' : 'var(--border-subtle)'}`,
+                    backgroundColor: skillLevel === opt ? 'var(--bg-pink-soft)' : '#FFFFFF',
                     color: 'var(--primary-dark)',
-                    fontWeight: skillLevel === opt ? '700' : '600',
+                    fontWeight: skillLevel === opt ? '700' : '500',
                     textAlign: 'left',
-                    cursor: 'pointer',
                     fontSize: '0.95rem'
                   }}
                 >
@@ -231,7 +216,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                 &larr; Back
               </button>
               <button className="btn btn-primary" onClick={() => setStep(3)} style={{ flex: 1 }}>
-                Next: Your Goal &rarr;
+                Next: Your Goal <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -240,7 +225,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         {/* STEP 3: GOAL */}
         {step === 3 && (
           <div>
-            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px', fontWeight: '600' }}>
+            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
               3. What is your main learning goal?
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
@@ -251,13 +236,12 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                   onClick={() => setGoal(opt)}
                   style={{
                     padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: `2px solid ${goal === opt ? 'var(--primary-dark)' : 'var(--border-color)'}`,
-                    backgroundColor: goal === opt ? 'var(--card-pink)' : '#fff',
+                    borderRadius: 'var(--border-radius-sm)',
+                    border: `2px solid ${goal === opt ? 'var(--primary-rose-dark)' : 'var(--border-subtle)'}`,
+                    backgroundColor: goal === opt ? 'var(--bg-pink-soft)' : '#FFFFFF',
                     color: 'var(--primary-dark)',
-                    fontWeight: goal === opt ? '700' : '600',
+                    fontWeight: goal === opt ? '700' : '500',
                     textAlign: 'left',
-                    cursor: 'pointer',
                     fontSize: '0.95rem'
                   }}
                 >
@@ -270,7 +254,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                 &larr; Back
               </button>
               <button className="btn btn-primary" onClick={() => setStep(4)} style={{ flex: 1 }}>
-                Next: Time Available &rarr;
+                Next: Time Available <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -279,7 +263,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         {/* STEP 4: TIME */}
         {step === 4 && (
           <div>
-            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px', fontWeight: '600' }}>
+            <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
               4. How much time can you spend learning per session?
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
@@ -290,13 +274,12 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                   onClick={() => setTimeCommitment(opt)}
                   style={{
                     padding: '14px 16px',
-                    borderRadius: '12px',
-                    border: `2px solid ${timeCommitment === opt ? 'var(--primary-dark)' : 'var(--border-color)'}`,
-                    backgroundColor: timeCommitment === opt ? 'var(--card-pink)' : '#fff',
+                    borderRadius: 'var(--border-radius-sm)',
+                    border: `2px solid ${timeCommitment === opt ? 'var(--primary-rose-dark)' : 'var(--border-subtle)'}`,
+                    backgroundColor: timeCommitment === opt ? 'var(--bg-pink-soft)' : '#FFFFFF',
                     color: 'var(--primary-dark)',
-                    fontWeight: timeCommitment === opt ? '700' : '600',
+                    fontWeight: timeCommitment === opt ? '700' : '500',
                     textAlign: 'left',
-                    cursor: 'pointer',
                     fontSize: '0.95rem'
                   }}
                 >
@@ -312,9 +295,9 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                 className="btn btn-primary"
                 onClick={handleGetRecommendations}
                 disabled={loading}
-                style={{ flex: 2, padding: '12px' }}
+                style={{ flex: 2 }}
               >
-                {loading ? 'Swadhara AI is thinking...' : 'Get AI Recommendations ✨'}
+                {loading ? 'Swadhara AI is thinking...' : 'Get AI Recommendations'}
               </button>
             </div>
           </div>
@@ -333,43 +316,35 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
                   <div
                     key={course._id || idx}
                     style={{
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '16px',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 'var(--border-radius-md)',
                       padding: '18px',
-                      backgroundColor: idx === 0 ? '#fcf8f4' : '#fff',
-                      position: 'relative'
+                      backgroundColor: idx === 0 ? 'var(--bg-pink-soft)' : '#FFFFFF'
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: '700',
-                        padding: '4px 10px',
-                        borderRadius: '12px',
-                        backgroundColor: idx === 0 ? '#4a773c' : idx === 1 ? 'var(--primary-dark)' : 'var(--text-muted)',
-                        color: '#fff'
-                      }}>
-                        {item.rank === 'Best Match' ? '★ Best Match' : item.rank}
+                      <span className="badge-tag" style={{ backgroundColor: 'var(--primary-dark)', color: '#FFFFFF' }}>
+                        {item.rank === 'Best Match' ? 'Best Match' : item.rank}
                       </span>
                       <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                         {difficulty} &bull; {tDynamic(course.category?.name)}
                       </span>
                     </div>
 
-                    <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', marginBottom: '6px', fontWeight: '700' }}>
+                    <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', marginBottom: '6px' }}>
                       {tDynamic(course.title)}
                     </h3>
 
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', marginBottom: '12px', lineHeight: '1.5', fontStyle: 'italic', backgroundColor: 'rgba(255,255,255,0.7)', padding: '8px 12px', borderRadius: '8px', borderLeft: '3px solid var(--primary-dark)' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', marginBottom: '12px', lineHeight: '1.5', fontStyle: 'italic', backgroundColor: 'rgba(255,255,255,0.7)', padding: '8px 12px', borderRadius: '6px', borderLeft: '3px solid var(--primary-rose-dark)' }}>
                       "{item.reason}"
                     </p>
 
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-rose btn-sm"
                       onClick={() => handleCourseClick(course._id)}
-                      style={{ width: '100%', padding: '10px' }}
+                      style={{ width: '100%' }}
                     >
-                      View Course &rarr;
+                      View Course <ArrowRight size={14} />
                     </button>
                   </div>
                 );
@@ -377,8 +352,8 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <button className="btn btn-outline btn-sm" onClick={resetQuiz}>
-                &circlearrowleft; Retake Quiz
+              <button className="btn btn-outline btn-sm" onClick={resetQuiz} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <RotateCcw size={14} /> Retake Quiz
               </button>
             </div>
           </div>
