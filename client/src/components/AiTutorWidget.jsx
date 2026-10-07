@@ -37,6 +37,7 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
     if (!questionText) setQuestion('');
 
     try {
+      console.log("AI Tutor sending:", qToSubmit.trim());
       const response = await axios.post('/api/ai/ask', {
         courseId,
         lessonId,

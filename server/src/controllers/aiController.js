@@ -70,6 +70,7 @@ const getCourseRecommendations = async (req, res, next) => {
  */
 const askTutorQuestion = async (req, res, next) => {
   try {
+    console.log("AI Controller received:", req.body);
     const { courseId, lessonId, question, language } = req.body;
 
     // Input validation
@@ -129,7 +130,7 @@ const askTutorQuestion = async (req, res, next) => {
     console.error('AI tutor controller error:', error);
     res.status(500).json({
       success: false,
-      message: 'AI tutor service is temporarily unavailable. Please try again.'
+      message: error.message || 'AI tutor service is temporarily unavailable. Please try again.'
     });
   }
 };
