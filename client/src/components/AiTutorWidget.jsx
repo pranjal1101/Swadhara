@@ -89,7 +89,7 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
       boxShadow: 'var(--shadow-subtle)',
       marginTop: '32px'
     }}>
-      {/* Widget Header (Panel 5 Reference) */}
+
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
           <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-dark)', margin: 0 }}>
@@ -101,7 +101,6 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
         </div>
       </div>
 
-      {/* Chat Conversation History */}
       {chatHistory.length > 0 && (
         <div style={{
           maxHeight: '320px',
@@ -141,7 +140,6 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
         </div>
       )}
 
-      {/* Suggested Quick Questions (Panel 5 Reference) */}
       {chatHistory.length === 0 && (
         <div style={{ marginBottom: '18px' }}>
           <label style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-light)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>
@@ -176,7 +174,6 @@ export default function AiTutorWidget({ courseId, lessonId, courseTitle }) {
         </div>
       )}
 
-      {/* Input Field & Submit Button */}
       <form onSubmit={(e) => { e.preventDefault(); handleAsk(); }} style={{ display: 'flex', gap: '10px' }}>
         <input
           type="text"

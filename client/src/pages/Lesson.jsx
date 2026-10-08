@@ -97,7 +97,7 @@ export default function Lesson() {
 
   return (
     <div className="container section">
-      {/* Navigation Header */}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <Link to={`/courses/${courseId}`} style={{ fontWeight: '600', color: 'var(--primary-dark)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
           <ArrowLeft size={16} /> Back to {tDynamic(course.title)}
@@ -112,7 +112,6 @@ export default function Lesson() {
         </div>
       </div>
 
-      {/* Video Player Container / Video Coming Soon Placeholder */}
       <div style={{ marginBottom: '28px' }}>
         <div style={{
           borderRadius: 'var(--border-radius-md)',
@@ -153,7 +152,6 @@ export default function Lesson() {
         </div>
       </div>
 
-      {/* Lesson Controls Bar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <button
           className="btn btn-secondary"
@@ -187,7 +185,6 @@ export default function Lesson() {
         </button>
       </div>
 
-      {/* Lesson Description Details */}
       <div className="card-editorial" style={{ padding: '32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
           <span className="badge-tag">
@@ -205,7 +202,6 @@ export default function Lesson() {
         </p>
       </div>
 
-      {/* AI Tutor Widget */}
       <AiTutorWidget courseId={courseId} lessonId={lessonId} courseTitle={tDynamic(course.title)} />
     </div>
   );

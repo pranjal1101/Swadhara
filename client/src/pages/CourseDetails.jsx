@@ -101,7 +101,6 @@ export default function CourseDetails() {
 
   const difficulty = course.difficulty || course.level || 'Easy';
 
-  // Numbered timeline steps (Panel 3 Course Journey)
   const courseJourneySteps = [
     { step: 1, title: 'Introduction & Basics', desc: 'Understanding tools, materials, and initial setup.' },
     { step: 2, title: 'Threading & Starting Stitches', desc: 'Step-by-step guidance on foundational technique.' },
@@ -111,7 +110,7 @@ export default function CourseDetails() {
 
   return (
     <div className="container section">
-      {/* Breadcrumb Navigation */}
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: '24px' }}>
         <Link to="/courses" style={{ color: 'var(--text-muted)' }}>Learn</Link>
         <ChevronRight size={14} />
@@ -120,7 +119,6 @@ export default function CourseDetails() {
         <span style={{ color: 'var(--primary-dark)', fontWeight: '600' }}>{tDynamic(course.title)}</span>
       </div>
 
-      {/* Main Course Hero Panel (Panel 3 Reference) */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '380px 1fr',
@@ -132,7 +130,7 @@ export default function CourseDetails() {
         boxShadow: 'var(--shadow-subtle)',
         marginBottom: '40px'
       }}>
-        {/* Left Craft Image */}
+
         <div style={{ height: '280px', borderRadius: 'var(--border-radius-md)', overflow: 'hidden', border: '2px solid #FFFFFF', boxShadow: 'var(--shadow-card)' }}>
           <SafeImage
             src={course.thumbnail}
@@ -142,7 +140,6 @@ export default function CourseDetails() {
           />
         </div>
 
-        {/* Right Info & CTA */}
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
             <span className="badge-tag">
@@ -179,7 +176,6 @@ export default function CourseDetails() {
         </div>
       </div>
 
-      {/* Tabs Switcher Navigation */}
       <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '36px' }}>
         {['overview', 'lessons', 'materials', 'creator'].map((tab) => (
           <button
@@ -199,10 +195,9 @@ export default function CourseDetails() {
         ))}
       </div>
 
-      {/* Grid Layout: Main Details vs Right Creator Panel */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '40px' }}>
         <div>
-          {/* WHAT YOU'LL LEARN */}
+
           {course.learningOutcomes && course.learningOutcomes.length > 0 && (
             <div style={{
               backgroundColor: '#FFFFFF',
@@ -231,7 +226,7 @@ export default function CourseDetails() {
             <h3 style={{ fontSize: '1.3rem', marginBottom: '20px' }}>Course Journey</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {courseJourneySteps.map((stepItem) => (
-                <div 
+                <div
                   key={stepItem.step}
                   style={{
                     display: 'flex',

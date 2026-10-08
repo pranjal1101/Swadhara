@@ -37,8 +37,8 @@ export default function Courses() {
         if (difficultyFilter && difficultyFilter !== 'All') queryParts.push(`difficulty=${encodeURIComponent(difficultyFilter)}`);
         if (searchQuery) queryParts.push(`search=${encodeURIComponent(searchQuery)}`);
 
-        const coursesUrl = queryParts.length > 0 
-          ? `/api/courses?${queryParts.join('&')}` 
+        const coursesUrl = queryParts.length > 0
+          ? `/api/courses?${queryParts.join('&')}`
           : '/api/courses';
 
         const [catsRes, coursesRes] = await Promise.all([
@@ -98,13 +98,12 @@ export default function Courses() {
 
   return (
     <div className="container section">
-      {/* AI Course Recommender Modal */}
+
       <CourseRecommenderModal
         isOpen={isRecommenderOpen}
         onClose={() => setIsRecommenderOpen(false)}
       />
 
-      {/* Page Header */}
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{ marginBottom: '6px' }}>Explore Skills</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', margin: 0 }}>
@@ -112,7 +111,6 @@ export default function Courses() {
         </p>
       </div>
 
-      {/* AI Course Recommender Promo Banner */}
       <div style={{
         backgroundColor: 'var(--bg-pink-soft)',
         border: '1px solid var(--border-rose)',
@@ -145,7 +143,6 @@ export default function Courses() {
         </button>
       </div>
 
-      {/* Visual Category Grid (Panel 2 Reference) */}
       <div style={{ marginBottom: '40px' }}>
         <h3 style={{ fontSize: '1.2rem', marginBottom: '16px' }}>Browse Categories</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '16px' }}>
@@ -173,7 +170,6 @@ export default function Courses() {
         </div>
       </div>
 
-      {/* Search & Filter Controls */}
       <div style={{
         backgroundColor: '#FFFFFF',
         padding: '20px 24px',
@@ -182,7 +178,7 @@ export default function Courses() {
         boxShadow: 'var(--shadow-subtle)',
         marginBottom: '36px'
       }}>
-        {/* Search Bar */}
+
         <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
           <div style={{ position: 'relative', flexGrow: 1 }}>
             <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
@@ -212,7 +208,6 @@ export default function Courses() {
           )}
         </form>
 
-        {/* Difficulty Filter Chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--text-light)', textTransform: 'uppercase' }}>
             Difficulty:
@@ -230,7 +225,6 @@ export default function Courses() {
         </div>
       </div>
 
-      {/* Courses Grid */}
       {loading ? (
         <div className="grid grid-3">
           {[1, 2, 3, 4, 5, 6].map(n => (

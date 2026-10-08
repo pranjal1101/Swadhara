@@ -14,21 +14,15 @@ const { validateProduct } = require('../middlewares/validate');
 
 const router = express.Router();
 
-// Categories listing (Public)
 router.get('/categories', listCategories);
 
-// Seller products portfolio (Protected, Seller only)
-// Note: Mount this BEFORE the /:id parameter route to avoid route matching conflicts
 router.get('/seller', authenticateUser, authorizeSeller, listSellerProducts);
 
-// Public product browsing routes
 router.get('/', listProducts);
 router.get('/:id', getProduct);
 
-// Protected review route (Registered users only)
 router.post('/:id/reviews', authenticateUser, createReview);
 
-// Protected product management (Seller only)
 router.post('/', authenticateUser, authorizeSeller, validateProduct, createProduct);
 router.put('/:id', authenticateUser, authorizeSeller, validateProduct, updateProduct);
 router.delete('/:id', authenticateUser, authorizeSeller, deleteProduct);

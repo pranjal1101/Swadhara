@@ -1,16 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Context Providers
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 
-// Core UI Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// Pages
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -25,12 +22,6 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import SellerDashboard from './pages/SellerDashboard';
 
-/**
- * Main Application component managing layouts and route maps
- * Guest pages: /, /login, /register, /courses, /courses/:id, /marketplace, /products/:id, /cart
- * Learner pages: /courses/:id/lesson/:lessonId, /orders, /profile, /dashboard
- * Maker pages: /seller, /seller/products, /seller/products/new (Requires seller validation)
- */
 function App() {
   return (
     <LanguageProvider>
@@ -40,7 +31,6 @@ function App() {
             <Navbar />
             <main className="main-content">
               <Routes>
-                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -50,64 +40,62 @@ function App() {
                 <Route path="/products/:id" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
 
-                {/* Learner Protected Routes */}
-                <Route 
-                  path="/courses/:id/lesson/:lessonId" 
+                <Route
+                  path="/courses/:id/lesson/:lessonId"
                   element={
                     <ProtectedRoute>
                       <Lesson />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/orders" 
+                <Route
+                  path="/orders"
                   element={
                     <ProtectedRoute>
                       <Orders />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/profile" 
+                <Route
+                  path="/profile"
                   element={
                     <ProtectedRoute>
                       <Profile />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/dashboard" 
+                <Route
+                  path="/dashboard"
                   element={
                     <ProtectedRoute>
                       <Dashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                {/* Seller/Maker Protected Routes */}
-                <Route 
-                  path="/seller" 
+                <Route
+                  path="/seller"
                   element={
                     <ProtectedRoute requireSeller={true}>
                       <SellerDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/seller/products" 
+                <Route
+                  path="/seller/products"
                   element={
                     <ProtectedRoute requireSeller={true}>
                       <SellerDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/seller/products/new" 
+                <Route
+                  path="/seller/products/new"
                   element={
                     <ProtectedRoute requireSeller={true}>
                       <SellerDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
               </Routes>
             </main>

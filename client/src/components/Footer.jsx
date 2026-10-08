@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="editorial-footer">
       <div className="container">
         <div className="footer-grid">
-          {/* Brand Info Column */}
+
           <div>
             <div className="header-brand" style={{ marginBottom: '16px' }} onClick={() => navigate('/')}>
               <span className="footer-brand-title">Swadhara</span>
@@ -21,7 +21,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Navigation Column */}
           <div>
             <h4 className="footer-col-title">Navigation</h4>
             <ul className="footer-links-list">
@@ -32,7 +31,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Categories Column */}
           <div>
             <h4 className="footer-col-title">Skill Categories</h4>
             <ul className="footer-links-list">
@@ -44,7 +42,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support & Community Column */}
           <div>
             <h4 className="footer-col-title">Community</h4>
             <ul className="footer-links-list">
@@ -55,7 +52,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Footer Bottom Bar */}
         <div className="footer-bottom-bar">
           <span>&copy; {new Date().getFullYear()} Swadhara Platform. All rights reserved.</span>
           <span>Crafted with care for Indian Women Creators & Learners.</span>

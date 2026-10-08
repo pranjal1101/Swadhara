@@ -59,11 +59,11 @@ export default function SafeImage({ src, alt, category = 'default', className = 
   };
 
   return (
-    <img 
-      src={imgSrc} 
-      alt={alt || 'Swadhara Craft'} 
-      className={className} 
-      style={style} 
+    <img
+      src={imgSrc}
+      alt={alt || 'Swadhara Craft'}
+      className={className}
+      style={style}
       onError={handleError}
       loading="lazy"
     />

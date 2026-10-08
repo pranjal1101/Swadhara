@@ -46,7 +46,7 @@ export default function Login() {
         boxShadow: 'var(--shadow-card)',
         backgroundColor: '#FFFFFF'
       }}>
-        {/* LEFT EDITORIAL PANEL (Panel 10 Reference) */}
+
         <div style={{
           backgroundColor: 'var(--bg-pink-soft)',
           padding: '48px',
@@ -74,7 +74,6 @@ export default function Login() {
           </div>
         </div>
 
-        {/* RIGHT FORM CONTAINER */}
         <div style={{ padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <h2 style={{ fontSize: '1.8rem', marginBottom: '6px' }}>Welcome back!</h2>
           <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', marginBottom: '28px' }}>

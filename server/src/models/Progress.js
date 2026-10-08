@@ -27,7 +27,6 @@ const ProgressSchema = new mongoose.Schema({
   }
 });
 
-// Ensure a user has unique progress per course
 ProgressSchema.index({ user: 1, course: 1 }, { unique: true });
 
 module.exports = mongoose.model('Progress', ProgressSchema);

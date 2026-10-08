@@ -19,13 +19,11 @@ export const LanguageProvider = ({ children }) => {
     }
   };
 
-  // Helper function to translate static UI strings
   const t = (key) => {
     const resource = translations[language] || en;
     return resource[key] || en[key] || key;
   };
 
-  // Helper function to translate dynamic database objects containing { en, hi, gu }
   const tDynamic = (obj) => {
     if (!obj) return '';
     if (typeof obj === 'string') return obj;

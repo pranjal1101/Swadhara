@@ -4,7 +4,6 @@ async function testFullOrderLifecycle() {
   console.log('--- STARTING SWADHARA ORDER LIFECYCLE DEMO TEST ---');
 
   try {
-    // Step 1: Login as buyer (Sunita)
     console.log('STEP 1: Logging in as Buyer (sunita@swadhara.org)...');
     const buyerLoginRes = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -16,7 +15,6 @@ async function testFullOrderLifecycle() {
     const buyerToken = buyerLoginData.token || buyerLoginData.data?.token;
     console.log('Buyer logged in successfully! Token received.');
 
-    // Step 2: Login as seller (Radha)
     console.log('\nSTEP 2: Logging in as Seller (radha@swadhara.org)...');
     const sellerLoginRes = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -27,7 +25,6 @@ async function testFullOrderLifecycle() {
     const sellerToken = sellerLoginData.token || sellerLoginData.data?.token;
     console.log('Seller logged in successfully! Token received.');
 
-    // Step 3: Fetch products from marketplace
     console.log('\nSTEP 3: Fetching marketplace products...');
     const productsRes = await fetch(`${API_URL}/products`);
     const productsData = await productsRes.json();
@@ -36,7 +33,6 @@ async function testFullOrderLifecycle() {
     const targetProduct = products[0];
     console.log(`Selected Product: "${targetProduct.name}" (Price: ₹${targetProduct.price})`);
 
-    // Step 4: Buyer places order ("Pay ₹X")
     console.log('\nSTEP 4: Buyer places order ("Pay ₹X")...');
     const checkoutRes = await fetch(`${API_URL}/orders`, {
       method: 'POST',
@@ -67,7 +63,6 @@ async function testFullOrderLifecycle() {
       throw new Error(`Order status mismatch! Expected PAID & PENDING, got ${createdOrder.paymentStatus} & ${createdOrder.status}`);
     }
 
-    // Step 5: Buyer checks My Orders
     console.log('\nSTEP 5: Buyer fetching Order History (My Orders)...');
     const buyerOrdersRes = await fetch(`${API_URL}/orders`, {
       headers: { 'Authorization': `Bearer ${buyerToken}` }
@@ -76,7 +71,6 @@ async function testFullOrderLifecycle() {
     const buyerFound = buyerOrdersData.data.find(o => o._id === createdOrder._id);
     console.log(`Buyer Order History contains order? ${!!buyerFound}. Status: ${buyerFound?.status}`);
 
-    // Step 6: Seller checks Incoming Orders
     console.log('\nSTEP 6: Seller fetching Incoming Orders...');
     const sellerOrdersRes = await fetch(`${API_URL}/orders/seller`, {
       headers: { 'Authorization': `Bearer ${sellerToken}` }
@@ -85,7 +79,6 @@ async function testFullOrderLifecycle() {
     const sellerFound = sellerOrdersData.data.find(o => o._id === createdOrder._id);
     console.log(`Seller Incoming Orders contains exact same order? ${!!sellerFound}. Status: ${sellerFound?.status}`);
 
-    // Step 7: Seller clicks "Confirm Order"
     console.log('\nSTEP 7: Seller clicking "Confirm Order" (PENDING -> CONFIRMED)...');
     const confirmRes = await fetch(`${API_URL}/orders/${createdOrder._id}/status`, {
       method: 'PUT',
@@ -98,7 +91,6 @@ async function testFullOrderLifecycle() {
     const confirmData = await confirmRes.json();
     console.log(`Server response for Confirm: Status updated to ${confirmData.data.status}`);
 
-    // Step 8: Buyer verifies order status is now CONFIRMED
     console.log('\nSTEP 8: Buyer verifying updated status...');
     const buyerCheck2Res = await fetch(`${API_URL}/orders`, {
       headers: { 'Authorization': `Bearer ${buyerToken}` }
@@ -108,7 +100,6 @@ async function testFullOrderLifecycle() {
     console.log(`Buyer sees updated Order Status: ${updatedBuyerOrder1.status}`);
     if (updatedBuyerOrder1.status !== 'CONFIRMED') throw new Error('Status not updated to CONFIRMED!');
 
-    // Step 9: Seller clicks "Mark as Delivered"
     console.log('\nSTEP 9: Seller clicking "Mark as Delivered" (CONFIRMED -> DELIVERED)...');
     const deliverRes = await fetch(`${API_URL}/orders/${createdOrder._id}/status`, {
       method: 'PUT',
@@ -121,7 +112,6 @@ async function testFullOrderLifecycle() {
     const deliverData = await deliverRes.json();
     console.log(`Server response for Deliver: Status updated to ${deliverData.data.status}`);
 
-    // Step 10: Buyer verifies order status is now DELIVERED
     console.log('\nSTEP 10: Buyer verifying final status...');
     const buyerCheck3Res = await fetch(`${API_URL}/orders`, {
       headers: { 'Authorization': `Bearer ${buyerToken}` }

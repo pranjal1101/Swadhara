@@ -1,6 +1,3 @@
-/**
- * Swadhara MERN Database Backup & Restore Utility Script
- */
 require('dotenv').config();
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -74,11 +71,9 @@ const restore = async () => {
       if (fs.existsSync(filePath)) {
         const raw = fs.readFileSync(filePath);
         const data = JSON.parse(raw);
-        
-        // Clear existing
+
         await col.model.deleteMany({});
-        
-        // Restore
+
         if (data.length > 0) {
           await col.model.insertMany(data);
         }
@@ -96,7 +91,6 @@ const restore = async () => {
   }
 };
 
-// Check CLI arguments
 const mode = process.argv[2];
 if (mode === 'restore') {
   restore();

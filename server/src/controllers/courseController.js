@@ -1,11 +1,6 @@
 const courseService = require('../services/courseService');
 const progressService = require('../services/progressService');
 
-/**
- * @desc    Get all courses (optional category filter)
- * @route   GET /api/courses
- * @access  Public
- */
 const listCourses = async (req, res, next) => {
   try {
     const { category, difficulty, search } = req.query;
@@ -19,11 +14,6 @@ const listCourses = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get course details & lessons list
- * @route   GET /api/courses/:id
- * @access  Public
- */
 const getCourse = async (req, res, next) => {
   try {
     const courseId = req.params.id;
@@ -37,11 +27,6 @@ const getCourse = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get single lesson detail
- * @route   GET /api/courses/:id/lessons/:lessonId
- * @access  Private (Registered users only)
- */
 const getLesson = async (req, res, next) => {
   try {
     const { id: courseId, lessonId } = req.params;
@@ -55,11 +40,6 @@ const getLesson = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get user progress for a course
- * @route   GET /api/courses/:id/progress
- * @access  Private (Registered users only)
- */
 const getProgress = async (req, res, next) => {
   try {
     const courseId = req.params.id;
@@ -74,11 +54,6 @@ const getProgress = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Mark a lesson as completed
- * @route   POST /api/courses/:id/lessons/:lessonId/complete
- * @access  Private (Registered users only)
- */
 const completeLesson = async (req, res, next) => {
   try {
     const { id: courseId, lessonId } = req.params;
@@ -95,11 +70,6 @@ const completeLesson = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get user's enrolled courses and percentages
- * @route   GET /api/courses/user/enrolled
- * @access  Private (Registered users only)
- */
 const getEnrolledCourses = async (req, res, next) => {
   try {
     const enrolled = await progressService.getUserEnrolledCourses(req.user._id);

@@ -14,7 +14,6 @@ export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
 
-  // Form states
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -137,7 +136,7 @@ export default function Cart() {
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px' }}>
-          {/* Cart Items List */}
+
           <div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {cartItems.map((item) => (
@@ -153,7 +152,7 @@ export default function Cart() {
                     </span>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      {/* Quantity Selector */}
+
                       <div style={{ display: 'inline-flex', alignItems: 'center', border: '1px solid var(--border-subtle)', borderRadius: 'var(--border-radius-sm)', height: '36px', backgroundColor: '#FFFFFF' }}>
                         <button onClick={() => handleQtyChange(item.product, -1)} style={{ width: '32px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <Minus size={14} />
@@ -183,7 +182,6 @@ export default function Cart() {
             </div>
           </div>
 
-          {/* Delivery Details Form */}
           <div className="card-pink-surface" style={{ padding: '32px' }}>
             <h2 style={{ fontSize: '1.4rem', marginBottom: '20px' }}>Delivery Details</h2>
 

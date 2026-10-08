@@ -15,7 +15,6 @@ export default function Profile() {
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Edit fields
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [bio, setBio] = useState('');
@@ -96,7 +95,6 @@ export default function Profile() {
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
       {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
 
-      {/* CREATOR PROFILE HEADER BANNER (Panel 8 Reference) */}
       <div style={{
         backgroundColor: 'var(--bg-pink-soft)',
         border: '1px solid var(--border-subtle)',
@@ -141,8 +139,8 @@ export default function Profile() {
           </div>
         </div>
 
-        <button 
-          onClick={() => setEditMode(!editMode)} 
+        <button
+          onClick={() => setEditMode(!editMode)}
           className="btn btn-outline btn-sm"
           style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
         >
@@ -150,7 +148,6 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* EDIT MODE FORM */}
       {editMode ? (
         <div className="card-editorial" style={{ padding: '32px', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '1.4rem', marginBottom: '24px' }}>Edit Profile Information</h2>
@@ -215,9 +212,9 @@ export default function Profile() {
         </div>
       ) : (
         <>
-          {/* PROFILE STATS & BIO (Panel 8 Reference) */}
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
-            {/* About Me */}
+
             <div className="card-editorial" style={{ padding: '24px' }}>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>About Me</h3>
               <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: '1.6', margin: 0 }}>
@@ -225,7 +222,6 @@ export default function Profile() {
               </p>
             </div>
 
-            {/* My Skills */}
             <div className="card-editorial" style={{ padding: '24px' }}>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>My Craft Skills</h3>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -238,7 +234,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* MY PURCHASES & ORDER HISTORY CARD */}
           <div style={{ marginBottom: '24px' }}>
             <div className="card-editorial" style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
@@ -255,7 +250,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* MAKER ACCOUNT ACTIVATION CARD */}
           <div style={{ marginBottom: '40px' }}>
             {user.role === 'seller' ? (
               <div className="card-pink-surface" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

@@ -1,6 +1,3 @@
-/**
- * Swadhara MERN Database Statistics Helper Script
- */
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');

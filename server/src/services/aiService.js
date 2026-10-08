@@ -1,9 +1,6 @@
 const { GoogleGenAI } = require('@google/genai');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-/**
- * Check if GEMINI_API_KEY environment variable is present and valid
- */
 const getAiApiKey = () => {
   const apiKey = process.env.GEMINI_API_KEY;
   console.log("Gemini API configured:", Boolean(process.env.GEMINI_API_KEY));
@@ -14,9 +11,6 @@ const getAiApiKey = () => {
   return apiKey.trim();
 };
 
-/**
- * Core function to execute real Gemini API requests using @google/genai & @google/generative-ai
- */
 const generateGeminiText = async (systemInstruction, userPrompt) => {
   const apiKey = getAiApiKey();
   if (!apiKey) {
@@ -60,7 +54,6 @@ const generateGeminiText = async (systemInstruction, userPrompt) => {
     }
   }
 
-  // Fallback to @google/generative-ai SDK if @google/genai fails
   try {
     console.log("Calling Gemini (fallback GoogleGenerativeAI)...");
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -87,10 +80,6 @@ const generateGeminiText = async (systemInstruction, userPrompt) => {
   throw new Error('AI service unavailable');
 };
 
-/**
- * FEATURE 1: AI Course Recommender
- * Recommends 3 real Swadhara courses using Gemini API.
- */
 const recommendCourses = async (preferences, availableCourses, language = 'en') => {
   const catalogSummary = availableCourses.map(c => ({
     id: c._id.toString(),
@@ -162,10 +151,6 @@ ${JSON.stringify(catalogSummary, null, 2)}
   return [];
 };
 
-/**
- * FEATURE 2: AI Course Tutor / Doubt Solver
- * Sends real course + lesson context to Gemini and returns generated answer.
- */
 const askCourseTutor = async ({ course, lesson, question, language = 'en' }) => {
   const courseTitle = typeof course.title === 'object' ? (course.title.en || course.title.hi || '') : course.title;
   const courseCategory = course.category?.name?.en || course.category?.slug || 'Skill';

@@ -1,10 +1,5 @@
 const productService = require('../services/productService');
 
-/**
- * @desc    Get all categories
- * @route   GET /api/categories
- * @access  Public
- */
 const listCategories = async (req, res, next) => {
   try {
     const categories = await productService.getCategories();
@@ -17,11 +12,6 @@ const listCategories = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get products (with search, category filter, sort)
- * @route   GET /api/products
- * @access  Public
- */
 const listProducts = async (req, res, next) => {
   try {
     const { search, category, sort } = req.query;
@@ -35,11 +25,6 @@ const listProducts = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get a single product details
- * @route   GET /api/products/:id
- * @access  Public
- */
 const getProduct = async (req, res, next) => {
   try {
     const product = await productService.getProductById(req.params.id);
@@ -52,11 +37,6 @@ const getProduct = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Create a product
- * @route   POST /api/products
- * @access  Private (Seller only)
- */
 const createProduct = async (req, res, next) => {
   try {
     const product = await productService.createProduct(req.user._id, req.body);
@@ -70,11 +50,6 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Update a product
- * @route   PUT /api/products/:id
- * @access  Private (Seller only, owner checks apply)
- */
 const updateProduct = async (req, res, next) => {
   try {
     const product = await productService.updateProduct(req.user._id, req.params.id, req.body);
@@ -88,11 +63,6 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Delete a product
- * @route   DELETE /api/products/:id
- * @access  Private (Seller only, owner checks apply)
- */
 const deleteProduct = async (req, res, next) => {
   try {
     const result = await productService.deleteProduct(req.user._id, req.params.id);
@@ -105,11 +75,6 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get seller's own products
- * @route   GET /api/seller/products
- * @access  Private (Seller only)
- */
 const listSellerProducts = async (req, res, next) => {
   try {
     const products = await productService.getSellerProducts(req.user._id);
@@ -122,11 +87,6 @@ const listSellerProducts = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Create a product rating and review
- * @route   POST /api/products/:id/reviews
- * @access  Private (Registered users only)
- */
 const createReview = async (req, res, next) => {
   try {
     const productId = req.params.id;

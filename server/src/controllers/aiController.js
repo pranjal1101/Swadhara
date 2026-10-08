@@ -2,16 +2,10 @@ const aiService = require('../services/aiService');
 const Course = require('../models/Course');
 const Lesson = require('../models/Lesson');
 
-/**
- * @desc    Get AI course recommendations based on user preferences
- * @route   POST /api/ai/recommend
- * @access  Public
- */
 const getCourseRecommendations = async (req, res, next) => {
   try {
     const { interest, skillLevel, goal, timeCommitment, language } = req.body;
 
-    // Fetch all existing courses from MongoDB
     const availableCourses = await Course.find({}).populate('category');
 
     if (!availableCourses || availableCourses.length === 0) {
@@ -28,14 +22,12 @@ const getCourseRecommendations = async (req, res, next) => {
       timeCommitment: timeCommitment || '30-60 minutes'
     };
 
-    // Get recommendations from AI service
     const rawRecommendations = await aiService.recommendCourses(
       preferences,
       availableCourses,
       language || 'en'
     );
 
-    // Populate actual full MongoDB Course objects
     const courseMap = new Map(availableCourses.map(c => [c._id.toString(), c]));
 
     const hydratedRecommendations = rawRecommendations
@@ -63,17 +55,11 @@ const getCourseRecommendations = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Ask AI tutor a doubt about a specific course or lesson
- * @route   POST /api/ai/ask
- * @access  Public / Learner
- */
 const askTutorQuestion = async (req, res, next) => {
   try {
     console.log("AI Controller received:", req.body);
     const { courseId, lessonId, question, language } = req.body;
 
-    // Input validation
     if (!question || typeof question !== 'string' || question.trim() === '') {
       return res.status(400).json({
         success: false,
@@ -96,7 +82,6 @@ const askTutorQuestion = async (req, res, next) => {
       });
     }
 
-    // Fetch real course from MongoDB
     const course = await Course.findById(courseId).populate('category');
     if (!course) {
       return res.status(404).json({
@@ -105,13 +90,11 @@ const askTutorQuestion = async (req, res, next) => {
       });
     }
 
-    // Fetch lesson if lessonId provided
     let lesson = null;
     if (lessonId) {
       lesson = await Lesson.findOne({ _id: lessonId, course: courseId });
     }
 
-    // Call AI Tutor service
     const answer = await aiService.askCourseTutor({
       course,
       lesson,

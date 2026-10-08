@@ -1,7 +1,3 @@
-/**
- * Swadhara Request Validation Middleware
- */
-
 const validateRegister = (req, res, next) => {
   const { name, email, password } = req.body;
 

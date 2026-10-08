@@ -53,7 +53,7 @@ export default function Orders() {
 
   return (
     <div className="container section" style={{ maxWidth: '880px' }}>
-      {/* Header */}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
           <h1 style={{ margin: '0 0 4px 0', fontSize: '2.2rem', color: 'var(--primary-dark)' }}>
@@ -92,7 +92,7 @@ export default function Orders() {
 
             return (
               <div key={order._id} className="card-editorial" style={{ padding: '24px' }}>
-                {/* Order Top Bar */}
+
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -137,7 +137,6 @@ export default function Orders() {
                   </div>
                 </div>
 
-                {/* Order Items Body */}
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
                   <div style={{ width: '80px', height: '80px', borderRadius: 'var(--border-radius-sm)', overflow: 'hidden', flexShrink: 0, border: '1px solid var(--border-subtle)' }}>
                     <SafeImage src={productImage} alt={product?.name || 'Product'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -163,7 +162,6 @@ export default function Orders() {
                   </div>
                 </div>
 
-                {/* Footer Action */}
                 <div style={{
                   borderTop: '1px solid var(--border-subtle)',
                   paddingTop: '14px',
@@ -189,7 +187,6 @@ export default function Orders() {
         </div>
       )}
 
-      {/* ORDER DETAILS MODAL */}
       {selectedOrder && (
         <div style={{
           position: 'fixed',
@@ -213,7 +210,7 @@ export default function Orders() {
             backgroundColor: '#FFFFFF',
             position: 'relative'
           }}>
-            {/* Close Button */}
+
             <button
               onClick={() => setSelectedOrder(null)}
               style={{
@@ -236,7 +233,6 @@ export default function Orders() {
               Order #{selectedOrder.orderNumber || `SWD-${selectedOrder._id.substring(selectedOrder._id.length - 6).toUpperCase()}`}
             </h2>
 
-            {/* VISUAL STATUS PROGRESSION TRACKER */}
             <div style={{
               backgroundColor: 'var(--bg-pink-soft)',
               borderRadius: 'var(--border-radius-md)',
@@ -249,7 +245,7 @@ export default function Orders() {
               </h4>
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
-                {/* Step 1: PENDING */}
+
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2, flex: 1 }}>
                   <div style={{
                     width: '36px',
@@ -275,7 +271,6 @@ export default function Orders() {
                   </span>
                 </div>
 
-                {/* Connecting Line 1 */}
                 <div style={{
                   height: '3px',
                   backgroundColor: getStatusStepIndex(selectedOrder.status) >= 2 ? 'var(--primary-rose-dark)' : '#E0E0E0',
@@ -283,7 +278,6 @@ export default function Orders() {
                   marginTop: '-24px'
                 }}></div>
 
-                {/* Step 2: CONFIRMED */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2, flex: 1 }}>
                   <div style={{
                     width: '36px',
@@ -309,7 +303,6 @@ export default function Orders() {
                   </span>
                 </div>
 
-                {/* Connecting Line 2 */}
                 <div style={{
                   height: '3px',
                   backgroundColor: getStatusStepIndex(selectedOrder.status) >= 3 ? 'var(--primary-rose-dark)' : '#E0E0E0',
@@ -317,7 +310,6 @@ export default function Orders() {
                   marginTop: '-24px'
                 }}></div>
 
-                {/* Step 3: DELIVERED */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2, flex: 1 }}>
                   <div style={{
                     width: '36px',
@@ -345,7 +337,6 @@ export default function Orders() {
               </div>
             </div>
 
-            {/* Product Summary */}
             <div style={{ marginBottom: '24px' }}>
               <h4 style={{ fontSize: '1rem', marginBottom: '12px', color: 'var(--primary-dark)' }}>Purchased Items</h4>
               {selectedOrder.items.map((item, idx) => {
@@ -378,7 +369,6 @@ export default function Orders() {
               })}
             </div>
 
-            {/* Info Grid: Address & Payment */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
               <div style={{ backgroundColor: '#FAF8F9', padding: '16px', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--border-subtle)' }}>
                 <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>

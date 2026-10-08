@@ -1,5 +1,4 @@
 export const hi = {
-  // Navigation
   navLearn: 'सीखें',
   navMarketplace: 'बाज़ार',
   navAbout: 'स्वधारा के बारे में',
@@ -10,13 +9,11 @@ export const hi = {
   navSellerDashboard: 'निर्माता पैनल',
   navProfile: 'प्रोफ़ाइल',
 
-  // Hero Section
   heroTitle: 'एक उपयोगी कौशल सीखें। अपनी खुद की पहचान बनाएं।',
   heroSubtitle: 'स्वधारा महिलाओं को सिलाई, बेकिंग और हस्तशिल्प सीखने में मदद करती है, और उनके द्वारा बनाई गई वस्तुओं को प्रदर्शित करने और बेचने का सीधा रास्ता देती है।',
   ctaStartLearning: 'सीखना शुरू करें',
   ctaExploreMarketplace: 'बाज़ार देखें',
 
-  // Homepage Sections
   sectionThreeStepsTitle: 'स्वधारा कैसे काम करता है',
   stepLearnTitle: '01 — सीखें',
   stepLearnText: 'कदम-दर-कदम उपयोगी वीडियो सबक देखें।',
@@ -29,7 +26,6 @@ export const hi = {
   sectionCTATitle: 'अपनी आजीविका बनाने के लिए तैयार हैं?',
   sectionCTASubtitle: 'आज ही हमारे सीखने और बनाने वाले समुदाय से जुड़ें।',
 
-  // Common UI Actions / States
   back: 'पीछे',
   next: 'आगे',
   save: 'सहेजें',
@@ -45,7 +41,6 @@ export const hi = {
   category: 'श्रेणी',
   quantity: 'मात्रा',
 
-  // Courses UI
   courseLevel: 'कठिनाई (Difficulty)',
   courseDifficulty: 'कठिनाई (Difficulty)',
   difficultyAll: 'सभी स्तर',
@@ -67,7 +62,6 @@ export const hi = {
   emptyCourses: 'आपकी खोज या फ़िल्टर से कोई कोर्स नहीं मिला।',
   courseDetails: 'पाठ्यक्रम सूची',
 
-  // Marketplace UI
   searchPlaceholder: 'हस्तनिर्मित सामान खोजें...',
   allCategories: 'सभी श्रेणियां',
   sortBy: 'क्रमबद्ध करें',
@@ -77,7 +71,6 @@ export const hi = {
   addToCart: 'कार्ट में जोड़ें',
   addedToCart: 'कार्ट में जोड़ा गया',
 
-  // Cart / Checkout
   cartTitle: 'आपका थैला',
   emptyCart: 'आपका कार्ट खाली है।',
   cartTotal: 'कुल राशि',
@@ -93,7 +86,6 @@ export const hi = {
   orderDate: 'तारीख',
   orderStatus: 'स्थिति (स्टेटस)',
 
-  // Seller Dashboard
   sellerOverview: 'निर्माता डैशबोर्ड',
   sellerMyProducts: 'मेरे उत्पाद',
   sellerIncomingOrders: 'आए हुए ऑर्डर',

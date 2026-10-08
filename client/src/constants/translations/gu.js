@@ -1,5 +1,4 @@
 export const gu = {
-  // Navigation
   navLearn: 'શીખો',
   navMarketplace: 'બજાર',
   navAbout: 'સ્વધારા વિશે',
@@ -10,13 +9,11 @@ export const gu = {
   navSellerDashboard: 'ઉત્પાદક પેનલ',
   navProfile: 'પ્રોફાઇલ',
 
-  // Hero Section
   heroTitle: 'એક ઉપયોગી કૌશલ્ય શીખો. તમારી પોતાની ઓળખ બનાવો.',
   heroSubtitle: 'સ્વધારા મહિલાઓને સિલાઈ, બેકિંગ અને હસ્તકલા શીખવામાં મદદ કરે છે, અને તેમના દ્વારા બનાવાયેલી વસ્તુઓ બજારમાં પ્રદર્શિત કરવા અને વેચવાનો સીધો માર્ગ આપે છે.',
   ctaStartLearning: 'શીખવાનું શરૂ કરો',
   ctaExploreMarketplace: 'બજાર જુઓ',
 
-  // Homepage Sections
   sectionThreeStepsTitle: 'સ્વધારા કેવી રીતે કામ કરે છે',
   stepLearnTitle: '01 — શીખો',
   stepLearnText: 'પગલા-દર-પગલાં ઉપયોગી વિડિઓ પાઠ જુઓ.',
@@ -29,7 +26,6 @@ export const gu = {
   sectionCTATitle: 'તમારી પોતાની આજીવિકા બનાવવા માટે તૈયાર છો?',
   sectionCTASubtitle: 'આજે જ અમારા શીખનારા અને ઉત્પાદકોના સમુદાયમાં જોડાઓ.',
 
-  // Common UI Actions / States
   back: 'પાછા જાઓ',
   next: 'આગળ વધો',
   save: 'સાચવો',
@@ -45,7 +41,6 @@ export const gu = {
   category: 'શ્રેણી',
   quantity: 'પ્રમાણ (જથ્થો)',
 
-  // Courses UI
   courseLevel: 'મુશ્કેલી (Difficulty)',
   courseDifficulty: 'મુશ્કેલી (Difficulty)',
   difficultyAll: 'બધા સ્તર',
@@ -67,7 +62,6 @@ export const gu = {
   emptyCourses: 'તમારી શોધ અથવા ફિલ્ટર મુજબ કોઈ કોર્સ મળ્યો નથી.',
   courseDetails: 'અભ્યાસક્રમની વિગતો',
 
-  // Marketplace UI
   searchPlaceholder: 'હસ્તનિર્મિત વસ્તુઓ શોધો...',
   allCategories: 'બધી શ્રેણીઓ',
   sortBy: 'ક્રમબદ્ધ કરો',
@@ -77,7 +71,6 @@ export const gu = {
   addToCart: 'કાર્ટમાં ઉમેરો',
   addedToCart: 'કાર્ટમાં ઉમેરાયેલ',
 
-  // Cart / Checkout
   cartTitle: 'તમારી ખરીદી બેગ',
   emptyCart: 'તમારું કાર્ટ ખાલી છે.',
   cartTotal: 'કુલ રકમ',
@@ -93,7 +86,6 @@ export const gu = {
   orderDate: 'તારીખ',
   orderStatus: 'સ્થિતિ (સ્ટેટસ)',
 
-  // Seller Dashboard
   sellerOverview: 'ઉત્પાદક ડેશબોર્ડ',
   sellerMyProducts: 'મારા ઉત્પાદનો',
   sellerIncomingOrders: 'આવેલા ઓર્ડર્સ',

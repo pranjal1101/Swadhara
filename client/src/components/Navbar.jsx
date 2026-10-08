@@ -33,7 +33,6 @@ export default function Navbar() {
     };
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
@@ -68,69 +67,66 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Primary Top Editorial Navigation Header Bar */}
+
       <header className="top-header-bar">
         <div className="header-container">
-          {/* Left Brand Identity */}
+
           <div className="header-brand" onClick={() => navigate('/')}>
             <span className="header-brand-logo">Swadhara</span>
             <span className="header-brand-dot"></span>
           </div>
 
-          {/* Center Navigation Links */}
           <nav className="header-nav-links">
-            <Link 
-              to="/courses" 
+            <Link
+              to="/courses"
               className={`header-nav-link ${isActive('/courses') ? 'active' : ''}`}
             >
               Learn
             </Link>
-            
-            <Link 
-              to={user?.role === 'seller' ? '/seller' : '/profile'} 
+
+            <Link
+              to={user?.role === 'seller' ? '/seller' : '/profile'}
               className={`header-nav-link ${isActive('/seller') ? 'active' : ''}`}
             >
               Create
             </Link>
 
-            <Link 
-              to="/marketplace" 
+            <Link
+              to="/marketplace"
               className={`header-nav-link ${isActive('/marketplace') ? 'active' : ''}`}
             >
               Marketplace
             </Link>
 
             {user && (
-              <Link 
-                to="/orders" 
+              <Link
+                to="/orders"
                 className={`header-nav-link ${isActive('/orders') ? 'active' : ''}`}
               >
                 My Orders
               </Link>
             )}
 
-            <Link 
-              to={user ? '/dashboard' : '/login'} 
+            <Link
+              to={user ? '/dashboard' : '/login'}
               className={`header-nav-link ${isActive('/dashboard') ? 'active' : ''}`}
             >
               My Journey
             </Link>
           </nav>
 
-          {/* Right Utilities & Profile Actions */}
           <div className="header-utility-actions">
-            {/* Search Action */}
-            <button 
-              className="icon-action-btn" 
+
+            <button
+              className="icon-action-btn"
               onClick={() => navigate('/courses')}
               title="Search Courses & Products"
             >
               <Search size={19} />
             </button>
 
-            {/* Shopping Bag Cart Action with Badge */}
-            <button 
-              className="icon-action-btn" 
+            <button
+              className="icon-action-btn"
               onClick={() => navigate('/cart')}
               title="Shopping Cart"
             >
@@ -138,20 +134,18 @@ export default function Navbar() {
               {cartCount > 0 && <span className="header-badge-count">{cartCount}</span>}
             </button>
 
-            {/* Language Cycle Toggle */}
-            <button 
-              onClick={handleLanguageCycle} 
+            <button
+              onClick={handleLanguageCycle}
               className="lang-toggle-btn"
               title="Switch Language"
             >
               {getLanguageLabel()}
             </button>
 
-            {/* User Profile Avatar / Auth */}
             {user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <button 
-                  onClick={() => navigate('/profile')} 
+                <button
+                  onClick={() => navigate('/profile')}
                   className="user-avatar-btn"
                   title={user.name}
                 >
@@ -162,8 +156,8 @@ export default function Navbar() {
                   )}
                 </button>
 
-                <button 
-                  onClick={handleLogout} 
+                <button
+                  onClick={handleLogout}
                   className="icon-action-btn"
                   title="Logout"
                 >
@@ -171,17 +165,16 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <button 
-                onClick={() => navigate('/login')} 
+              <button
+                onClick={() => navigate('/login')}
                 className="btn btn-primary btn-sm btn-pill"
               >
                 Sign In
               </button>
             )}
 
-            {/* Mobile Menu Toggle Button */}
-            <button 
-              className="icon-action-btn mobile-only-toggle" 
+            <button
+              className="icon-action-btn mobile-only-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               style={{ display: 'none' }}
               aria-label="Toggle menu"
@@ -192,42 +185,41 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation Bar (Panel 13) */}
       <nav className="mobile-bottom-bar">
-        <button 
-          onClick={() => navigate('/')} 
+        <button
+          onClick={() => navigate('/')}
           className={`mobile-nav-item ${isActive('/') ? 'active' : ''}`}
         >
           <Compass size={20} />
           <span>Home</span>
         </button>
 
-        <button 
-          onClick={() => navigate('/courses')} 
+        <button
+          onClick={() => navigate('/courses')}
           className={`mobile-nav-item ${isActive('/courses') ? 'active' : ''}`}
         >
           <BookOpen size={20} />
           <span>Learn</span>
         </button>
 
-        <button 
-          onClick={() => navigate('/marketplace')} 
+        <button
+          onClick={() => navigate('/marketplace')}
           className={`mobile-nav-item ${isActive('/marketplace') ? 'active' : ''}`}
         >
           <ShoppingBag size={20} />
           <span>Market</span>
         </button>
 
-        <button 
-          onClick={() => navigate(user ? '/dashboard' : '/login')} 
+        <button
+          onClick={() => navigate(user ? '/dashboard' : '/login')}
           className={`mobile-nav-item ${isActive('/dashboard') ? 'active' : ''}`}
         >
           <Layers size={20} />
           <span>Journey</span>
         </button>
 
-        <button 
-          onClick={() => navigate(user ? '/profile' : '/login')} 
+        <button
+          onClick={() => navigate(user ? '/profile' : '/login')}
           className={`mobile-nav-item ${isActive('/profile') ? 'active' : ''}`}
         >
           <User size={20} />

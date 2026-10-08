@@ -8,23 +8,19 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Initialize authentication state on load
   useEffect(() => {
     const initializeAuth = async () => {
       const storedToken = localStorage.getItem('swadhara_token');
-      
+
       if (storedToken) {
         try {
-          // Set global Authorization header for Axios
           axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
           setToken(storedToken);
 
-          // Get fresh profile details
           const response = await axios.get('/api/auth/me');
           if (response.data && response.data.success) {
             setUser(response.data.data);
           } else {
-            // Invalid response
             clearAuth();
           }
         } catch (error) {
@@ -32,7 +28,7 @@ export const AuthProvider = ({ children }) => {
           clearAuth();
         }
       }
-      
+
       setLoading(false);
     };
 
@@ -46,17 +42,16 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
   };
 
-  // Register user (defaults to role: "user")
   const register = async (name, email, password) => {
     try {
       const response = await axios.post('/api/auth/register', { name, email, password });
-      
+
       if (response.data && response.data.success) {
         const { token: userToken, ...userData } = response.data.data;
-        
+
         localStorage.setItem('swadhara_token', userToken);
         axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
-        
+
         setToken(userToken);
         setUser(userData);
         return { success: true };
@@ -67,17 +62,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login user
   const login = async (email, password) => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
-      
+
       if (response.data && response.data.success) {
         const { token: userToken, ...userData } = response.data.data;
-        
+
         localStorage.setItem('swadhara_token', userToken);
         axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
-        
+
         setToken(userToken);
         setUser(userData);
         return { success: true };
@@ -88,16 +82,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout user
   const logout = () => {
     clearAuth();
   };
 
-  // Upgrade profile from user to seller (maker)
   const upgradeToSeller = async () => {
     try {
       const response = await axios.post('/api/auth/upgrade');
-      
+
       if (response.data && response.data.success) {
         setUser(response.data.data);
         return { success: true, message: response.data.message };
@@ -108,11 +100,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Update user profile
   const updateProfileDetails = async (profileData) => {
     try {
       const response = await axios.put('/api/auth/profile', profileData);
-      
+
       if (response.data && response.data.success) {
         setUser(response.data.data);
         return { success: true, message: response.data.message };

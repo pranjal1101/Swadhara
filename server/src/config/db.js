@@ -16,7 +16,6 @@ const connectDB = async () => {
   }
 
   try {
-    // Auto-seed initial data non-destructively if database is fresh/empty
     const Course = require('../models/Course');
     const count = await Course.countDocuments();
     if (count === 0) {

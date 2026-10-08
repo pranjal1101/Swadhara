@@ -60,7 +60,6 @@ const OrderSchema = new mongoose.Schema({
   }
 });
 
-// Auto-generate orderNumber before saving if not present
 OrderSchema.pre('save', function (next) {
   if (!this.orderNumber) {
     const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();

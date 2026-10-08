@@ -1,16 +1,10 @@
-/* ==========================================================================
-   SWADHARA DESIGN SYSTEM
-   Editorial • Handmade • Modern • Warm • Human
-   ========================================================================== */
-
 :root {
-  /* Color Tokens */
   --bg-base: #FFF7F8;
   --bg-card: #FFFFFF;
   --bg-pink-soft: #F8DDE3;
   --bg-pink-subtle: #FDF2F4;
   --bg-pink-hover: #F3CBD3;
-  
+
   --primary-dark: #2E2226;
   --primary-rose: #E8A8B8;
   --primary-rose-dark: #C86B85;
@@ -20,11 +14,11 @@
   --text-muted: #6E5A63;
   --text-light: #9E8690;
   --text-white: #FFFFFF;
-  
+
   --border-subtle: #F0D6DC;
   --border-rose: #E4B5C1;
   --border-focus: #C86B85;
-  
+
   --success-bg: #EAF5EA;
   --success-text: #2E6A34;
   --error-bg: #FDF0F0;
@@ -32,28 +26,22 @@
   --warning-bg: #FFF8E6;
   --warning-text: #966000;
 
-  /* Typography Tokens */
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  /* Layout Tokens */
+
   --max-width: 1240px;
   --header-height: 72px;
   --border-radius-sm: 8px;
   --border-radius-md: 14px;
   --border-radius-lg: 20px;
   --border-radius-pill: 9999px;
-  
-  /* Shadows & Transitions */
+
   --shadow-subtle: 0 4px 20px rgba(70, 40, 50, 0.04);
   --shadow-card: 0 6px 24px rgba(70, 40, 50, 0.06);
   --shadow-hover: 0 12px 32px rgba(70, 40, 50, 0.10);
   --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --------------------------------------------------------------------------
-   Global Reset & Base Styles
-   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -99,9 +87,6 @@ img {
   display: block;
 }
 
-/* --------------------------------------------------------------------------
-   Typography System
-   -------------------------------------------------------------------------- */
 .serif-heading {
   font-family: var(--font-serif);
   color: var(--primary-dark);
@@ -159,7 +144,6 @@ p {
   color: var(--text-light);
 }
 
-/* Eyebrow / Tagline Pill */
 .eyebrow-pill {
   display: inline-flex;
   align-items: center;
@@ -176,9 +160,6 @@ p {
   border: 1px solid var(--border-rose);
 }
 
-/* --------------------------------------------------------------------------
-   Layout Containers
-   -------------------------------------------------------------------------- */
 .app-layout {
   min-height: 100vh;
   display: flex;
@@ -206,9 +187,6 @@ p {
   padding: 40px 0;
 }
 
-/* --------------------------------------------------------------------------
-   Buttons System
-   -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -304,9 +282,6 @@ p {
   box-shadow: none !important;
 }
 
-/* --------------------------------------------------------------------------
-   Cards System
-   -------------------------------------------------------------------------- */
 .card-editorial {
   background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -329,9 +304,6 @@ p {
   padding: 24px;
 }
 
-/* --------------------------------------------------------------------------
-   Form Elements & Inputs
-   -------------------------------------------------------------------------- */
 .form-group {
   margin-bottom: 20px;
 }
@@ -379,9 +351,6 @@ select.form-control {
   padding-right: 40px;
 }
 
-/* --------------------------------------------------------------------------
-   Badges & Indicators
-   -------------------------------------------------------------------------- */
 .badge-tag {
   display: inline-flex;
   align-items: center;
@@ -431,7 +400,6 @@ select.form-control {
   gap: 4px;
 }
 
-/* Alert Boxes */
 .alert {
   padding: 14px 18px;
   border-radius: var(--border-radius-sm);
@@ -452,9 +420,6 @@ select.form-control {
   border: 1px solid #C4E4C4;
 }
 
-/* --------------------------------------------------------------------------
-   Navigation Header Bar
-   -------------------------------------------------------------------------- */
 .top-header-bar {
   position: fixed;
   top: 0;
@@ -610,7 +575,6 @@ select.form-control {
   object-fit: cover;
 }
 
-/* Mobile Top & Bottom Navigation */
 .mobile-header-bar {
   display: none;
 }
@@ -623,11 +587,11 @@ select.form-control {
   .header-nav-links {
     display: none;
   }
-  
+
   .top-header-bar {
     display: flex;
   }
-  
+
   .mobile-bottom-bar {
     display: flex;
     position: fixed;
@@ -643,7 +607,7 @@ select.form-control {
     align-items: center;
     padding: 0 8px;
   }
-  
+
   .mobile-nav-item {
     display: flex;
     flex-direction: column;
@@ -657,20 +621,17 @@ select.form-control {
     border-radius: 8px;
     transition: var(--transition);
   }
-  
+
   .mobile-nav-item.active {
     color: var(--primary-rose-dark);
     font-weight: 700;
   }
-  
+
   .main-content {
     padding-bottom: 70px;
   }
 }
 
-/* --------------------------------------------------------------------------
-   Editorial Footer Component
-   -------------------------------------------------------------------------- */
 .editorial-footer {
   background-color: #F8ECEE;
   border-top: 1px solid var(--border-subtle);
@@ -749,9 +710,6 @@ select.form-control {
   }
 }
 
-/* --------------------------------------------------------------------------
-   Grid Layouts
-   -------------------------------------------------------------------------- */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -782,9 +740,6 @@ select.form-control {
   }
 }
 
-/* --------------------------------------------------------------------------
-   Skeleton Loader
-   -------------------------------------------------------------------------- */
 .skeleton {
   background: linear-gradient(90deg, #F5E5E8 25%, #FBF0F2 50%, #F5E5E8 75%);
   background-size: 200% 100%;

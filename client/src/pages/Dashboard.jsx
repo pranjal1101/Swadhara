@@ -44,7 +44,6 @@ export default function Dashboard() {
   const activeCourseProgress = enrolledCourses[0] || null;
   const activeCourse = activeCourseProgress?.course || null;
 
-  // Sample skill journey indicators (Panel 4 Reference)
   const learningSkills = [
     { title: 'Embroidery', progress: 40 },
     { title: 'Tailoring', progress: 25 },
@@ -52,7 +51,6 @@ export default function Dashboard() {
     { title: 'Jewellery', progress: 0 }
   ];
 
-  // User projects showcase (Panel 4 Reference)
   const myProjectsList = [
     { title: 'Embroidery Tote Bag', status: 'In progress - 60%', img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=300&auto=format&fit=crop' },
     { title: 'Baking Dreams', status: 'In progress - 70%', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=300&auto=format&fit=crop' },
@@ -70,7 +68,7 @@ export default function Dashboard() {
 
   return (
     <div className="container section">
-      {/* Header Banner (Panel 4 Reference) */}
+
       <div style={{
         backgroundColor: 'var(--bg-pink-soft)',
         border: '1px solid var(--border-subtle)',
@@ -98,13 +96,11 @@ export default function Dashboard() {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {/* Main Grid: Continue Learning + Focus & Journey */}
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px', marginBottom: '40px' }}>
-        
-        {/* LEFT: CONTINUE LEARNING HERO CARD */}
+
         <div>
           <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Continue Learning</h3>
-          
+
           {activeCourse ? (
             <div className="card-editorial" style={{ padding: '24px', display: 'flex', gap: '20px', alignItems: 'center' }}>
               <div style={{ width: '140px', height: '120px', borderRadius: 'var(--border-radius-sm)', overflow: 'hidden', flexShrink: 0 }}>
@@ -121,7 +117,6 @@ export default function Dashboard() {
                   Lesson 3 &bull; {activeCourseProgress.percentage}% complete
                 </span>
 
-                {/* Progress bar */}
                 <div style={{ height: '6px', backgroundColor: '#F0E2E5', borderRadius: '3px', overflow: 'hidden', marginBottom: '16px' }}>
                   <div style={{ width: `${activeCourseProgress.percentage}%`, height: '100%', backgroundColor: 'var(--primary-rose-dark)' }}></div>
                 </div>

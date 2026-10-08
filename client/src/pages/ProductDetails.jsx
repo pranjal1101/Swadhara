@@ -18,7 +18,6 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
-  // Review form states
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
@@ -144,7 +143,7 @@ export default function ProductDetails() {
 
   return (
     <div className="container section">
-      {/* Breadcrumb Navigation */}
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: '28px' }}>
         <Link to="/marketplace" style={{ color: 'var(--text-muted)' }}>Marketplace</Link>
         <ChevronRight size={14} />
@@ -154,7 +153,7 @@ export default function ProductDetails() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '48px', marginBottom: '56px' }}>
-        {/* Product Image Gallery */}
+
         <div>
           <div style={{ borderRadius: 'var(--border-radius-md)', overflow: 'hidden', height: '420px', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-subtle)', backgroundColor: '#FFFFFF' }}>
             <SafeImage
@@ -166,7 +165,6 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        {/* Product Details Column (Panel 7 Reference) */}
         <div>
           <span className="badge-tag" style={{ marginBottom: '12px' }}>
             {tDynamic(product.category?.name)}
@@ -184,7 +182,6 @@ export default function ProductDetails() {
             )}
           </div>
 
-          {/* Maker Line */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--bg-pink-soft)', padding: '12px 16px', borderRadius: 'var(--border-radius-sm)', marginBottom: '24px' }}>
             <img
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
@@ -200,10 +197,9 @@ export default function ProductDetails() {
             {product.description}
           </p>
 
-          {/* Add to Cart Actions */}
           {product.stock > 0 && (
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '32px' }}>
-              {/* Quantity Counter */}
+
               <div style={{ display: 'inline-flex', alignItems: 'center', border: '1px solid var(--border-subtle)', borderRadius: 'var(--border-radius-sm)', overflow: 'hidden', height: '48px', backgroundColor: '#FFFFFF' }}>
                 <button onClick={handleDecrement} disabled={quantity <= 1} style={{ width: '40px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Minus size={16} />
@@ -236,7 +232,6 @@ export default function ProductDetails() {
             </div>
           )}
 
-          {/* MEET THE CREATOR SPOTLIGHT CARD (Panel 7 Reference) */}
           <div style={{
             backgroundColor: '#FFFFFF',
             border: '1px solid var(--border-subtle)',
@@ -264,12 +259,11 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* CUSTOMER REVIEWS & RATINGS SECTION */}
       <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '40px' }}>
         <h2 style={{ fontSize: '1.8rem', marginBottom: '24px' }}>Customer Reviews ({product.numReviews})</h2>
-        
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '40px' }}>
-          {/* Reviews List */}
+
           <div>
             {product.reviews && product.reviews.length === 0 ? (
               <p style={{ color: 'var(--text-muted)' }}>No reviews yet. Be the first to share your thoughts!</p>
@@ -283,7 +277,7 @@ export default function ProductDetails() {
                         {new Date(rev.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    {/* SVG Rating Stars */}
+
                     <div style={{ display: 'flex', gap: '2px', marginBottom: '8px', color: '#D4AF37' }}>
                       {[1, 2, 3, 4, 5].map(star => (
                         <Star key={star} size={14} fill={star <= rev.rating ? '#D4AF37' : 'none'} stroke="#D4AF37" />
@@ -296,7 +290,6 @@ export default function ProductDetails() {
             )}
           </div>
 
-          {/* Write a Review Box */}
           <div className="card-pink-surface" style={{ padding: '24px' }}>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '16px' }}>Write a Review</h3>
 

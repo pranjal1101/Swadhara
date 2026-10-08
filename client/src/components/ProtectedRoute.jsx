@@ -20,12 +20,10 @@ const ProtectedRoute = ({ children, requireSeller = false }) => {
     );
   }
 
-  // User is not logged in
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // User does not have seller permissions
   if (requireSeller && user.role !== 'seller' && user.role !== 'admin') {
     return <Navigate to="/dashboard" replace />;
   }

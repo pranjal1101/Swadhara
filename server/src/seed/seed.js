@@ -28,10 +28,8 @@ const seedData = async (shouldDisconnect = true) => {
     }
     console.log('Connected to MongoDB. Checking existing data...');
 
-    // Only seed if collections are empty or missing default seed data
     console.log('Seeding initial data if needed...');
 
-    // 1. Seed Default Users (Upsert)
     const defaultPassword = 'password123';
 
     let sellerRadha = await User.findOne({ email: 'radha@swadhara.org' });
@@ -62,7 +60,6 @@ const seedData = async (shouldDisconnect = true) => {
 
     console.log(`Verified default users: Radha (Seller), Sunita (User). Seeding categories...`);
 
-    // 2. Seed Categories (Upsert)
     const categoryData = [
       { name: { en: 'Tailoring', hi: 'सिलाई-कटाई', gu: 'ટેલરિંગ' }, slug: 'tailoring', image: '/images/tailoring.jpg' },
       { name: { en: 'Embroidery', hi: 'कढ़ाई', gu: 'ભરતકામ' }, slug: 'embroidery', image: '/images/embroidery.png' },
@@ -122,7 +119,6 @@ const seedData = async (shouldDisconnect = true) => {
 
     console.log(`Seeding check: ${seededCourseCount} new courses with ${seededLessonCount} lessons added.`);
 
-    // 4. Seed Products (sold by Radha Sharma if missing)
     const productCount = await Product.countDocuments();
     if (productCount === 0) {
       const productData = [
@@ -180,7 +176,6 @@ const seedData = async (shouldDisconnect = true) => {
   }
 };
 
-// Run the script directly if invoked
 if (require.main === module) {
   seedData(true);
 }

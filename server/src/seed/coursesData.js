@@ -1,7 +1,5 @@
 const coursesData = [
-  // ==========================================
-  // CATEGORY 1 — TAILORING (6 Courses: 2 Easy, 3 Medium, 1 Hard)
-  // ==========================================
+
   {
     categorySlug: 'tailoring',
     title: {
@@ -311,9 +309,6 @@ const coursesData = [
     ]
   },
 
-  // ==========================================
-  // CATEGORY 2 — EMBROIDERY (6 Courses: 2 Easy, 3 Medium, 1 Hard)
-  // ==========================================
   {
     categorySlug: 'embroidery',
     title: {
@@ -623,9 +618,6 @@ const coursesData = [
     ]
   },
 
-  // ==========================================
-  // CATEGORY 3 — BAKING (6 Courses: 2 Easy, 3 Medium, 1 Hard)
-  // ==========================================
   {
     categorySlug: 'baking',
     title: {
@@ -935,9 +927,6 @@ const coursesData = [
     ]
   },
 
-  // ==========================================
-  // CATEGORY 4 — JEWELLERY MAKING (6 Courses: 2 Easy, 3 Medium, 1 Hard)
-  // ==========================================
   {
     categorySlug: 'jewellery',
     title: {
@@ -1247,9 +1236,6 @@ const coursesData = [
     ]
   },
 
-  // ==========================================
-  // CATEGORY 5 — HANDICRAFTS (6 Courses: 2 Easy, 3 Medium, 1 Hard)
-  // ==========================================
   {
     categorySlug: 'handicrafts',
     title: {

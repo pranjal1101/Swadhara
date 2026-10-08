@@ -1,9 +1,6 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 
-/**
- * Place a new order with demo payment
- */
 const createOrder = async (userId, { items, shippingAddress, paymentMethod, paymentStatus, status }) => {
   if (!items || items.length === 0) {
     throw new Error('No items in the order');
@@ -15,7 +12,6 @@ const createOrder = async (userId, { items, shippingAddress, paymentMethod, paym
   const orderItems = [];
   let totalAmount = 0;
 
-  // Process items, check stock and decrement
   for (const item of items) {
     const product = await Product.findById(item.product);
     if (!product) {
@@ -26,11 +22,9 @@ const createOrder = async (userId, { items, shippingAddress, paymentMethod, paym
       throw new Error(`Insufficient stock for product: ${product.name}. Available: ${product.stock}`);
     }
 
-    // Decrement stock
     product.stock -= item.quantity;
     await product.save();
 
-    // Add to items list with historical price
     orderItems.push({
       product: product._id,
       quantity: item.quantity,
@@ -43,7 +37,6 @@ const createOrder = async (userId, { items, shippingAddress, paymentMethod, paym
   const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();
   const orderNumber = `SWD-${randomHex}`;
 
-  // Create order
   const order = await Order.create({
     orderNumber,
     user: userId,
@@ -63,9 +56,6 @@ const createOrder = async (userId, { items, shippingAddress, paymentMethod, paym
     .populate('user', 'name email location');
 };
 
-/**
- * Get all orders placed by a customer
- */
 const getUserOrders = async (userId) => {
   return await Order.find({ user: userId })
     .populate({
@@ -76,9 +66,6 @@ const getUserOrders = async (userId) => {
     .sort({ createdAt: -1 });
 };
 
-/**
- * Get single order details by ID
- */
 const getOrderById = async (orderId) => {
   return await Order.findById(orderId)
     .populate({
@@ -88,9 +75,6 @@ const getOrderById = async (orderId) => {
     .populate('user', 'name email location');
 };
 
-/**
- * Get all orders containing products belonging to a seller
- */
 const getSellerOrders = async (sellerId) => {
   const products = await Product.find({ seller: sellerId });
   const productIds = products.map(p => p._id);
@@ -104,10 +88,6 @@ const getSellerOrders = async (sellerId) => {
     .sort({ createdAt: -1 });
 };
 
-/**
- * Update order status (Sellers can update status of orders containing their products)
- * State machine allows only: PENDING -> CONFIRMED -> DELIVERED
- */
 const updateOrderStatus = async (sellerId, orderId, status) => {
   const allowedStatuses = ['CONFIRMED', 'DELIVERED'];
   if (!allowedStatuses.includes(status)) {
@@ -127,7 +107,6 @@ const updateOrderStatus = async (sellerId, orderId, status) => {
     throw new Error('Not authorized to update status for this order');
   }
 
-  // Validate state transitions
   if (order.status === 'PENDING' && status !== 'CONFIRMED') {
     throw new Error('Pending order can only be updated to CONFIRMED');
   }

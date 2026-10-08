@@ -28,7 +28,7 @@ export default function Marketplace() {
       setLoading(true);
       try {
         const categoriesUrl = '/api/products/categories';
-        
+
         const params = new URLSearchParams();
         if (categoryFilter) params.append('category', categoryFilter);
         if (searchFilter) params.append('search', searchFilter);
@@ -77,7 +77,6 @@ export default function Marketplace() {
     setSearchParams({});
   };
 
-  // Featured Creators Showcase (Panel 6 Reference)
   const featuredCreators = [
     { name: 'Meena Sharma', skill: 'Embroidery', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop' },
     { name: 'Rani Devi', skill: 'Baking', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop' },
@@ -87,7 +86,7 @@ export default function Marketplace() {
 
   return (
     <div className="container section">
-      {/* HERO MARKETPLACE BANNER (Panel 6 Reference) */}
+
       <div style={{
         backgroundColor: 'var(--bg-pink-soft)',
         borderRadius: 'var(--border-radius-lg)',
@@ -108,8 +107,8 @@ export default function Marketplace() {
           <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '24px' }}>
             Support real women creators. Discover authentic handmade apparel, home decor, jewellery, and craft products directly from Indian makers.
           </p>
-          <button 
-            onClick={() => updateFilters('sort', 'latest')} 
+          <button
+            onClick={() => updateFilters('sort', 'latest')}
             className="btn btn-rose btn-lg"
           >
             Explore Collection <ArrowRight size={18} />
@@ -125,13 +124,12 @@ export default function Marketplace() {
         </div>
       </div>
 
-      {/* FEATURED CREATORS ROW (Panel 6 Reference) */}
       <div style={{ marginBottom: '40px' }}>
         <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Featured Creators</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
           {featuredCreators.map((creator) => (
-            <div 
-              key={creator.name} 
+            <div
+              key={creator.name}
               className="card-editorial"
               onClick={() => navigate('/profile')}
               style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer' }}
@@ -146,7 +144,6 @@ export default function Marketplace() {
         </div>
       </div>
 
-      {/* SEARCH AND CATEGORY FILTER BAR */}
       <div style={{
         backgroundColor: '#FFFFFF',
         padding: '20px 24px',
@@ -156,7 +153,7 @@ export default function Marketplace() {
         marginBottom: '36px'
       }}>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-          {/* Search Form */}
+
           <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '10px', flexGrow: 1, maxWidth: '500px' }}>
             <div style={{ position: 'relative', width: '100%' }}>
               <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
@@ -174,7 +171,6 @@ export default function Marketplace() {
             </button>
           </form>
 
-          {/* Sort Dropdown */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-light)', textTransform: 'uppercase' }}>
               Sort:
@@ -198,7 +194,6 @@ export default function Marketplace() {
           </div>
         </div>
 
-        {/* Category Pills */}
         <div style={{ display: 'flex', gap: '8px', marginTop: '16px', flexWrap: 'wrap' }}>
           <button
             onClick={() => updateFilters('category', '')}
@@ -220,7 +215,6 @@ export default function Marketplace() {
         </div>
       </div>
 
-      {/* PRODUCTS GRID */}
       {loading ? (
         <div className="grid grid-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
@@ -250,8 +244,8 @@ export default function Marketplace() {
                   category={product.category?.slug}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
-                <button 
-                  onClick={(e) => { e.stopPropagation(); }} 
+                <button
+                  onClick={(e) => { e.stopPropagation(); }}
                   style={{ position: 'absolute', top: '10px', right: '10px', width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
                 >
                   <Heart size={16} style={{ color: 'var(--primary-rose-dark)' }} />
@@ -262,11 +256,11 @@ export default function Marketplace() {
                 <span className="badge-tag" style={{ width: 'fit-content', marginBottom: '8px', fontSize: '0.72rem' }}>
                   {tDynamic(product.category?.name)}
                 </span>
-                
+
                 <h3 style={{ fontSize: '1.05rem', margin: '0 0 4px 0', color: 'var(--primary-dark)' }}>
                   {product.name}
                 </h3>
-                
+
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginBottom: '12px', display: 'block' }}>
                   Made by {product.seller?.name || 'Swadhara Maker'}
                 </span>

@@ -6,7 +6,6 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
-// Configure CORS for production (Vercel) and local development
 const allowedOrigins = [
   'https://swadhara.vercel.app',
   'https://swadhara-c4461ajyv-pranjal1101s-projects.vercel.app',
@@ -29,7 +28,6 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Endpoint
 app.use('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -37,7 +35,6 @@ app.use('/api/health', (req, res) => {
   });
 });
 
-// Routes
 const authRoutes = require('./routes/authRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -50,7 +47,6 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/ai', aiRoutes);
 
-// Centralized Error Handler
 app.use(errorHandler);
 
 module.exports = app;

@@ -115,7 +115,7 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
         padding: '32px',
         position: 'relative'
       }}>
-        {/* Close Button */}
+
         <button
           onClick={onClose}
           style={{
@@ -128,7 +128,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           <X size={20} />
         </button>
 
-        {/* Modal Header */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <span className="eyebrow-pill">
             Swadhara AI Assistant
@@ -147,7 +146,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* STEP 1: INTEREST */}
         {step === 1 && (
           <div>
             <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
@@ -184,7 +182,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* STEP 2: SKILL LEVEL */}
         {step === 2 && (
           <div>
             <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
@@ -222,7 +219,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* STEP 3: GOAL */}
         {step === 3 && (
           <div>
             <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
@@ -260,7 +256,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* STEP 4: TIME */}
         {step === 4 && (
           <div>
             <h4 style={{ fontSize: '1.05rem', color: 'var(--primary-dark)', marginBottom: '14px' }}>
@@ -303,7 +298,6 @@ export default function CourseRecommenderModal({ isOpen, onClose }) {
           </div>
         )}
 
-        {/* STEP 5: RECOMMENDATION RESULTS */}
         {step === 5 && recommendations && (
           <div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>

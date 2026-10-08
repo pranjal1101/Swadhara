@@ -1,5 +1,4 @@
 export const en = {
-  // Navigation
   navLearn: 'Learn',
   navMarketplace: 'Marketplace',
   navAbout: 'About Swadhara',
@@ -10,13 +9,11 @@ export const en = {
   navSellerDashboard: 'Maker Panel',
   navProfile: 'Profile',
 
-  // Hero Section
   heroTitle: 'Learn a practical skill. Make something of your own.',
   heroSubtitle: 'Swadhara helps women learn tailoring, baking, and crafts, and provides a direct path to show and sell what they create.',
   ctaStartLearning: 'Start Learning',
   ctaExploreMarketplace: 'Explore Marketplace',
 
-  // Homepage Sections
   sectionThreeStepsTitle: 'How Swadhara Works',
   stepLearnTitle: '01 — Learn',
   stepLearnText: 'Watch practical video lessons step-by-step.',
@@ -29,7 +26,6 @@ export const en = {
   sectionCTATitle: 'Ready to build your own livelihood?',
   sectionCTASubtitle: 'Join our community of learners and makers today.',
 
-  // Common UI Actions / States
   back: 'Back',
   next: 'Next',
   save: 'Save',
@@ -45,7 +41,6 @@ export const en = {
   category: 'Category',
   quantity: 'Quantity',
 
-  // Courses UI
   courseLevel: 'Difficulty',
   courseDifficulty: 'Difficulty',
   difficultyAll: 'All Difficulties',
@@ -67,7 +62,6 @@ export const en = {
   emptyCourses: 'No courses match your search or filter selection.',
   courseDetails: 'Course Syllabus',
 
-  // Marketplace UI
   searchPlaceholder: 'Search handmade items...',
   allCategories: 'All Categories',
   sortBy: 'Sort By',
@@ -77,7 +71,6 @@ export const en = {
   addToCart: 'Add to Cart',
   addedToCart: 'Added to Cart',
 
-  // Cart / Checkout
   cartTitle: 'Your Shopping Bag',
   emptyCart: 'Your cart is empty.',
   cartTotal: 'Total Amount',
@@ -93,7 +86,6 @@ export const en = {
   orderDate: 'Date',
   orderStatus: 'Status',
 
-  // Seller Dashboard
   sellerOverview: 'Maker Overview',
   sellerMyProducts: 'My Products',
   sellerIncomingOrders: 'Incoming Orders',

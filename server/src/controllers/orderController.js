@@ -1,10 +1,5 @@
 const orderService = require('../services/orderService');
 
-/**
- * @desc    Create a new order from checkout / demo payment
- * @route   POST /api/orders
- * @access  Private (Authenticated users)
- */
 const checkout = async (req, res, next) => {
   try {
     const { items, shippingAddress, paymentMethod, paymentStatus, status } = req.body;
@@ -26,11 +21,6 @@ const checkout = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get single order details by ID
- * @route   GET /api/orders/:id
- * @access  Private (Authenticated users)
- */
 const getOrderDetails = async (req, res, next) => {
   try {
     const order = await orderService.getOrderById(req.params.id);
@@ -49,11 +39,6 @@ const getOrderDetails = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get user order history
- * @route   GET /api/orders
- * @access  Private (Authenticated users)
- */
 const listUserOrders = async (req, res, next) => {
   try {
     const orders = await orderService.getUserOrders(req.user._id);
@@ -66,11 +51,6 @@ const listUserOrders = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get orders containing seller's products
- * @route   GET /api/orders/seller
- * @access  Private (Seller only)
- */
 const listSellerOrders = async (req, res, next) => {
   try {
     const orders = await orderService.getSellerOrders(req.user._id);
@@ -83,11 +63,6 @@ const listSellerOrders = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Update status of an order
- * @route   PUT /api/orders/:id/status
- * @access  Private (Seller only)
- */
 const updateStatus = async (req, res, next) => {
   try {
     const { status } = req.body;

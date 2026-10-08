@@ -1,21 +1,16 @@
-/**
- * Swadhara Backend API Endpoints Integration Test Script
- * Runs using Node's native http module (Zero dependencies)
- */
 require('dotenv').config();
 const http = require('http');
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');
-const app = require('../app'); // Import express app instance
+const app = require('../app');
 
 const PORT = 5099;
 let serverInstance;
 
-// Setup test helper to make HTTP requests programmatically
 const makeRequest = (method, path, body = null, headers = {}) => {
   return new Promise((resolve, reject) => {
     const postData = body ? JSON.stringify(body) : '';
-    
+
     const options = {
       hostname: '127.0.0.1',
       port: PORT,
@@ -59,18 +54,14 @@ const runTests = async () => {
   console.log('--- STARTING SWADHARA API ENDPOINT TESTS ---');
 
   try {
-    // Connect to database
     await connectDB();
 
-    // 1. Start test server
     serverInstance = app.listen(PORT, () => {
       console.log(`Test server running on port ${PORT}`);
     });
 
-    // Wait 500ms for MongoDB connection
     await new Promise(r => setTimeout(r, 500));
 
-    // 2. Test GET /api/products/categories (Public)
     console.log('\n[Test 1] Fetch categories list...');
     const catRes = await makeRequest('GET', '/api/products/categories');
     if (catRes.status === 200 && catRes.body.success === true) {
@@ -79,7 +70,6 @@ const runTests = async () => {
       console.log('❌ FAIL:', catRes.status, catRes.body);
     }
 
-    // 3. Test GET /api/courses (Public)
     console.log('\n[Test 2] Fetch courses list...');
     const courseRes = await makeRequest('GET', '/api/courses');
     if (courseRes.status === 200 && courseRes.body.success === true) {
@@ -88,7 +78,6 @@ const runTests = async () => {
       console.log('❌ FAIL:', courseRes.status, courseRes.body);
     }
 
-    // 4. Test GET /api/products (Public)
     console.log('\n[Test 3] Fetch products list...');
     const prodRes = await makeRequest('GET', '/api/products');
     if (prodRes.status === 200 && prodRes.body.success === true) {
@@ -97,7 +86,6 @@ const runTests = async () => {
       console.log('❌ FAIL:', prodRes.status, prodRes.body);
     }
 
-    // 5. Test POST /api/auth/login with invalid credentials (Negative test)
     console.log('\n[Test 4] Login with incorrect credentials...');
     const loginRes = await makeRequest('POST', '/api/auth/login', {
       email: 'nonexistent@swadhara.org',
@@ -113,7 +101,6 @@ const runTests = async () => {
   } catch (error) {
     console.error('Testing runtime error:', error);
   } finally {
-    // Shutdown server and MongoDB connection cleanly
     if (serverInstance) {
       serverInstance.close(() => {
         console.log('Test server shut down successfully.');

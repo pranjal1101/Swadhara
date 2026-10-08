@@ -9,7 +9,7 @@ export default function SellerDashboard() {
   const { user } = useAuth();
   const { t, tDynamic } = useLanguage();
 
-  const [activeTab, setActiveTab] = useState('overview'); // overview, products, orders, form
+  const [activeTab, setActiveTab] = useState('overview');
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -17,7 +17,6 @@ export default function SellerDashboard() {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  // Product Form states
   const [editMode, setEditMode] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [prodName, setProdName] = useState('');
@@ -157,7 +156,7 @@ export default function SellerDashboard() {
 
   return (
     <div className="container section">
-      {/* HEADER BANNER (Panel 9 Reference) */}
+
       <div style={{
         backgroundColor: 'var(--bg-pink-soft)',
         borderRadius: 'var(--border-radius-lg)',
@@ -187,7 +186,6 @@ export default function SellerDashboard() {
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
       {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
 
-      {/* TABS NAVIGATION */}
       <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '36px' }}>
         <button
           onClick={() => setActiveTab('overview')}
@@ -227,7 +225,6 @@ export default function SellerDashboard() {
         </button>
       </div>
 
-      {/* TAB 1: OVERVIEW METRICS */}
       {activeTab === 'overview' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
           <div className="card-editorial" style={{ padding: '36px', textAlign: 'center' }}>
@@ -248,7 +245,6 @@ export default function SellerDashboard() {
         </div>
       )}
 
-      {/* TAB 2: MY CREATIONS GRID / CARDS (Panel 9 Reference) */}
       {activeTab === 'products' && (
         <div>
           {products.length === 0 ? (
@@ -290,7 +286,6 @@ export default function SellerDashboard() {
         </div>
       )}
 
-      {/* TAB 3: INCOMING ORDERS */}
       {activeTab === 'orders' && (
         <div>
           {orders.length === 0 ? (
@@ -348,7 +343,6 @@ export default function SellerDashboard() {
                       </div>
                     </div>
 
-                    {/* Order Product List */}
                     <div style={{ marginBottom: '16px' }}>
                       {order.items.map((item, idx) => (
                         <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.92rem', marginBottom: '8px' }}>
@@ -358,12 +352,10 @@ export default function SellerDashboard() {
                       ))}
                     </div>
 
-                    {/* Shipping Address */}
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px', backgroundColor: '#FAF8F9', padding: '12px', borderRadius: '4px' }}>
                       <strong>Shipping Address:</strong> {order.shippingAddress?.street}, {order.shippingAddress?.city}, {order.shippingAddress?.state} ({order.shippingAddress?.zipCode}) &bull; Phone: {order.shippingAddress?.phone}
                     </div>
 
-                    {/* Footer & Action Buttons based on Exact State Machine */}
                     <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontWeight: '700', color: 'var(--primary-dark)', fontSize: '1.1rem' }}>
                         Total: ₹{order.totalAmount.toLocaleString('en-IN')}
@@ -405,7 +397,6 @@ export default function SellerDashboard() {
         </div>
       )}
 
-      {/* TAB 4: CREATE / EDIT PRODUCT FORM */}
       {activeTab === 'form' && (
         <div className="card-editorial" style={{ maxWidth: '640px', margin: '0 auto', padding: '36px' }}>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '24px' }}>

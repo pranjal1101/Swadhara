@@ -1,27 +1,18 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 
-/**
- * Get all categories
- */
 const getCategories = async () => {
   return await Category.find({});
 };
 
-/**
- * Get products with search, category filtering, and sorting
- */
 const getProducts = async ({ search, category, sort }) => {
   let query = {};
 
-  // Search filter
   if (search) {
     query.name = { $regex: search, $options: 'i' };
   }
 
-  // Category filter (supports slug or ID)
   if (category) {
-    // If it looks like a Mongo ID, use it directly, otherwise lookup by slug
     if (category.match(/^[0-9a-fA-F]{24}$/)) {
       query.category = category;
     } else {
@@ -29,7 +20,7 @@ const getProducts = async ({ search, category, sort }) => {
       if (cat) {
         query.category = cat._id;
       } else {
-        return []; // Category not found, return empty
+        return [];
       }
     }
   }
@@ -38,35 +29,28 @@ const getProducts = async ({ search, category, sort }) => {
     .populate('category')
     .populate('seller', 'name profileImage location');
 
-  // Sorting
   if (sort === 'price-asc') {
     dbQuery = dbQuery.sort({ price: 1 });
   } else if (sort === 'price-desc') {
     dbQuery = dbQuery.sort({ price: -1 });
   } else {
-    dbQuery = dbQuery.sort({ createdAt: -1 }); // Default latest
+    dbQuery = dbQuery.sort({ createdAt: -1 });
   }
 
   return await dbQuery;
 };
 
-/**
- * Get a single product by ID
- */
 const getProductById = async (id) => {
   const product = await Product.findById(id)
     .populate('category')
     .populate('seller', 'name profileImage location bio');
-    
+
   if (!product) {
     throw new Error('Product not found');
   }
   return product;
 };
 
-/**
- * Create a new product (Sellers only)
- */
 const createProduct = async (sellerId, productData) => {
   const { name, description, price, category, images, stock } = productData;
 
@@ -87,21 +71,16 @@ const createProduct = async (sellerId, productData) => {
   return product;
 };
 
-/**
- * Update an existing product (Sellers only, checks ownership)
- */
 const updateProduct = async (sellerId, productId, updateData) => {
   const product = await Product.findById(productId);
   if (!product) {
     throw new Error('Product not found');
   }
 
-  // Check ownership
   if (product.seller.toString() !== sellerId.toString()) {
     throw new Error('Not authorized to edit this product');
   }
 
-  // Update fields
   const allowedFields = ['name', 'description', 'price', 'category', 'images', 'stock'];
   allowedFields.forEach(field => {
     if (updateData[field] !== undefined) {
@@ -113,16 +92,12 @@ const updateProduct = async (sellerId, productId, updateData) => {
   return product;
 };
 
-/**
- * Delete a product (Sellers only, checks ownership)
- */
 const deleteProduct = async (sellerId, productId) => {
   const product = await Product.findById(productId);
   if (!product) {
     throw new Error('Product not found');
   }
 
-  // Check ownership
   if (product.seller.toString() !== sellerId.toString()) {
     throw new Error('Not authorized to delete this product');
   }
@@ -131,9 +106,6 @@ const deleteProduct = async (sellerId, productId) => {
   return { message: 'Product deleted successfully' };
 };
 
-/**
- * Get all products belonging to a seller
- */
 const getSellerProducts = async (sellerId) => {
   return await Product.find({ seller: sellerId }).populate('category');
 };
@@ -161,7 +133,7 @@ const addProductReview = async (productId, userId, userName, { rating, comment }
 
   product.reviews.push(review);
   product.numReviews = product.reviews.length;
-  
+
   const totalRating = product.reviews.reduce((sum, r) => sum + r.rating, 0);
   product.rating = Number((totalRating / product.reviews.length).toFixed(1));
 

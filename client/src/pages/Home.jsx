@@ -16,14 +16,12 @@ export default function Home() {
   const { t, tDynamic } = useLanguage();
   const navigate = useNavigate();
 
-  // Data States
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [courses, setCourses] = useState([]);
   const [enrolledProgress, setEnrolledProgress] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Category Filter State
   const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
@@ -61,7 +59,6 @@ export default function Home() {
     fetchHomeData();
   }, [user]);
 
-  // Featured Skill Categories for Visual Display
   const featuredSkillCards = [
     { title: 'Tailoring', slug: 'tailoring', image: tailoringImg },
     { title: 'Embroidery', slug: 'embroidery', image: embroideryImg },
@@ -70,7 +67,6 @@ export default function Home() {
     { title: 'Handicrafts', slug: 'handicrafts', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=500&auto=format&fit=crop' }
   ];
 
-  // Creator Avatars for Women Supporting Women Section
   const creatorAvatars = [
     { name: 'Meena Sharma', skill: 'Embroidery', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop' },
     { name: 'Rani Devi', skill: 'Baking', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop' },
@@ -79,7 +75,7 @@ export default function Home() {
 
   return (
     <div className="homepage-redesign-container">
-      {/* SECTION 1: EDITORIAL HERO BANNER */}
+
       <section className="section" style={{ backgroundColor: 'var(--bg-base)', paddingTop: '40px', paddingBottom: '56px' }}>
         <div className="container">
           <div style={{
@@ -95,27 +91,27 @@ export default function Home() {
           }}>
             <div>
               <span className="eyebrow-pill">LEARN &bull; CREATE &bull; EARN</span>
-              
+
               <h1 style={{ fontSize: '3.2rem', marginBottom: '20px', lineHeight: '1.15', color: 'var(--primary-dark)' }}>
                 Real skills.<br />
                 Handmade dreams.<br />
                 Your journey.
               </h1>
-              
+
               <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '32px', maxWidth: '480px' }}>
                 Learn practical craft skills step-by-step, create beautiful products, and build your own sustainable income.
               </p>
 
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                <button 
-                  onClick={() => navigate('/courses')} 
+                <button
+                  onClick={() => navigate('/courses')}
                   className="btn btn-rose btn-lg"
                 >
                   Explore the Journey <ArrowRight size={18} />
                 </button>
 
-                <button 
-                  onClick={() => navigate('/marketplace')} 
+                <button
+                  onClick={() => navigate('/marketplace')}
                   className="btn btn-outline btn-lg"
                 >
                   Explore Marketplace
@@ -139,7 +135,6 @@ export default function Home() {
                 />
               </div>
 
-              {/* Floating Story Pill */}
               <div style={{
                 position: 'absolute',
                 bottom: '-20px',
@@ -166,7 +161,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2: POPULAR SKILLS SHOWCASE */}
       <section className="section" style={{ padding: '32px 0 56px 0' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '28px' }}>
@@ -181,8 +175,8 @@ export default function Home() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
             {featuredSkillCards.map((skill) => (
-              <div 
-                key={skill.slug} 
+              <div
+                key={skill.slug}
                 className="card-editorial"
                 onClick={() => navigate(`/courses?category=${skill.slug}`)}
                 style={{ cursor: 'pointer', textAlign: 'center', padding: '12px' }}
@@ -197,7 +191,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 3: EDITORIAL STORY - SMALL STEPS BIG DREAMS */}
       <section className="section" style={{ backgroundColor: '#FAF0F2', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
@@ -206,8 +199,8 @@ export default function Home() {
               <p style={{ fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--text-main)', marginBottom: '24px' }}>
                 Learn new skills, create what you love, and build your own income — at your pace. Swadhara provides step-by-step video courses, AI guidance, and a direct marketplace to showcase your creations to appreciative buyers.
               </p>
-              <button 
-                onClick={() => navigate('/courses')} 
+              <button
+                onClick={() => navigate('/courses')}
                 className="btn btn-outline"
                 style={{ fontWeight: '700', color: 'var(--primary-rose-dark)' }}
               >
@@ -226,7 +219,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 4: WOMEN SUPPORTING WOMEN */}
       <section className="section">
         <div className="container">
           <div style={{
@@ -251,17 +243,17 @@ export default function Home() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               <div style={{ display: 'flex' }}>
                 {creatorAvatars.map((c, i) => (
-                  <img 
-                    key={i} 
-                    src={c.img} 
-                    alt={c.name} 
-                    style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #FFFFFF', marginLeft: i > 0 ? '-12px' : 0, objectFit: 'cover' }} 
+                  <img
+                    key={i}
+                    src={c.img}
+                    alt={c.name}
+                    style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #FFFFFF', marginLeft: i > 0 ? '-12px' : 0, objectFit: 'cover' }}
                   />
                 ))}
               </div>
-              
-              <button 
-                onClick={() => navigate('/profile')} 
+
+              <button
+                onClick={() => navigate('/profile')}
                 className="btn btn-rose btn-sm"
               >
                 Read our Creators <ArrowRight size={16} />
@@ -271,25 +263,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 5: FEATURED COURSES & PRODUCTS FROM DATABASE */}
       <section className="section" style={{ paddingTop: '0' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <h2 style={{ margin: 0 }}>Featured Opportunities</h2>
-            
-            {/* Category Pills */}
+
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button 
-                onClick={() => setActiveCategory('all')} 
+              <button
+                onClick={() => setActiveCategory('all')}
                 className={`btn btn-sm ${activeCategory === 'all' ? 'btn-rose' : 'btn-ghost'}`}
                 style={{ borderRadius: 'var(--border-radius-pill)' }}
               >
                 All
               </button>
               {categories.slice(0, 4).map((cat) => (
-                <button 
-                  key={cat._id} 
-                  onClick={() => setActiveCategory(cat.slug)} 
+                <button
+                  key={cat._id}
+                  onClick={() => setActiveCategory(cat.slug)}
                   className={`btn btn-sm ${activeCategory === cat.slug ? 'btn-rose' : 'btn-ghost'}`}
                   style={{ borderRadius: 'var(--border-radius-pill)' }}
                 >
@@ -299,7 +289,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Grid of Courses & Products */}
           {loading ? (
             <div className="grid grid-3">
               {[1, 2, 3].map(n => (
@@ -309,8 +298,8 @@ export default function Home() {
           ) : (
             <div className="grid grid-3">
               {courses.slice(0, 3).map((course) => (
-                <div 
-                  key={course._id} 
+                <div
+                  key={course._id}
                   className="card-editorial"
                   onClick={() => navigate(`/courses/${course._id}`)}
                   style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', height: '100%' }}
